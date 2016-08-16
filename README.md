@@ -2,6 +2,8 @@
 
 The [Molecular Signatures Database (MSigDB)](http://www.broad.mit.edu/gsea/msigdb/index.jsp) in a data frame. 
 
+Current version: [v5.1](http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_v5.1_Release_Notes) (January 2016).
+
 ## Installation
 
 ```r
