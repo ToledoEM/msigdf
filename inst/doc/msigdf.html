@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Stephen Turner" />
+
+<meta name="date" content="2016-08-16" />
+
+<title>MSigDF: Molecular Signature Database (MSigDB) in a Data Frame</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">MSigDF: Molecular Signature Database (MSigDB) in a Data Frame</h1>
+<h4 class="author"><em>Stephen Turner</em></h4>
+<h4 class="date"><em>2016-08-16</em></h4>
+
+
+
+<div id="data-sources" class="section level2">
+<h2>Data sources</h2>
+<p>Original data from the Broad’s MSigDB: <a href="http://www.broad.mit.edu/gsea/msigdb/index.jsp" class="uri">http://www.broad.mit.edu/gsea/msigdb/index.jsp</a>.</p>
+<p>R-formatted data from WEHI: <a href="http://bioinf.wehi.edu.au/software/MSigDB/" class="uri">http://bioinf.wehi.edu.au/software/MSigDB/</a>. Description:</p>
+<blockquote>
+<p>The gene sets contained in the MSigDB are from a wide variety of sources, and relate to a variety of species, mostly human. Our work at the WEHI predominately uses mouse models of human disease. To facilitate use of the MSigDB in our work, we have created a pure mouse version of the MSigDB by mapping all sets to mouse orthologs. A pure human version is also provided.</p>
+<p><strong><em>Prodecure:</em></strong></p>
+<ol style="list-style-type: decimal">
+<li>The current MSigDB v5.1 xml file was downloaded.</li>
+<li>Human Entrez Gene IDs were mapped to Mouse Entrez Gene IDs, using the <a href="http://www.genenames.org/cgi-bin/hcop">HGNC Comparison of &gt; Orthology Predictions (HCOP)</a> (downloaded 9 May 2016).</li>
+<li>Each collection was converted to a list in R, and written to a RData file using <code>save()</code>.</li>
+</ol>
+</blockquote>
+<p>See the script in <code>data-raw/</code> to see how the data.frames were created.</p>
+</div>
+<div id="example-usage" class="section level2">
+<h2>Example usage</h2>
+<p>There are three data frames this package. The <code>msigdf.human</code> data frame has columns for each MSigDB collection (c1-7 and hallmark), each gene set, and Entrez ID, where each row is a single Entrez gene ID. The <code>msigdf.mouse</code> data frame has the same structure for mouse orthologs. The <code>msigdf.urls</code> data frame links the name of the gene set to the URL on the Broad’s website.</p>
+<p>The data sets in this package have several million rows. Having dplyr loaded will print them nicely as <code>tbl_df</code>s.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(plyr)
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(tidyr)
+<span class="kw">library</span>(msigdf)</code></pre></div>
+<p>Take a look:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">msigdf.human</code></pre></div>
+<pre><code>## # A tibble: 1,881,999 x 3
+##    collection geneset    entrez
+##         &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;
+## 1          c1 chr5q23      5759
+## 2          c1 chr5q23     94033
+## 3          c1 chr5q23     51334
+## 4          c1 chr5q23    153163
+## 5          c1 chr5q23    133615
+## 6          c1 chr5q23    402229
+## 7          c1 chr5q23      6219
+## 8          c1 chr5q23 100505841
+## 9          c1 chr5q23    115123
+## 10         c1 chr5q23      2878
+## # ... with 1,881,989 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">msigdf.mouse</code></pre></div>
+<pre><code>## # A tibble: 3,389,316 x 3
+##    collection geneset    entrez
+##         &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;
+## 1          c1 chr5q23 100042150
+## 2          c1 chr5q23    103236
+## 3          c1 chr5q23    106869
+## 4          c1 chr5q23    107022
+## 5          c1 chr5q23    109700
+## 6          c1 chr5q23     11548
+## 7          c1 chr5q23     12328
+## 8          c1 chr5q23     12583
+## 9          c1 chr5q23     12981
+## 10         c1 chr5q23     13653
+## # ... with 3,389,306 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">msigdf.urls %&gt;%<span class="st"> </span>as.data.frame %&gt;%<span class="st"> </span>head</code></pre></div>
+<pre><code>##   collection  geneset
+## 1         c1  chr5q23
+## 2         c1 chr16q24
+## 3         c1  chr8q24
+## 4         c1 chr13q11
+## 5         c1  chr7p21
+## 6         c1 chr10q23
+##                                                        url
+## 1  http://www.broadinstitute.org/gsea/msigdb/cards/chr5q23
+## 2 http://www.broadinstitute.org/gsea/msigdb/cards/chr16q24
+## 3  http://www.broadinstitute.org/gsea/msigdb/cards/chr8q24
+## 4 http://www.broadinstitute.org/gsea/msigdb/cards/chr13q11
+## 5  http://www.broadinstitute.org/gsea/msigdb/cards/chr7p21
+## 6 http://www.broadinstitute.org/gsea/msigdb/cards/chr10q23</code></pre>
+<p>Just get the entries for the <a href="http://www.genome.jp/kegg/pathway/hsa/hsa03450.html">KEGG non-homologous end joining pathway</a>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">msigdf.human %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(geneset==<span class="st">&quot;KEGG_NON_HOMOLOGOUS_END_JOINING&quot;</span>)</code></pre></div>
+<pre><code>## # A tibble: 14 x 3
+##    collection                         geneset entrez
+##         &lt;chr&gt;                           &lt;chr&gt;  &lt;int&gt;
+## 1          c2 KEGG_NON_HOMOLOGOUS_END_JOINING   7518
+## 2          c2 KEGG_NON_HOMOLOGOUS_END_JOINING   4361
+## 3          c2 KEGG_NON_HOMOLOGOUS_END_JOINING  27343
+## 4          c2 KEGG_NON_HOMOLOGOUS_END_JOINING  27434
+## 5          c2 KEGG_NON_HOMOLOGOUS_END_JOINING 731751
+## 6          c2 KEGG_NON_HOMOLOGOUS_END_JOINING  79840
+## 7          c2 KEGG_NON_HOMOLOGOUS_END_JOINING   3981
+## 8          c2 KEGG_NON_HOMOLOGOUS_END_JOINING   2237
+## 9          c2 KEGG_NON_HOMOLOGOUS_END_JOINING   1791
+## 10         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   7520
+## 11         c2 KEGG_NON_HOMOLOGOUS_END_JOINING  10111
+## 12         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   2547
+## 13         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   5591
+## 14         c2 KEGG_NON_HOMOLOGOUS_END_JOINING  64421</code></pre>
+<p>Some software, e.g., <a href="http://bioconductor.org/packages/release/bioc/html/gage.html">GAGE</a> might require gene sets to be a named list of Entrez IDs, where the name of each element in the list is the name of the pathway. This is how the data was originally structured, and we can return to it with <code>plyr::dlply()</code>. Here, let’s use only the hallmark sets, and after we <code>dlply</code> the data into this named list format, get just the first 10 pathways, and in each of those, just display the first 5 entrez IDs.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">msigdf.human %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(collection==<span class="st">&quot;hallmark&quot;</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">dlply</span>(<span class="dt">.variables=</span><span class="st">&quot;geneset&quot;</span>, <span class="dt">.fun=</span>function(x) x$entrez) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">lapply</span>(head, <span class="dv">5</span>)</code></pre></div>
+<pre><code>## $HALLMARK_ADIPOGENESIS
+## [1] 2167 9370 5468 3991 8694
+## 
+## $HALLMARK_ALLOGRAFT_REJECTION
+## [1] 5788 3593 7040 3592  916
+## 
+## $HALLMARK_ANDROGEN_RESPONSE
+## [1]   354  3817  2181  8554 10645
+## 
+## $HALLMARK_ANGIOGENESIS
+## [1]  1462 10631 11167  4043  6781
+## 
+## $HALLMARK_APICAL_JUNCTION
+## [1]     87   1366     89 149461   1739
+## 
+## $HALLMARK_APICAL_SURFACE
+## [1]  2683 51458  4118 27076  5314
+## 
+## $HALLMARK_APOPTOSIS
+## [1]  836  842 1676  840 8837
+## 
+## $HALLMARK_BILE_ACID_METABOLISM
+## [1]  6342  5825 11001 80270  3295
+## 
+## $HALLMARK_CHOLESTEROL_HOMEOSTASIS
+## [1] 2224 1595 3422 2222 1717
+## 
+## $HALLMARK_COAGULATION
+## [1] 2147 5624  716 4323 2159</code></pre>
+</div>
+<div id="further-exploration" class="section level2">
+<h2>Further exploration</h2>
+<p>For demonstration purposes, create a single object containing both human and mouse data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">msigdf &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(
+  msigdf.human %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">org=</span><span class="st">&quot;human&quot;</span>),
+  msigdf.mouse %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">org=</span><span class="st">&quot;mouse&quot;</span>)
+)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(msigdf)</code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   collection geneset entrez   org
+##        &lt;chr&gt;   &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;
+## 1         c1 chr5q23   5759 human
+## 2         c1 chr5q23  94033 human
+## 3         c1 chr5q23  51334 human
+## 4         c1 chr5q23 153163 human
+## 5         c1 chr5q23 133615 human
+## 6         c1 chr5q23 402229 human</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(msigdf)</code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   collection                      geneset entrez   org
+##        &lt;chr&gt;                        &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;
+## 1   hallmark HALLMARK_PANCREAS_BETA_CELLS  56458 mouse
+## 2   hallmark HALLMARK_PANCREAS_BETA_CELLS  56529 mouse
+## 3   hallmark HALLMARK_PANCREAS_BETA_CELLS  66286 mouse
+## 4   hallmark HALLMARK_PANCREAS_BETA_CELLS  69019 mouse
+## 5   hallmark HALLMARK_PANCREAS_BETA_CELLS  77766 mouse
+## 6   hallmark HALLMARK_PANCREAS_BETA_CELLS  80976 mouse</code></pre>
+<p>The number of gene sets in each collection is the same for each organism:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">msigdf %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(org, collection) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ngenesets=</span><span class="kw">n_distinct</span>(geneset)) %&gt;%
+<span class="st">  </span><span class="kw">spread</span>(org, ngenesets)</code></pre></div>
+<pre><code>## # A tibble: 8 x 3
+##   collection human mouse
+## *      &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1         c1   326   326
+## 2         c2  4726  4726
+## 3         c3   836   836
+## 4         c4   858   858
+## 5         c5  1454  1454
+## 6         c6   189   189
+## 7         c7  4872  4872
+## 8   hallmark    50    50</code></pre>
+<p>But the number of mouse genes in each collection is much greater, due to the one-to-many ortholog mapping.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">msigdf %&gt;%
+<span class="st">  </span><span class="kw">count</span>(org, collection) %&gt;%
+<span class="st">  </span><span class="kw">spread</span>(org, n)</code></pre></div>
+<pre><code>## # A tibble: 8 x 3
+##   collection  human   mouse
+## *      &lt;chr&gt;  &lt;int&gt;   &lt;int&gt;
+## 1         c1  30288   32922
+## 2         c2 440830  789906
+## 3         c3 198275  348751
+## 4         c4  91309  170610
+## 5         c5 134400  208362
+## 6         c6  31319   61452
+## 7         c7 948254 1764094
+## 8   hallmark   7324   13219</code></pre>
+<p>Look at the first few gene sets just in the 50-geneset hallmark collection. In each gene set, the number of mouse genes is greater than the number of human genes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">msigdf %&gt;%
+<span class="st">  </span><span class="kw">count</span>(org, collection, geneset) %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(collection==<span class="st">&quot;hallmark&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">spread</span>(org, n)</code></pre></div>
+<pre><code>## Source: local data frame [50 x 4]
+## Groups: collection [1]
+## 
+##    collection                          geneset human mouse
+## *       &lt;chr&gt;                            &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1    hallmark            HALLMARK_ADIPOGENESIS   200   390
+## 2    hallmark     HALLMARK_ALLOGRAFT_REJECTION   200   367
+## 3    hallmark       HALLMARK_ANDROGEN_RESPONSE   101   221
+## 4    hallmark            HALLMARK_ANGIOGENESIS    36    66
+## 5    hallmark         HALLMARK_APICAL_JUNCTION   200   366
+## 6    hallmark          HALLMARK_APICAL_SURFACE    44    92
+## 7    hallmark               HALLMARK_APOPTOSIS   161   231
+## 8    hallmark    HALLMARK_BILE_ACID_METABOLISM   112   238
+## 9    hallmark HALLMARK_CHOLESTEROL_HOMEOSTASIS    74   121
+## 10   hallmark             HALLMARK_COAGULATION   138   266
+## # ... with 40 more rows</code></pre>
+<p>Get the URL for the hallmark set with the fewest number of genes (Notch signaling). Optionally, <code>%&gt;%</code> this to <code>browseURL</code> to open it up in your browser.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">msigdf.human %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(collection==<span class="st">&quot;hallmark&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">count</span>(geneset) %&gt;%
+<span class="st">  </span><span class="kw">arrange</span>((n)) %&gt;%
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">1</span>) %&gt;%
+<span class="st">  </span><span class="kw">inner_join</span>(msigdf.urls, <span class="dt">by=</span><span class="st">&quot;geneset&quot;</span>) %&gt;%
+<span class="st">  </span>.$url</code></pre></div>
+<pre><code>## [1] &quot;http://www.broadinstitute.org/gsea/msigdb/cards/HALLMARK_NOTCH_SIGNALING&quot;</code></pre>
+<p>Just look at the number of genes in each KEGG pathway (sorted descending by the number of genes in that pathway):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">msigdf.human %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(collection==<span class="st">&quot;c2&quot;</span> &amp;<span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^KEGG_&quot;</span>, geneset)) %&gt;%
+<span class="st">  </span><span class="kw">count</span>(geneset) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n))</code></pre></div>
+<pre><code>## # A tibble: 186 x 2
+##                                         geneset     n
+##                                           &lt;chr&gt; &lt;int&gt;
+## 1                   KEGG_OLFACTORY_TRANSDUCTION   389
+## 2                       KEGG_PATHWAYS_IN_CANCER   328
+## 3  KEGG_NEUROACTIVE_LIGAND_RECEPTOR_INTERACTION   272
+## 4   KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION   267
+## 5                   KEGG_MAPK_SIGNALING_PATHWAY   267
+## 6         KEGG_REGULATION_OF_ACTIN_CYTOSKELETON   216
+## 7                           KEGG_FOCAL_ADHESION   201
+## 8              KEGG_CHEMOKINE_SIGNALING_PATHWAY   190
+## 9                      KEGG_HUNTINGTONS_DISEASE   185
+## 10                             KEGG_ENDOCYTOSIS   183
+## # ... with 176 more rows</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
