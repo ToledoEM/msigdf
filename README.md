@@ -17,7 +17,7 @@ devtools::install_github("stephenturner/msigdf", build_vignettes = TRUE)
 
 ## Example usage
 
-See the package vignette.
+See the [package vignette](https://rawgit.com/stephenturner/msigdf/master/inst/doc/msigdf.html) for more.
 
 ```r
 library(dplyr)
@@ -62,3 +62,5 @@ msigdf.human %>% filter(geneset=="KEGG_NON_HOMOLOGOUS_END_JOINING")
 13         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   5591
 14         c2 KEGG_NON_HOMOLOGOUS_END_JOINING  64421
 ```
+
+See the [package vignette](https://rawgit.com/stephenturner/msigdf/master/inst/doc/msigdf.html) for more.
