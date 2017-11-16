@@ -28,17 +28,17 @@ R-formatted data from WEHI: <http://bioinf.wehi.edu.au/software/MSigDB/>. Descri
 > 
 > **_Prodecure:_** 
 > 
-> 1. The current MSigDB v5.1 xml file was downloaded.
-> 2. Human Entrez Gene IDs were mapped to Mouse Entrez Gene IDs, using the [HGNC Comparison of > Orthology Predictions (HCOP)](http://www.genenames.org/cgi-bin/hcop) (downloaded 9 May 2016).
+> 1. The current MSigDB v5.2 xml file was downloaded.
+> 2. Human Entrez Gene IDs were mapped to Mouse Entrez Gene IDs, using the [HGNC Comparison of > Orthology Predictions (HCOP)](http://www.genenames.org/cgi-bin/hcop) (downloaded 11 Octtober 2016).
 > 3. Each collection was converted to a list in R, and written to a RData file using `save()`. 
 
-See the script in `data-raw/` to see how the data.frames were created.
+See the script in `data-raw/` to see how the data frames (tibbles) were created.
 
 ## Example usage
 
-There are three data frames this package. The `msigdf.human` data frame has columns for each MSigDB collection (c1-7 and hallmark), each gene set, and Entrez ID, where each row is a single Entrez gene ID. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
+There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection (c1-7 and hallmark), each gene set, and Entrez ID, where each row is a single Entrez gene ID. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
 
-The data sets in this package have several million rows. Having dplyr loaded will print them nicely as `tbl_df`s.
+The data sets in this package have several million rows. The package imports the tibble package so they're displayed nicely.
 
 ```{r}
 library(plyr)

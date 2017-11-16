@@ -1,14 +1,16 @@
 Package: msigdf
 Type: Package
 Title: MSigDB in a data frame
-Version: 5.1
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Version: 5.2
+Authors@R: person("Stephen", "Turner", email = "vustephen@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9140-9028"))
+Maintainer: Stephen Turner <vustephen@gmail.com>
 Description: Molecular Signatures Database (MSigDB) in a data frame.
+URL: https://github.com/stephenturner/msigdf
 License: CC0
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Depends: R (>= 3.1.2)
 Suggests: knitr, plyr, dplyr, rmarkdown, tidyr
 VignetteBuilder: knitr
+Imports: tibble

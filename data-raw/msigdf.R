@@ -5,24 +5,24 @@ library(dplyr)
 library(tidyr)
 
 # human data
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_H_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c1_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c2_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c3_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c4_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c6_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c5_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c7_v5p1.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_H_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c1_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c2_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c3_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c4_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c6_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c5_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/human_c7_v5p2.rdata"))
 
 # mouse data
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_H_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c1_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c2_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c3_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c4_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c6_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c5_v5p1.rdata"))
-load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c7_v5p1.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_H_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c1_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c2_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c3_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c4_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c6_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c5_v5p2.rdata"))
+load(url("http://bioinf.wehi.edu.au/software/MSigDB/mouse_c7_v5p2.rdata"))
 
 # Each element of the msigdf list named "Org.Collection" is a data frame
 # containing the name of the geneset and the entrez id of genes in that set.
@@ -51,9 +51,10 @@ msigdf.mouse <- msigdf %>% filter(org=="mouse") %>% select(-org)
 # Create data frame of urls to join to
 msigdf.urls <- msigdf %>%
   distinct(collection, geneset) %>%
-  mutate(url=paste0("http://www.broadinstitute.org/gsea/msigdb/cards/", geneset))
+  mutate(url=paste0("http://software.broadinstitute.org/gsea/msigdb/cards/", geneset))
 
 # Save data in the package, and remove the original list objects
-devtools::use_data(msigdf.human, msigdf.mouse, msigdf.urls)
+devtools::use_data(msigdf.human, msigdf.mouse, msigdf.urls, overwrite=TRUE, compress='xz')
+devtools::use_package("tibble")
 rm(list=ls(pattern="^Hs\\.|^Mm\\."))
 rm(msigdf)
