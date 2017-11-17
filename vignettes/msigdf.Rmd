@@ -1,13 +1,18 @@
 ---
 title: "MSigDF: Molecular Signature Database (MSigDB) in a Data Frame"
-author: "Stephen Turner"
-date: "`r Sys.Date()`"
-output: 
-  rmarkdown::html_vignette:
-    fig_height: 5
-    fig_width: 7
-vignette: >
-  %\VignetteIndexEntry{MSigDF}
+author:
+- name: Stephen D. Turner
+  affiliation: University of Virginia, Charlottesville VA, United States
+  email: vustephen@gmail.com
+# package: msigdf
+output:
+  BiocStyle::html_document2
+abstract: |
+  This data package contains the Molecular Signature Database (MSigDB) for both human and predicted mouse orthologs in separate data frames (tibbles). 
+  Each data frame (`msigdf.human` and `msigdf.mouse`) contain three columns: the collection (Hallmark, or c1-c7), the gene set, and Entrez IDs
+  for genes in that set. The `msigdf.urls` tibble contains links to descriptions on the Broad Institute's website of each gene set.
+vignette: |
+  %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,24 +22,25 @@ library(knitr)
 opts_chunk$set(message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE)
 ```
 
-## Data sources
+# Data sources
 
-Original data from the Broad's MSigDB: <http://www.broad.mit.edu/gsea/msigdb/index.jsp>.
+Original data from the Broad Institute's Molecular Signature Database (MSigDB)^[<http://www.broad.mit.edu/gsea/msigdb/index.jsp>], redistributed as separate R data files containing named lists of gene sets, available from WEHI.^[<http://bioinf.wehi.edu.au/software/MSigDB/>] The following description applies to the R-formatted data:
 
-R-formatted data from WEHI: <http://bioinf.wehi.edu.au/software/MSigDB/>. Description:
+----
 
+_The gene sets contained in the MSigDB are from a wide variety of sources, and relate to a variety of species, mostly human. Our work at the WEHI predominately uses mouse models of human disease. To facilitate use of the MSigDB in our work, we have created a pure mouse version of the MSigDB by mapping all sets to mouse orthologs. A pure human version is also provided._
 
-> The gene sets contained in the MSigDB are from a wide variety of sources, and relate to a variety of species, mostly human. Our work at the WEHI predominately uses mouse models of human disease. To facilitate use of the MSigDB in our work, we have created a pure mouse version of the MSigDB by mapping all sets to mouse orthologs. A pure human version is also provided.
-> 
-> **_Prodecure:_** 
-> 
-> 1. The current MSigDB v5.2 xml file was downloaded.
-> 2. Human Entrez Gene IDs were mapped to Mouse Entrez Gene IDs, using the [HGNC Comparison of > Orthology Predictions (HCOP)](http://www.genenames.org/cgi-bin/hcop) (downloaded 11 Octtober 2016).
-> 3. Each collection was converted to a list in R, and written to a RData file using `save()`. 
+**_Prodecure:_** 
+
+_1. The current MSigDB v5.2 xml file was downloaded._
+_2. Human Entrez Gene IDs were mapped to Mouse Entrez Gene IDs, using the [HGNC Comparison of Orthology Predictions (HCOP)](http://www.genenames.org/cgi-bin/hcop) (downloaded 11 Octtober 2016)._
+_3. Each collection was converted to a list in R, and written to a RData file using `save()`._ 
+
+----
 
 See the script in `data-raw/` to see how the data frames (tibbles) were created.
 
-## Example usage
+# Example usage
 
 There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection (c1-7 and hallmark), each gene set, and Entrez ID, where each row is a single Entrez gene ID. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
 
@@ -73,7 +79,7 @@ msigdf.human %>%
   map(head)
 ```
 
-## Further exploration
+# Further exploration
 
 For demonstration purposes, create a single object containing both human and mouse data:
 
@@ -137,3 +143,8 @@ msigdf.human %>%
 ```
 
 
+# Session info {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
