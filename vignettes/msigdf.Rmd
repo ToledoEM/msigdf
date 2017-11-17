@@ -11,6 +11,7 @@ abstract: |
   This data package contains the Molecular Signature Database (MSigDB) for both human and predicted mouse orthologs in separate data frames (tibbles). 
   Each data frame (`msigdf.human` and `msigdf.mouse`) contain three columns: the collection (Hallmark, or c1-c7), the gene set, and Entrez IDs
   for genes in that set. The `msigdf.urls` tibble contains links to descriptions on the Broad Institute's website of each gene set.
+  Source code available at <https://github.com/stephenturner/msigdf>.
 vignette: |
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
