@@ -41,18 +41,16 @@ There are three data frames (tibbles) this package. The `msigdf.human` data fram
 The data sets in this package have several million rows. The package imports the tibble package so they're displayed nicely.
 
 ```{r}
-library(plyr)
-library(dplyr)
-library(tidyr)
+library(tidyverse)
 library(msigdf)
 ```
 
 Take a look:
 
 ```{r}
-msigdf.human
-msigdf.mouse
-msigdf.urls %>% as.data.frame %>% head
+msigdf.human %>% head()
+msigdf.mouse %>% head()
+msigdf.urls %>% as.data.frame() %>% head()
 ```
 
 Just get the entries for the [KEGG non-homologous end joining pathway](http://www.genome.jp/kegg/pathway/hsa/hsa03450.html): 
@@ -62,14 +60,17 @@ msigdf.human %>%
   filter(geneset=="KEGG_NON_HOMOLOGOUS_END_JOINING")
 ```
 
-Some software, e.g., [GAGE](http://bioconductor.org/packages/release/bioc/html/gage.html) might require gene sets to be a named list of Entrez IDs, where the name of each element in the list is the name of the pathway. This is how the data was originally structured, and we can return to it with `plyr::dlply()`. Here, let's use only the hallmark sets, and after we `dlply` the data into this named list format, get just the first 10 pathways, and in each of those, just display the first 5 entrez IDs.
+Some software, e.g., [GAGE](http://bioconductor.org/packages/release/bioc/html/gage.html) might require gene sets to be a named list of Entrez IDs, where the name of each element in the list is the name of the pathway. This is how the data was originally structured, and we can return to it with `plyr::dlply()`. Here, let's use only the hallmark sets, and after we `dlply` the data into this named list format, get just the first few pathways, and in each of those, just display the first few entrez IDs.
 
 ```{r}
 msigdf.human %>% 
   filter(collection=="hallmark") %>% 
-  dlply(.variables="geneset", .fun=function(x) x$entrez) %>% 
-  head(10) %>% 
-  lapply(head, 5)
+  select(geneset, entrez) %>% 
+  group_by(geneset) %>% 
+  summarize(entrez=list(entrez)) %>% 
+  deframe() %>% 
+  head() %>% 
+  map(head)
 ```
 
 ## Further exploration
@@ -123,7 +124,7 @@ msigdf.human %>%
   arrange((n)) %>%
   head(1) %>%
   inner_join(msigdf.urls, by="geneset") %>%
-  .$url
+  pull(url)
 ```
 
 Just look at the number of genes in each KEGG pathway (sorted descending by the number of genes in that pathway):
