@@ -4,7 +4,7 @@ author:
 - name: Stephen D. Turner
   affiliation: University of Virginia, Charlottesville VA, United States
   email: vustephen@gmail.com
-# package: msigdf
+package: msigdf
 output:
   BiocStyle::html_document2
 abstract: |
@@ -13,7 +13,7 @@ abstract: |
   for genes in that set. The `msigdf.urls` tibble contains links to descriptions on the Broad Institute's website of each gene set.
   Source code available at <https://github.com/stephenturner/msigdf>.
 vignette: |
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{MSigDF: Molecular Signature Database (MSigDB) in a Data Frame}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
