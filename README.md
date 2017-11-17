@@ -2,7 +2,7 @@
 
 The [Molecular Signatures Database (MSigDB)](http://www.broad.mit.edu/gsea/msigdb/index.jsp) in a data frame. 
 
-Current version: [v5.1](http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_v5.1_Release_Notes) (January 2016).
+Current version: [v5.2](http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_v5.2_Release_Notes) (October 2016).
 
 ## Installation
 
@@ -13,7 +13,7 @@ install.packages("devtools")
 # Just get the data
 devtools::install_github("stephenturner/msigdf")
 
-# Get the data and build the vignette (requires plyr, dplyr, tidyr, knitr, rmarkdown)
+# Get the data and build the vignette (requires tidyverse, knitr, rmarkdown)
 devtools::install_github("stephenturner/msigdf", build_vignettes = TRUE)
 ```
 
