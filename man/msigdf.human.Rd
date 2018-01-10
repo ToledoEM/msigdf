@@ -4,9 +4,9 @@
 \name{msigdf.human}
 \alias{msigdf.human}
 \title{MSigDB in a data frame (human)}
-\format{A data frame with 3 variables: \code{collection}, \code{geneset}, and \code{entrez}. See vignette for more details.}
+\format{A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset} and \code{symbol}. See vignette for more details.}
 \source{
-\url{http://bioinf.wehi.edu.au/software/MSigDB/} and \url{http://software.broadinstitute.org/gsea/msigdb/}
+\url{http://software.broadinstitute.org/gsea/msigdb/}
 }
 \usage{
 msigdf.human
