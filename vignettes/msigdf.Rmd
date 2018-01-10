@@ -25,16 +25,16 @@ opts_chunk$set(message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE)
 
 # Data sources
 
-Original data from the Broad Institute's Molecular Signature Database (MSigDB)^[<http://www.broad.mit.edu/gsea/msigdb/index.jsp>], redistributed as separate R data files containing named lists of gene sets, available from WEHI.^[<http://bioinf.wehi.edu.au/software/MSigDB/>] The following description applies to the R-formatted data:
+Original data from the Broad Institute's Molecular Signature Database (MSigDB)^[<http://www.broad.mit.edu/gsea/msigdb/index.jsp>], redistributed as separate gmt data files from the MSigDB.
 
 ----
 
-_The gene sets contained in the MSigDB are from a wide variety of sources, and relate to a variety of species, mostly human. Our work at the WEHI predominately uses mouse models of human disease. To facilitate use of the MSigDB in our work, we have created a pure mouse version of the MSigDB by mapping all sets to mouse orthologs. A pure human version is also provided._
+_The gene sets contained in the MSigDB are from a wide variety of sources, and relate to a variety of species, mostly human. To facilitate use of the MSigDB in our work, we have created a pure mouse version of the MSigDB by mapping all sets to mouse orthologs. A pure human version is also provided._
 
 **_Prodecure:_** 
 
-_1. The current MSigDB v5.2 xml file was downloaded._
-_2. Human Entrez Gene IDs were mapped to Mouse Entrez Gene IDs, using the [HGNC Comparison of Orthology Predictions (HCOP)](http://www.genenames.org/cgi-bin/hcop) (downloaded 11 Octtober 2016)._
+_1. The current MSigDB v6.1 gmt files were downloaded._
+_2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20180110)._
 _3. Each collection was converted to a list in R, and written to a RData file using `save()`._ 
 
 ----
@@ -43,7 +43,7 @@ See the script in `data-raw/` to see how the data frames (tibbles) were created.
 
 # Example usage
 
-There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection (c1-7 and hallmark), each gene set, and Entrez ID, where each row is a single Entrez gene ID. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
+There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection (c1-7 and hallmark), sub-collection (like C5 cc, bp and mf), each gene set, and gene symbol, where each row is a single gene symbol. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
 
 The data sets in this package have several million rows. The package imports the tibble package so they're displayed nicely.
 
@@ -71,10 +71,10 @@ Some software, e.g., [GAGE](http://bioconductor.org/packages/release/bioc/html/g
 
 ```{r}
 msigdf.human %>% 
-  filter(collection=="hallmark") %>% 
-  select(geneset, entrez) %>% 
+  filter(category_code=="hallmark") %>% 
+  select(geneset, symbol) %>% 
   group_by(geneset) %>% 
-  summarize(entrez=list(entrez)) %>% 
+  summarize(entrez=list(symbol)) %>% 
   deframe() %>% 
   head() %>% 
   map(head)
@@ -87,7 +87,7 @@ For demonstration purposes, create a single object containing both human and mou
 ```{r}
 msigdf <- bind_rows(
   msigdf.human %>% mutate(org="human"),
-  msigdf.mouse %>% mutate(org="mouse")
+  msigdf.mouse %>% rename(symbol=mouse.symbol) %>% mutate(org="mouse")
 )
 ```
 
@@ -100,33 +100,33 @@ The number of gene sets in each collection is the same for each organism:
 
 ```{r}
 msigdf %>%
-  group_by(org, collection) %>%
+  group_by(org, category_code) %>%
   summarize(ngenesets=n_distinct(geneset)) %>%
-  spread(org, ngenesets)
+  tidyr::spread(org, ngenesets)
 ```
 
 But the number of mouse genes in each collection is much greater, due to the one-to-many ortholog mapping.
 
 ```{r}
 msigdf %>%
-  count(org, collection) %>%
-  spread(org, n)
+  count(org, category_code) %>%
+  tidyr::spread(org, n)
 ```
 
 Look at the first few gene sets just in the 50-geneset hallmark collection. In each gene set, the number of mouse genes is greater than the number of human genes.
 
 ```{r}
 msigdf %>%
-  count(org, collection, geneset) %>%
-  filter(collection=="hallmark") %>%
-  spread(org, n)
+  count(org, category_code, geneset) %>%
+  filter(category_code=="hallmark") %>%
+  tidyr::spread(org, n)
 ```
 
 Get the URL for the hallmark set with the fewest number of genes (Notch signaling). Optionally, `%>%` this to `browseURL` to open it up in your browser.
 
 ```{r}
 msigdf.human %>%
-  filter(collection=="hallmark") %>%
+  filter(category_code=="hallmark") %>%
   count(geneset) %>%
   arrange((n)) %>%
   head(1) %>%
@@ -138,7 +138,7 @@ Just look at the number of genes in each KEGG pathway (sorted descending by the 
 
 ```{r}
 msigdf.human %>%
-  filter(collection=="c2" & grepl("^KEGG_", geneset)) %>%
+  filter(category_code=="c2" & grepl("^KEGG_", geneset)) %>%
   count(geneset) %>% 
   arrange(desc(n))
 ```

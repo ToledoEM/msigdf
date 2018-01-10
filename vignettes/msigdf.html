@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2017-11-17" />
+<meta name="date" content="2018-01-10" />
 
 <title>MSigDF: Molecular Signature Database (MSigDB) in a Data Frame</title>
 
@@ -33,7 +33,7 @@ if (window.hljs) {
   hljs.configure({languages: []});
   hljs.initHighlightingOnLoad();
   if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlightingOnLoad(); }, 0);
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
   }
 }
 </script>
@@ -77,7 +77,7 @@ h6 {
 }
 </style>
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Amargin%3A%200px%20auto%3B%0Amax%2Dwidth%3A%201134px%3B%0A%7D%0Abody%2C%20td%20%7B%0Afont%2Dfamily%3A%20sans%2Dserif%3B%0Afont%2Dsize%3A%2010pt%3B%0A%7D%0A%0Adiv%23TOC%20ul%20%7B%0Apadding%3A%200px%200px%200px%2045px%3B%0Alist%2Dstyle%3A%20none%3B%0Abackground%2Dimage%3A%20none%3B%0Abackground%2Drepeat%3A%20none%3B%0Abackground%2Dposition%3A%200%3B%0Afont%2Dsize%3A%2010pt%3B%0Afont%2Dfamily%3A%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%7D%0Adiv%23TOC%20%3E%20ul%20%7B%0Apadding%3A%200px%20150px%200px%2065px%3B%0Afont%2Dsize%3A%2012pt%3B%0A%7D%0Adiv%23TOC%20%3E%20ul%20%3E%20li%20%7B%0Apadding%3A%205px%200px%200px%200px%3B%0A%7D%0Adiv%23TOC%20ul%20ul%20%7B%0Afont%2Dsize%3A%2011pt%3B%0A%7D%0Adiv%23TOC%2Etocify%20ul%20%7B%0Apadding%3A%200px%3B%0Afont%2Dsize%3A%20inherit%3B%0Afont%2Dfamily%3A%20inherit%3B%0A%7D%0Adiv%23TOC%2Etocify%20li%20%7B%0Apadding%3A%205px%3B%0Afont%2Dsize%3A%20inherit%3B%0Afont%2Dfamily%3A%20inherit%3B%0A%7D%0Ap%2C%20dl%20%7B%0Apadding%3A%200px%20150px%200px%2065px%3B%0Atext%2Dalign%3A%20justify%3B%0A%7D%0A%0Ap%2C%20img%2C%20table%20%7B%0Amargin%2Dtop%3A%2010px%3B%0Amargin%2Dbottom%3A%2010px%3B%0A%7D%0Aol%2C%20ul%20%7B%0Apadding%3A%200px%20150px%200px%2065px%3B%0Alist%2Dstyle%3A%20square%3B%0A%7D%0Ali%20p%20%7B%0Apadding%3A%200px%3B%0A%7D%0Apre%20%7B%0Amargin%3A%200em%20150px%200%2E5em%200em%3B%0Apadding%3A%200px%200px%200px%2065px%3B%0Aborder%3A%200px%20none%3B%0Abackground%2Dcolor%3A%20%23f0f0f0%3B%0Awhite%2Dspace%3A%20pre%3B%0Aoverflow%2Dx%3A%20auto%3B%0Afont%2Dsize%3A%2090%25%3B%0A%7D%0Ali%20pre%20%7B%0Amargin%3A%200em%200px%200%2E5em%20%2D65px%3B%0Apadding%3A%200px%200px%200px%2065px%3B%0A%7D%0Apre%20code%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0Adisplay%3A%20block%3B%0Apadding%3A%2010px%2010px%2010px%200px%3B%0Aoverflow%2Dx%3A%20inherit%3B%0Afont%2Dsize%3A%20100%25%3B%0A%7D%0A%0Apre%20code%5Bclass%5D%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0A%7D%0A%0Apre%5Bclass%5D%20code%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0A%7D%0Att%2C%20code%2C%20pre%20%7B%0Afont%2Dfamily%3A%20%27DejaVu%20Sans%20Mono%27%2C%20%27Droid%20Sans%20Mono%27%2C%20%27Lucida%20Console%27%2C%20Consolas%2C%20Monaco%2C%20monospace%3B%0A%7D%0Ah1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%20%7B%20font%2Dfamily%3A%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Amargin%3A%201%2E2em%20150px%200%2E6em%200em%3B%0A%7D%0Ah1%2Etitle%20%7B%0Acolor%3A%20%2387b13f%3B%0Aline%2Dheight%3A%201%2E1em%3B%0Amargin%2Dtop%3A%2025px%3B%0Aborder%2Dbottom%3A%200px%3B%0A%7D%0Ah1%20%7B%0Aline%2Dheight%3A%201%2E4em%3B%0Aborder%2Dbottom%3A%201px%20%231a81c2%20solid%3B%0A%7D%0Ah1%2C%20h2%2C%20h3%20%7B%0Acolor%3A%20%231a81c2%3B%0A%7D%0Ah1%20%7B%0Afont%2Dsize%3A%2018%2E0pt%3B%0A%7D%0Ah2%20%7B%0Afont%2Dsize%3A%2014%2E5pt%3B%0A%7D%0Ah3%2C%20h4%20%7B%0Afont%2Dsize%3A%2012pt%3B%0A%7D%0Aspan%2Eheader%2Dsection%2Dnumber%20%7B%0Afloat%3A%20left%3B%0Awidth%3A%2065px%3B%0A%7D%0A%0Ap%2Eauthor%2Dname%20%7B%0Afont%2Dsize%3A%2014%2E5pt%3B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dstyle%3A%20italic%3B%0Atext%2Dalign%3A%20left%3B%0A%7D%0Asup%20%7B%0Atop%3A%200em%3B%0A%7D%0A%2Edate%20%7B%0Apadding%2Dleft%3A%2065px%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%2Eabstract%2C%20%2Epackage%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%0Acode%20%7B%20background%2Dcolor%3A%20%23f0f0f0%3B%0Acolor%3A%20%23404040%3B%0Afont%2Dsize%3A%2090%25%3B%0A%7D%0A%0A%2Efigure%20%7B%20margin%3A%200em%200px%200%2E5em%3B%0A%7D%0Aimg%20%7B%0Amax%2Dwidth%3A%20100%25%3B%0Adisplay%3A%20block%3B%0Apadding%3A%200px%20150px%200px%20130px%3B%0A%7D%0Ap%20%3E%20img%20%7B%0Apadding%2Dleft%3A%2065px%3B%0Apadding%2Dright%3A%200px%3B%0A%7D%0Aimg%2Esmallfigure%20%7B%0Apadding%2Dleft%3A%20195px%3B%0Apadding%2Dright%3A%20280px%3B%0A%7D%0Ap%20%3E%20img%2Esmallfigure%20%7B%0Apadding%2Dleft%3A%20130px%3B%0Apadding%2Dright%3A%20130px%3B%0A%7D%0Aimg%2Ewidefigure%20%7B%0Apadding%2Dleft%3A%2065px%3B%0Apadding%2Dright%3A%2085px%3B%0Amargin%2Dright%3A%20%2D65px%3B%0A%7D%0Ap%20%3E%20img%2Ewidefigure%20%7B%0Apadding%2Dleft%3A%200px%3B%0Apadding%2Dright%3A%200px%3B%0Amargin%2Dright%3A%20%2D65px%3B%0A%7D%0Ap%2Ecaption%2C%20caption%20%7B%0Acolor%3A%20inherit%3B%0Afont%2Dsize%3A%208pt%3B%0A%7D%0Ap%2Ecaption%20%7B%0Apadding%2Dleft%3A%20130px%3B%0Apadding%2Dright%3A%2085px%3B%0Amargin%2Dbottom%3A%2020px%3B%0A%7D%0Acaption%20%7B%0Apadding%3A%200px%3B%0Amargin%2Dbottom%3A%2010px%3B%0Amin%2Dwidth%3A%20583%3B%0A%7D%0Aspan%2Ecaption%2Dtitle%20%7B%0Acolor%3A%20%231a81c2%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aspan%2Ecaption%2Dlabel%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%0Atable%20%7B%0Amargin%2Dleft%3A%20130px%3B%0Amargin%2Dright%3A%2085px%3B%0A%7D%0A%2Etable%20%7B%0Amax%2Dwidth%3A%20518px%3B%0A%7D%0A%0Add%20%7B%0Amargin%2Dleft%3A%2065px%3B%0Amargin%2Dbottom%3A%2010px%3B%0A%7D%0A%0A%2Ecode%2Dfolding%2Dbtn%20%7B%0Aposition%3A%20relative%3B%0Amargin%2Dtop%3A%20%2D26px%3B%0Atop%3A%2026px%3B%0A%7D%0A%2Ecol%2Dmd%2D12%20%7B%0Amin%2Dheight%3A%200px%3B%0A%7D%0A%0A%2Esidenote%20%7B%0Afloat%3A%20right%3B%0Aclear%3A%20right%3B%0Amargin%2Dright%3A%20%2D150px%3B%0Awidth%3A%20130px%3B%0Amargin%2Dtop%3A%200%3B%0Amargin%2Dbottom%3A%201rem%3B%0Afont%2Dsize%3A%208pt%3B%0Aline%2Dheight%3A%201%2E3%3B%0Avertical%2Dalign%3A%20baseline%3B%0Aposition%3A%20relative%3B%0Atext%2Dalign%3A%20left%3B%0A%7D%0A%2Esidenote%2Dnumber%2C%20%2Eaffil%2Dmark%20%7B%0Aposition%3A%20relative%3B%0Avertical%2Dalign%3A%20super%3B%0Afont%2Dsize%3A%207%2E5pt%3B%0Afont%2Dweight%3A%20normal%3B%0Afont%2Dstyle%3A%20normal%3B%0Aline%2Dheight%3A%20normal%3B%0A%7D%0Ainput%2Emargin%2Dtoggle%20%7B%20display%3A%20none%3B%20%7D%0Alabel%2Esidenote%2Dnumber%20%7B%20display%3A%20inline%3B%20%7D%0Alabel%2Emargin%2Dtoggle%3Anot%28%2Esidenote%2Dnumber%29%20%7B%20display%3A%20none%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23E07020%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23404040%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%23D02070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23D02070%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%2340A040%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%2340A040%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23808080%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%232020F0%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23E07020%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23FF0000%3B%20%7D%20%0Acode%20%3E%20span%2Eidentifier%20%7B%20color%3A%20%23404040%3B%20%7D%0Acode%20%3E%20span%2Enumber%20%7B%20color%3A%20%23D02070%3B%20%7D%0Acode%20%3E%20span%2Estring%20%7B%20color%3A%20%2340A040%3B%20%7D%0Acode%20%3E%20span%2Ecomment%20%7B%20color%3A%20%23808080%3B%20font%2Dstyle%3A%20italic%3B%20%7D%0Acode%20%3E%20span%2Ekeyword%20%7B%20color%3A%20%232020F0%3B%20%7D%0Acode%20%3E%20span%2Eliteral%20%7B%20color%3A%20%232020F0%3B%20%7D%0Acode%20%3E%20span%2Eoperator%20%7B%20color%3A%20%23000000%3B%7D%0Acode%20%3E%20span%2Eparen%20%7B%20color%3A%20%23000000%3B%7D%0A%0A%2Ejs%2Dplotly%2Dplot%20%2Eplotly%20%7B%0Apadding%2Dleft%3A%2065px%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
+<link href="data:text/css;charset=utf-8,body%20%7B%0Amargin%3A%200px%20auto%3B%0Amax%2Dwidth%3A%201134px%3B%0Afont%2Dfamily%3A%20sans%2Dserif%3B%0Afont%2Dsize%3A%2010pt%3B%0A%7D%0A%0Adiv%23TOC%20ul%20%7B%0Apadding%3A%200px%200px%200px%2045px%3B%0Alist%2Dstyle%3A%20none%3B%0Abackground%2Dimage%3A%20none%3B%0Abackground%2Drepeat%3A%20none%3B%0Abackground%2Dposition%3A%200%3B%0Afont%2Dsize%3A%2010pt%3B%0Afont%2Dfamily%3A%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%7D%0Adiv%23TOC%20%3E%20ul%20%7B%0Apadding%3A%200px%20150px%200px%2065px%3B%0Afont%2Dsize%3A%2012pt%3B%0A%7D%0Adiv%23TOC%20%3E%20ul%20%3E%20li%20%7B%0Apadding%3A%205px%200px%200px%200px%3B%0A%7D%0Adiv%23TOC%20ul%20ul%20%7B%0Afont%2Dsize%3A%2011pt%3B%0A%7D%0Adiv%23TOC%2Etocify%20ul%20%7B%0Apadding%3A%200px%3B%0Afont%2Dsize%3A%20inherit%3B%0Afont%2Dfamily%3A%20inherit%3B%0A%7D%0Adiv%23TOC%2Etocify%20li%20%7B%0Apadding%3A%205px%3B%0Afont%2Dsize%3A%20inherit%3B%0Afont%2Dfamily%3A%20inherit%3B%0A%7D%0Ap%2C%20dl%20%7B%0Apadding%3A%200px%20150px%200px%2065px%3B%0Atext%2Dalign%3A%20justify%3B%0A%7D%0A%0Ap%2C%20img%2C%20table%20%7B%0Amargin%2Dtop%3A%2010px%3B%0Amargin%2Dbottom%3A%2010px%3B%0A%7D%0A%0Aol%2C%20ul%20%7B%0Apadding%3A%200px%20150px%200px%20100px%3B%0Alist%2Dstyle%3A%20square%3B%0A%7D%0Ali%20ol%2C%20li%20ul%20%7B%0Apadding%3A%200px%200px%200px%2035px%3B%0A%7D%0Ali%20p%20%7B%0Apadding%3A%200%3B%0A%7D%0Apre%20%7B%0Amargin%3A%200em%20150px%200%2E5em%200em%3B%0Apadding%3A%200px%200px%200px%2065px%3B%0Aborder%3A%200px%20none%3B%0Abackground%2Dcolor%3A%20%23f0f0f0%3B%0Awhite%2Dspace%3A%20pre%3B%0Aoverflow%2Dx%3A%20auto%3B%0Afont%2Dsize%3A%2090%25%3B%0A%7D%0Ali%20pre%20%7B%0Amargin%3A%200em%200px%200%2E5em%20%2D65px%3B%0Apadding%3A%200px%200px%200px%2065px%3B%0A%7D%0Apre%20code%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0Adisplay%3A%20block%3B%0Apadding%3A%2010px%2010px%2010px%200px%3B%0Aoverflow%2Dx%3A%20inherit%3B%0Afont%2Dsize%3A%20100%25%3B%0A%7D%0A%0Apre%20code%5Bclass%5D%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0A%7D%0A%0Apre%5Bclass%5D%20code%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0A%7D%0Att%2C%20code%2C%20pre%20%7B%0Afont%2Dfamily%3A%20%27DejaVu%20Sans%20Mono%27%2C%20%27Droid%20Sans%20Mono%27%2C%20%27Lucida%20Console%27%2C%20Consolas%2C%20Monaco%2C%20monospace%3B%0A%7D%0Ah1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%20%7B%20font%2Dfamily%3A%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Amargin%3A%201%2E2em%20150px%200%2E6em%200em%3B%0A%0Apadding%2Dleft%3A%2065px%3B%0Atext%2Dindent%3A%20%2D65px%3B%0A%7D%0Ah1%2Etitle%20%7B%0Acolor%3A%20%2387b13f%3B%0Aline%2Dheight%3A%201%2E1em%3B%0Amargin%2Dtop%3A%2025px%3B%0Aborder%2Dbottom%3A%200px%3B%0A%7D%0Ah1%20%7B%0Aline%2Dheight%3A%201%2E4em%3B%0Aborder%2Dbottom%3A%201px%20%231a81c2%20solid%3B%0A%7D%0Ah1%2C%20h2%2C%20h3%20%7B%0Acolor%3A%20%231a81c2%3B%0A%7D%0Ah1%20%7B%0Afont%2Dsize%3A%2018%2E0pt%3B%0A%7D%0Ah2%20%7B%0Afont%2Dsize%3A%2014%2E5pt%3B%0A%7D%0Ah3%2C%20h4%20%7B%0Afont%2Dsize%3A%2012pt%3B%0A%7D%0Aspan%2Eheader%2Dsection%2Dnumber%20%7B%0Afloat%3A%20left%3B%0Awidth%3A%2065px%3B%0A%7D%0A%0Ap%2Eauthor%2Dname%20%7B%0Afont%2Dsize%3A%2014%2E5pt%3B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dstyle%3A%20italic%3B%0Atext%2Dalign%3A%20left%3B%0A%7D%0A%2Edate%20%7B%0Atext%2Dindent%3A%200px%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%2Eabstract%2C%20%2Epackage%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%0Acode%20%7B%20background%2Dcolor%3A%20%23f0f0f0%3B%0Acolor%3A%20%23404040%3B%0Afont%2Dsize%3A%2090%25%3B%0A%7D%0A%0A%2Efigure%20%7B%20margin%3A%200em%200px%200%2E5em%3B%0A%7D%0Aimg%20%7B%0Amax%2Dwidth%3A%20100%25%3B%0Adisplay%3A%20block%3B%0Apadding%3A%200px%20150px%200px%20130px%3B%0A%7D%0Ap%20%3E%20img%20%7B%0Apadding%2Dleft%3A%2065px%3B%0Apadding%2Dright%3A%200px%3B%0A%7D%0Aimg%2Esmallfigure%20%7B%0Apadding%2Dleft%3A%20195px%3B%0Apadding%2Dright%3A%20280px%3B%0A%7D%0Ap%20%3E%20img%2Esmallfigure%20%7B%0Apadding%2Dleft%3A%20130px%3B%0Apadding%2Dright%3A%20130px%3B%0A%7D%0Aimg%2Ewidefigure%20%7B%0Apadding%2Dleft%3A%2065px%3B%0Apadding%2Dright%3A%2085px%3B%0Amargin%2Dright%3A%20%2D65px%3B%0A%7D%0Ap%20%3E%20img%2Ewidefigure%20%7B%0Apadding%2Dleft%3A%200px%3B%0Apadding%2Dright%3A%200px%3B%0Amargin%2Dright%3A%20%2D65px%3B%0A%7D%0Ap%2Ecaption%2C%20caption%20%7B%0Acolor%3A%20inherit%3B%0Afont%2Dsize%3A%208pt%3B%0A%7D%0Ap%2Ecaption%20%7B%0Apadding%2Dleft%3A%20130px%3B%0Apadding%2Dright%3A%2085px%3B%0Amargin%2Dbottom%3A%2020px%3B%0A%7D%0Acaption%20%7B%0Apadding%3A%200px%3B%0Amargin%2Dbottom%3A%2010px%3B%0Amin%2Dwidth%3A%20583%3B%0A%7D%0Aspan%2Ecaption%2Dtitle%20%7B%0Acolor%3A%20%231a81c2%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aspan%2Ecaption%2Dlabel%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%0Atable%20%7B%0Amargin%2Dleft%3A%20130px%3B%0Amargin%2Dright%3A%2085px%3B%0A%7D%0A%2Etable%20%7B%0Amax%2Dwidth%3A%20518px%3B%0A%7D%0A%0Add%20%7B%0Amargin%2Dleft%3A%2065px%3B%0Amargin%2Dbottom%3A%2010px%3B%0A%7D%0A%0A%2Ecode%2Dfolding%2Dbtn%20%7B%0Aposition%3A%20relative%3B%0Amargin%2Dtop%3A%20%2D26px%3B%0Atop%3A%2026px%3B%0A%7D%0A%2Ecol%2Dmd%2D12%20%7B%0Amin%2Dheight%3A%200px%3B%0A%7D%0A%0A%2Esidenote%20%7B%0Afloat%3A%20right%3B%0Aclear%3A%20right%3B%0Amargin%2Dright%3A%20%2D150px%3B%0Awidth%3A%20130px%3B%0Amargin%2Dtop%3A%200%3B%0Amargin%2Dbottom%3A%201rem%3B%0Afont%2Dsize%3A%208pt%3B%0Aline%2Dheight%3A%201%2E3%3B%0Avertical%2Dalign%3A%20baseline%3B%0Aposition%3A%20relative%3B%0Atext%2Dalign%3A%20left%3B%0A%7D%0A%2Esidenote%2Dnumber%2C%20%2Eaffil%2Dmark%20%7B%0Aposition%3A%20relative%3B%0Avertical%2Dalign%3A%20super%3B%0Afont%2Dsize%3A%207%2E5pt%3B%0Afont%2Dweight%3A%20normal%3B%0Afont%2Dstyle%3A%20normal%3B%0Aline%2Dheight%3A%20normal%3B%0A%7D%0Ainput%2Emargin%2Dtoggle%20%7B%20display%3A%20none%3B%20%7D%0Alabel%2Esidenote%2Dnumber%20%7B%20display%3A%20inline%3B%20%7D%0Alabel%2Emargin%2Dtoggle%3Anot%28%2Esidenote%2Dnumber%29%20%7B%20display%3A%20none%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23E07020%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23404040%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%23D02070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23D02070%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%2340A040%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%2340A040%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23808080%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%232020F0%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23E07020%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23FF0000%3B%20%7D%20%0Acode%20%3E%20span%2Eidentifier%20%7B%20color%3A%20%23404040%3B%20%7D%0Acode%20%3E%20span%2Enumber%20%7B%20color%3A%20%23D02070%3B%20%7D%0Acode%20%3E%20span%2Estring%20%7B%20color%3A%20%2340A040%3B%20%7D%0Acode%20%3E%20span%2Ecomment%20%7B%20color%3A%20%23808080%3B%20font%2Dstyle%3A%20italic%3B%20%7D%0Acode%20%3E%20span%2Ekeyword%20%7B%20color%3A%20%232020F0%3B%20%7D%0Acode%20%3E%20span%2Eliteral%20%7B%20color%3A%20%232020F0%3B%20%7D%0Acode%20%3E%20span%2Eoperator%20%7B%20color%3A%20%23000000%3B%7D%0Acode%20%3E%20span%2Eparen%20%7B%20color%3A%20%23000000%3B%7D%0A%0A%2Ejs%2Dplotly%2Dplot%20%2Eplotly%20%7B%0Apadding%2Dleft%3A%2065px%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -128,7 +128,7 @@ $(document).ready(function () {
 <p class="author-name">Stephen D. Turner<span class="affil-mark">1*</span></p>
 <p class="author-affiliation"><span class="affil-mark">1</span>University of Virginia, Charlottesville VA, United States</p>
 <p class="author-email"><span class="affil-mark">*</span><a href="mailto:vustephen@gmail.com">vustephen@gmail.com</a></p>
-<h4 class="date"><em>17 November 2017</em></h4>
+<h4 class="date"><em>10 January 2018</em></h4>
 <h4 class="abstract">Abstract</h4>
 <p>This data package contains the Molecular Signature Database (MSigDB) for both human and predicted mouse orthologs in separate data frames (tibbles). Each data frame (<code>msigdf.human</code> and <code>msigdf.mouse</code>) contain three columns: the collection (Hallmark, or c1-c7), the gene set, and Entrez IDs for genes in that set. The <code>msigdf.urls</code> tibble contains links to descriptions on the Broad Institute’s website of each gene set. <strong><a href="https://github.com/stephenturner/msigdf">Source code available on GitHub</a></strong>.</p>
 <h4 class="package">Package</h4>
@@ -148,183 +148,178 @@ $(document).ready(function () {
 
 <div id="data-sources" class="section level1">
 <h1><span class="header-section-number">1</span> Data sources</h1>
-<p>Original data from the Broad Institute’s Molecular Signature Database (MSigDB)<label for="sidenote-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="sidenote-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> <a href="http://www.broad.mit.edu/gsea/msigdb/index.jsp" class="uri">http://www.broad.mit.edu/gsea/msigdb/index.jsp</a></span>, redistributed as separate R data files containing named lists of gene sets, available from WEHI.<label for="sidenote-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="sidenote-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> <a href="http://bioinf.wehi.edu.au/software/MSigDB/" class="uri">http://bioinf.wehi.edu.au/software/MSigDB/</a></span> The following description applies to the R-formatted data:</p>
+<p>Original data from the Broad Institute’s Molecular Signature Database (MSigDB)<label for="sidenote-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="sidenote-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> <a href="http://www.broad.mit.edu/gsea/msigdb/index.jsp" class="uri">http://www.broad.mit.edu/gsea/msigdb/index.jsp</a></span>, redistributed as separate gmt data files from the MSigDB.</p>
 <hr />
-<p><em>The gene sets contained in the MSigDB are from a wide variety of sources, and relate to a variety of species, mostly human. Our work at the WEHI predominately uses mouse models of human disease. To facilitate use of the MSigDB in our work, we have created a pure mouse version of the MSigDB by mapping all sets to mouse orthologs. A pure human version is also provided.</em></p>
+<p><em>The gene sets contained in the MSigDB are from a wide variety of sources, and relate to a variety of species, mostly human. To facilitate use of the MSigDB in our work, we have created a pure mouse version of the MSigDB by mapping all sets to mouse orthologs. A pure human version is also provided.</em></p>
 <p><strong><em>Prodecure:</em></strong></p>
-<p><em>1. The current MSigDB v5.2 xml file was downloaded.</em> <em>2. Human Entrez Gene IDs were mapped to Mouse Entrez Gene IDs, using the <a href="http://www.genenames.org/cgi-bin/hcop">HGNC Comparison of Orthology Predictions (HCOP)</a> (downloaded 11 Octtober 2016).</em> <em>3. Each collection was converted to a list in R, and written to a RData file using <code>save()</code>.</em></p>
+<p><em>1. The current MSigDB v6.1 gmt files were downloaded.</em> <em>2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20180110).</em> <em>3. Each collection was converted to a list in R, and written to a RData file using <code>save()</code>.</em></p>
 <hr />
 <p>See the script in <code>data-raw/</code> to see how the data frames (tibbles) were created.</p>
 </div>
 <div id="example-usage" class="section level1">
 <h1><span class="header-section-number">2</span> Example usage</h1>
-<p>There are three data frames (tibbles) this package. The <code>msigdf.human</code> data frame has columns for each MSigDB collection (c1-7 and hallmark), each gene set, and Entrez ID, where each row is a single Entrez gene ID. The <code>msigdf.mouse</code> data frame has the same structure for mouse orthologs. The <code>msigdf.urls</code> data frame links the name of the gene set to the URL on the Broad’s website.</p>
+<p>There are three data frames (tibbles) this package. The <code>msigdf.human</code> data frame has columns for each MSigDB collection (c1-7 and hallmark), sub-collection (like C5 cc, bp and mf), each gene set, and gene symbol, where each row is a single gene symbol. The <code>msigdf.mouse</code> data frame has the same structure for mouse orthologs. The <code>msigdf.urls</code> data frame links the name of the gene set to the URL on the Broad’s website.</p>
 <p>The data sets in this package have several million rows. The package imports the tibble package so they’re displayed nicely.</p>
 <pre class="r"><code>library(tidyverse)
 library(msigdf)</code></pre>
 <p>Take a look:</p>
 <pre class="r"><code>msigdf.human %&gt;% head()</code></pre>
-<pre><code>## # A tibble: 6 x 3
-##   collection geneset entrez
-##        &lt;chr&gt;   &lt;chr&gt;  &lt;int&gt;
-## 1         c1 chr5q23   5759
-## 2         c1 chr5q23  94033
-## 3         c1 chr5q23  51334
-## 4         c1 chr5q23 153163
-## 5         c1 chr5q23 133615
-## 6         c1 chr5q23 402229</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   category_code category_subcode geneset symbol   
+##   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;    
+## 1 c1            all              chr5q23 PTMAP2   
+## 2 c1            all              chr5q23 FTMT     
+## 3 c1            all              chr5q23 PRR16    
+## 4 c1            all              chr5q23 MGC32805 
+## 5 c1            all              chr5q23 MRPS5P3  
+## 6 c1            all              chr5q23 LOC402229</code></pre>
 <pre class="r"><code>msigdf.mouse %&gt;% head()</code></pre>
-<pre><code>## # A tibble: 6 x 3
-##   collection geneset    entrez
-##        &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;
-## 1         c1 chr5q23 100042150
-## 2         c1 chr5q23    103236
-## 3         c1 chr5q23    106869
-## 4         c1 chr5q23    107022
-## 5         c1 chr5q23    109700
-## 6         c1 chr5q23     11548</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   category_code category_subcode geneset                           mouse.sy…
+##   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;                             &lt;chr&gt;    
+## 1 c1            all              chr12q13                          Inhbc    
+## 2 c2            cgp              OSMAN_BLADDER_CANCER_UP           Inhbc    
+## 3 c2            cgp              OSWALD_HEMATOPOIETIC_STEM_CELL_I… Inhbc    
+## 4 c2            cgp              RASHI_RESPONSE_TO_IONIZING_RADIA… Inhbc    
+## 5 c2            cgp              XU_AKT1_TARGETS_6HR               Inhbc    
+## 6 c2            cgp              WOOD_EBV_EBNA1_TARGETS_UP         Inhbc</code></pre>
 <pre class="r"><code>msigdf.urls %&gt;% as.data.frame() %&gt;% head()</code></pre>
-<pre><code>##   collection  geneset
-## 1         c1  chr5q23
-## 2         c1 chr16q24
-## 3         c1  chr8q24
-## 4         c1 chr13q11
-## 5         c1  chr7p21
-## 6         c1 chr10q23
-##                                                             url
-## 1  http://software.broadinstitute.org/gsea/msigdb/cards/chr5q23
-## 2 http://software.broadinstitute.org/gsea/msigdb/cards/chr16q24
-## 3  http://software.broadinstitute.org/gsea/msigdb/cards/chr8q24
-## 4 http://software.broadinstitute.org/gsea/msigdb/cards/chr13q11
-## 5  http://software.broadinstitute.org/gsea/msigdb/cards/chr7p21
-## 6 http://software.broadinstitute.org/gsea/msigdb/cards/chr10q23</code></pre>
+<pre><code>##    geneset                                                           url
+## 1  chr5q23  http://software.broadinstitute.org/gsea/msigdb/cards/chr5q23
+## 2 chr16q24 http://software.broadinstitute.org/gsea/msigdb/cards/chr16q24
+## 3  chr8q24  http://software.broadinstitute.org/gsea/msigdb/cards/chr8q24
+## 4 chr13q11 http://software.broadinstitute.org/gsea/msigdb/cards/chr13q11
+## 5  chr7p21  http://software.broadinstitute.org/gsea/msigdb/cards/chr7p21
+## 6 chr10q23 http://software.broadinstitute.org/gsea/msigdb/cards/chr10q23</code></pre>
 <p>Just get the entries for the <a href="http://www.genome.jp/kegg/pathway/hsa/hsa03450.html">KEGG non-homologous end joining pathway</a>:</p>
 <pre class="r"><code>msigdf.human %&gt;% 
   filter(geneset==&quot;KEGG_NON_HOMOLOGOUS_END_JOINING&quot;)</code></pre>
-<pre><code>## # A tibble: 14 x 3
-##    collection                         geneset entrez
-##         &lt;chr&gt;                           &lt;chr&gt;  &lt;int&gt;
-##  1         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   7518
-##  2         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   4361
-##  3         c2 KEGG_NON_HOMOLOGOUS_END_JOINING  27343
-##  4         c2 KEGG_NON_HOMOLOGOUS_END_JOINING  27434
-##  5         c2 KEGG_NON_HOMOLOGOUS_END_JOINING 731751
-##  6         c2 KEGG_NON_HOMOLOGOUS_END_JOINING  79840
-##  7         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   3981
-##  8         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   2237
-##  9         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   1791
-## 10         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   7520
-## 11         c2 KEGG_NON_HOMOLOGOUS_END_JOINING  10111
-## 12         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   2547
-## 13         c2 KEGG_NON_HOMOLOGOUS_END_JOINING   5591
-## 14         c2 KEGG_NON_HOMOLOGOUS_END_JOINING  64421</code></pre>
+<pre><code>## # A tibble: 14 x 4
+##    category_code category_subcode geneset                         symbol   
+##    &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;                           &lt;chr&gt;    
+##  1 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING XRCC4    
+##  2 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING MRE11A   
+##  3 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING POLL     
+##  4 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING POLM     
+##  5 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING LOC731751
+##  6 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING NHEJ1    
+##  7 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING LIG4     
+##  8 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING FEN1     
+##  9 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING DNTT     
+## 10 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING XRCC5    
+## 11 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING RAD50    
+## 12 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING XRCC6    
+## 13 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING PRKDC    
+## 14 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING DCLRE1C</code></pre>
 <p>Some software, e.g., <a href="http://bioconductor.org/packages/release/bioc/html/gage.html">GAGE</a> might require gene sets to be a named list of Entrez IDs, where the name of each element in the list is the name of the pathway. This is how the data was originally structured, and we can return to it with <code>plyr::dlply()</code>. Here, let’s use only the hallmark sets, and after we <code>dlply</code> the data into this named list format, get just the first few pathways, and in each of those, just display the first few entrez IDs.</p>
 <pre class="r"><code>msigdf.human %&gt;% 
-  filter(collection==&quot;hallmark&quot;) %&gt;% 
-  select(geneset, entrez) %&gt;% 
+  filter(category_code==&quot;hallmark&quot;) %&gt;% 
+  select(geneset, symbol) %&gt;% 
   group_by(geneset) %&gt;% 
-  summarize(entrez=list(entrez)) %&gt;% 
+  summarize(entrez=list(symbol)) %&gt;% 
   deframe() %&gt;% 
   head() %&gt;% 
   map(head)</code></pre>
 <pre><code>## $HALLMARK_ADIPOGENESIS
-## [1] 2167 9370 5468 3991 8694 4023
+## [1] &quot;FABP4&quot;  &quot;ADIPOQ&quot; &quot;PPARG&quot;  &quot;LIPE&quot;   &quot;DGAT1&quot;  &quot;LPL&quot;   
 ## 
 ## $HALLMARK_ALLOGRAFT_REJECTION
-## [1] 5788 3593 7040 3592  916  915
+## [1] &quot;PTPRC&quot; &quot;IL12B&quot; &quot;TGFB1&quot; &quot;IL12A&quot; &quot;CD3E&quot;  &quot;CD3D&quot; 
 ## 
 ## $HALLMARK_ANDROGEN_RESPONSE
-## [1]   354  3817  2181  8554 10645  4824
+## [1] &quot;KLK3&quot;   &quot;KLK2&quot;   &quot;ACSL3&quot;  &quot;PIAS1&quot;  &quot;CAMKK2&quot; &quot;NKX3-1&quot;
 ## 
 ## $HALLMARK_ANGIOGENESIS
-## [1]  1462 10631 11167  4043  6781  4023
+## [1] &quot;VCAN&quot;   &quot;POSTN&quot;  &quot;FSTL1&quot;  &quot;LRPAP1&quot; &quot;STC1&quot;   &quot;LPL&quot;   
 ## 
 ## $HALLMARK_APICAL_JUNCTION
-## [1]     87   1366     89 149461   1739   7082
+## [1] &quot;ACTN1&quot;  &quot;CLDN7&quot;  &quot;ACTN3&quot;  &quot;CLDN19&quot; &quot;DLG1&quot;   &quot;TJP1&quot;  
 ## 
 ## $HALLMARK_APICAL_SURFACE
-## [1]  2683 51458  4118 27076  5314 50617</code></pre>
+## [1] &quot;B4GALT1&quot;  &quot;RHCG&quot;     &quot;MAL&quot;      &quot;LYPD3&quot;    &quot;PKHD1&quot;    &quot;ATP6V0A4&quot;</code></pre>
 </div>
 <div id="further-exploration" class="section level1">
 <h1><span class="header-section-number">3</span> Further exploration</h1>
 <p>For demonstration purposes, create a single object containing both human and mouse data:</p>
 <pre class="r"><code>msigdf &lt;- bind_rows(
   msigdf.human %&gt;% mutate(org=&quot;human&quot;),
-  msigdf.mouse %&gt;% mutate(org=&quot;mouse&quot;)
+  msigdf.mouse %&gt;% rename(symbol=mouse.symbol) %&gt;% mutate(org=&quot;mouse&quot;)
 )</code></pre>
 <pre class="r"><code>head(msigdf)</code></pre>
-<pre><code>## # A tibble: 6 x 4
-##   collection geneset entrez   org
-##        &lt;chr&gt;   &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;
-## 1         c1 chr5q23   5759 human
-## 2         c1 chr5q23  94033 human
-## 3         c1 chr5q23  51334 human
-## 4         c1 chr5q23 153163 human
-## 5         c1 chr5q23 133615 human
-## 6         c1 chr5q23 402229 human</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##   category_code category_subcode geneset symbol    org  
+##   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;
+## 1 c1            all              chr5q23 PTMAP2    human
+## 2 c1            all              chr5q23 FTMT      human
+## 3 c1            all              chr5q23 PRR16     human
+## 4 c1            all              chr5q23 MGC32805  human
+## 5 c1            all              chr5q23 MRPS5P3   human
+## 6 c1            all              chr5q23 LOC402229 human</code></pre>
 <pre class="r"><code>tail(msigdf)</code></pre>
-<pre><code>## # A tibble: 6 x 4
-##   collection                      geneset entrez   org
-##        &lt;chr&gt;                        &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;
-## 1   hallmark HALLMARK_PANCREAS_BETA_CELLS  56458 mouse
-## 2   hallmark HALLMARK_PANCREAS_BETA_CELLS  56529 mouse
-## 3   hallmark HALLMARK_PANCREAS_BETA_CELLS  66286 mouse
-## 4   hallmark HALLMARK_PANCREAS_BETA_CELLS  69019 mouse
-## 5   hallmark HALLMARK_PANCREAS_BETA_CELLS  77766 mouse
-## 6   hallmark HALLMARK_PANCREAS_BETA_CELLS  80976 mouse</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##   category_code category_subcode geneset                         symb… org  
+##   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;                           &lt;chr&gt; &lt;chr&gt;
+## 1 c7            all              GSE40274_CTRL_VS_FOXP3_AND_XBP… Pcdh… mouse
+## 2 c7            all              GSE20727_ROS_INH_VS_ROS_INH_AN… Pcdh… mouse
+## 3 c7            all              GSE36078_UNTREATED_VS_AD5_INF_… Pcdh… mouse
+## 4 c7            all              GSE28737_WT_VS_BCL6_HET_FOLLIC… Pcdh… mouse
+## 5 c7            all              GSE11961_PLASMA_CELL_DAY7_VS_M… Pcdh… mouse
+## 6 c7            all              GSE41176_WT_VS_TAK1_KO_UNSTIM_… Pcdh… mouse</code></pre>
 <p>The number of gene sets in each collection is the same for each organism:</p>
 <pre class="r"><code>msigdf %&gt;%
-  group_by(org, collection) %&gt;%
+  group_by(org, category_code) %&gt;%
   summarize(ngenesets=n_distinct(geneset)) %&gt;%
-  spread(org, ngenesets)</code></pre>
-<pre><code>## # A tibble: 8 x 3
-##   collection human mouse
-## *      &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-## 1         c1   326   326
-## 2         c2  4729  4729
-## 3         c3   836   836
-## 4         c4   858   858
-## 5         c5  6166  6166
-## 6         c6   189   189
-## 7         c7  4872  4872
-## 8   hallmark    50    50</code></pre>
+  tidyr::spread(org, ngenesets)</code></pre>
+<pre><code>## # A tibble: 9 x 3
+##   category_code human mouse
+## * &lt;chr&gt;         &lt;int&gt; &lt;int&gt;
+## 1 c1              326   326
+## 2 c2             4738  4737
+## 3 c3              836   836
+## 4 c4              858   858
+## 5 c5             5917  5913
+## 6 c6              189   189
+## 7 c7             4872  4872
+## 8 h                NA    50
+## 9 hallmark         50    NA</code></pre>
 <p>But the number of mouse genes in each collection is much greater, due to the one-to-many ortholog mapping.</p>
 <pre class="r"><code>msigdf %&gt;%
-  count(org, collection) %&gt;%
-  spread(org, n)</code></pre>
-<pre><code>## # A tibble: 8 x 3
-##   collection  human   mouse
-## *      &lt;chr&gt;  &lt;int&gt;   &lt;int&gt;
-## 1         c1  30288   29951
-## 2         c2 441018  726058
-## 3         c3 198275  325849
-## 4         c4  91309  160394
-## 5         c5 703598 1013231
-## 6         c6  31319   56280
-## 7         c7 948254 1588236
-## 8   hallmark   7324   12067</code></pre>
+  count(org, category_code) %&gt;%
+  tidyr::spread(org, n)</code></pre>
+<pre><code>## # A tibble: 9 x 3
+##   category_code  human  mouse
+## * &lt;chr&gt;          &lt;int&gt;  &lt;int&gt;
+## 1 c1             30288  14605
+## 2 c2            444687 389301
+## 3 c3            198275 176259
+## 4 c4             91309  81682
+## 5 c5            689570 617282
+## 6 c6             31319  27028
+## 7 c7            948254 824671
+## 8 h                 NA   6924
+## 9 hallmark        7324     NA</code></pre>
 <p>Look at the first few gene sets just in the 50-geneset hallmark collection. In each gene set, the number of mouse genes is greater than the number of human genes.</p>
 <pre class="r"><code>msigdf %&gt;%
-  count(org, collection, geneset) %&gt;%
-  filter(collection==&quot;hallmark&quot;) %&gt;%
-  spread(org, n)</code></pre>
-<pre><code>## # A tibble: 50 x 4
-##    collection                          geneset human mouse
-##  *      &lt;chr&gt;                            &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-##  1   hallmark            HALLMARK_ADIPOGENESIS   200   303
-##  2   hallmark     HALLMARK_ALLOGRAFT_REJECTION   200   333
-##  3   hallmark       HALLMARK_ANDROGEN_RESPONSE   101   186
-##  4   hallmark            HALLMARK_ANGIOGENESIS    36    65
-##  5   hallmark         HALLMARK_APICAL_JUNCTION   200   363
-##  6   hallmark          HALLMARK_APICAL_SURFACE    44    80
-##  7   hallmark               HALLMARK_APOPTOSIS   161   224
-##  8   hallmark    HALLMARK_BILE_ACID_METABOLISM   112   176
-##  9   hallmark HALLMARK_CHOLESTEROL_HOMEOSTASIS    74   110
-## 10   hallmark             HALLMARK_COAGULATION   138   225
+  count(org, category_code, geneset) %&gt;%
+  filter(category_code==&quot;hallmark&quot;) %&gt;%
+  tidyr::spread(org, n)</code></pre>
+<pre><code>## # A tibble: 50 x 3
+##    category_code geneset                          human
+##  * &lt;chr&gt;         &lt;chr&gt;                            &lt;int&gt;
+##  1 hallmark      HALLMARK_ADIPOGENESIS              200
+##  2 hallmark      HALLMARK_ALLOGRAFT_REJECTION       200
+##  3 hallmark      HALLMARK_ANDROGEN_RESPONSE         101
+##  4 hallmark      HALLMARK_ANGIOGENESIS               36
+##  5 hallmark      HALLMARK_APICAL_JUNCTION           200
+##  6 hallmark      HALLMARK_APICAL_SURFACE             44
+##  7 hallmark      HALLMARK_APOPTOSIS                 161
+##  8 hallmark      HALLMARK_BILE_ACID_METABOLISM      112
+##  9 hallmark      HALLMARK_CHOLESTEROL_HOMEOSTASIS    74
+## 10 hallmark      HALLMARK_COAGULATION               138
 ## # ... with 40 more rows</code></pre>
 <p>Get the URL for the hallmark set with the fewest number of genes (Notch signaling). Optionally, <code>%&gt;%</code> this to <code>browseURL</code> to open it up in your browser.</p>
 <pre class="r"><code>msigdf.human %&gt;%
-  filter(collection==&quot;hallmark&quot;) %&gt;%
+  filter(category_code==&quot;hallmark&quot;) %&gt;%
   count(geneset) %&gt;%
   arrange((n)) %&gt;%
   head(1) %&gt;%
@@ -333,27 +328,27 @@ library(msigdf)</code></pre>
 <pre><code>## [1] &quot;http://software.broadinstitute.org/gsea/msigdb/cards/HALLMARK_NOTCH_SIGNALING&quot;</code></pre>
 <p>Just look at the number of genes in each KEGG pathway (sorted descending by the number of genes in that pathway):</p>
 <pre class="r"><code>msigdf.human %&gt;%
-  filter(collection==&quot;c2&quot; &amp; grepl(&quot;^KEGG_&quot;, geneset)) %&gt;%
+  filter(category_code==&quot;c2&quot; &amp; grepl(&quot;^KEGG_&quot;, geneset)) %&gt;%
   count(geneset) %&gt;% 
   arrange(desc(n))</code></pre>
 <pre><code>## # A tibble: 186 x 2
-##                                         geneset     n
-##                                           &lt;chr&gt; &lt;int&gt;
-##  1                  KEGG_OLFACTORY_TRANSDUCTION   389
-##  2                      KEGG_PATHWAYS_IN_CANCER   328
+##    geneset                                          n
+##    &lt;chr&gt;                                        &lt;int&gt;
+##  1 KEGG_OLFACTORY_TRANSDUCTION                    389
+##  2 KEGG_PATHWAYS_IN_CANCER                        328
 ##  3 KEGG_NEUROACTIVE_LIGAND_RECEPTOR_INTERACTION   272
-##  4  KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION   267
-##  5                  KEGG_MAPK_SIGNALING_PATHWAY   267
-##  6        KEGG_REGULATION_OF_ACTIN_CYTOSKELETON   216
-##  7                          KEGG_FOCAL_ADHESION   201
-##  8             KEGG_CHEMOKINE_SIGNALING_PATHWAY   190
-##  9                     KEGG_HUNTINGTONS_DISEASE   185
-## 10                             KEGG_ENDOCYTOSIS   183
+##  4 KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION    267
+##  5 KEGG_MAPK_SIGNALING_PATHWAY                    267
+##  6 KEGG_REGULATION_OF_ACTIN_CYTOSKELETON          216
+##  7 KEGG_FOCAL_ADHESION                            201
+##  8 KEGG_CHEMOKINE_SIGNALING_PATHWAY               190
+##  9 KEGG_HUNTINGTONS_DISEASE                       185
+## 10 KEGG_ENDOCYTOSIS                               183
 ## # ... with 176 more rows</code></pre>
 </div>
 <div id="session-info" class="section level1 unnumbered">
 <h1>Session info</h1>
-<pre><code>## R version 3.4.2 (2017-09-28)
+<pre><code>## R version 3.4.3 (2017-11-30)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
 ## Running under: macOS Sierra 10.12.6
 ## 
@@ -362,32 +357,32 @@ library(msigdf)</code></pre>
 ## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
-## [1] C/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## [1] C/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
 ##  [1] bindrcpp_0.2    forcats_0.2.0   stringr_1.2.0   dplyr_0.7.4    
-##  [5] purrr_0.2.4     readr_1.1.1     tidyr_0.7.2     tibble_1.3.4   
-##  [9] ggplot2_2.2.1   tidyverse_1.2.1 knitr_1.17      BiocStyle_2.4.1
+##  [5] purrr_0.2.4     readr_1.1.1     tidyr_0.7.2     tibble_1.4.1   
+##  [9] ggplot2_2.2.1   tidyverse_1.2.1 knitr_1.18      BiocStyle_2.6.1
 ## [13] msigdf_5.2     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_0.2.3 reshape2_1.4.2   haven_1.1.0      lattice_0.20-35 
-##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.14      rlang_0.1.4     
-##  [9] foreign_0.8-69   glue_1.2.0       withr_2.0.0      readxl_1.0.0    
-## [13] modelr_0.1.1     bindr_0.1        plyr_1.8.4       cellranger_1.1.0
-## [17] munsell_0.4.3    commonmark_1.4   gtable_0.2.0     rvest_0.3.2     
-## [21] devtools_1.13.3  psych_1.7.8      memoise_1.1.0    evaluate_0.10.1 
-## [25] parallel_3.4.2   broom_0.4.2      Rcpp_0.12.13     backports_1.1.1 
-## [29] scales_0.5.0     desc_1.1.1       jsonlite_1.5     mnormt_1.5-5    
-## [33] hms_0.3          digest_0.6.12    stringi_1.1.5    bookdown_0.5    
-## [37] grid_3.4.2       rprojroot_1.2    cli_1.0.0        tools_3.4.2     
-## [41] magrittr_1.5     lazyeval_0.2.0   crayon_1.3.4     pkgconfig_2.0.1 
-## [45] xml2_1.1.1       lubridate_1.7.1  assertthat_0.2.0 rmarkdown_1.7   
-## [49] roxygen2_6.0.1   httr_1.3.1       rstudioapi_0.7   R6_2.2.2        
-## [53] nlme_3.1-131     compiler_3.4.2</code></pre>
+##  [1] tidyselect_0.2.3 reshape2_1.4.3   haven_1.1.0      lattice_0.20-35 
+##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.16      utf8_1.1.3      
+##  [9] rlang_0.1.6      pillar_1.0.1     foreign_0.8-69   glue_1.2.0      
+## [13] withr_2.1.1      readxl_1.0.0     modelr_0.1.1     bindr_0.1       
+## [17] plyr_1.8.4       cellranger_1.1.0 munsell_0.4.3    commonmark_1.4  
+## [21] gtable_0.2.0     rvest_0.3.2      devtools_1.13.4  psych_1.7.8     
+## [25] memoise_1.1.0    evaluate_0.10.1  parallel_3.4.3   broom_0.4.3     
+## [29] Rcpp_0.12.14     backports_1.1.2  scales_0.5.0     desc_1.1.1      
+## [33] jsonlite_1.5     mnormt_1.5-5     hms_0.4.0        digest_0.6.13   
+## [37] stringi_1.1.6    bookdown_0.5     grid_3.4.3       rprojroot_1.3-2 
+## [41] cli_1.0.0        tools_3.4.3      magrittr_1.5     lazyeval_0.2.1  
+## [45] crayon_1.3.4     pkgconfig_2.0.1  xml2_1.1.1       lubridate_1.7.1 
+## [49] assertthat_0.2.0 rmarkdown_1.8    roxygen2_6.0.1   httr_1.3.1      
+## [53] rstudioapi_0.7   R6_2.2.2         nlme_3.1-131     compiler_3.4.3</code></pre>
 </div>
 
 
