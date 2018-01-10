@@ -17,10 +17,10 @@ msigdf.human %>%
 
 ## --------------------------------------------------------------------------
 msigdf.human %>% 
-  filter(collection=="hallmark") %>% 
-  select(geneset, entrez) %>% 
+  filter(category_code=="hallmark") %>% 
+  select(geneset, symbol) %>% 
   group_by(geneset) %>% 
-  summarize(entrez=list(entrez)) %>% 
+  summarize(entrez=list(symbol)) %>% 
   deframe() %>% 
   head() %>% 
   map(head)
@@ -28,7 +28,7 @@ msigdf.human %>%
 ## --------------------------------------------------------------------------
 msigdf <- bind_rows(
   msigdf.human %>% mutate(org="human"),
-  msigdf.mouse %>% mutate(org="mouse")
+  msigdf.mouse %>% rename(symbol=mouse.symbol) %>% mutate(org="mouse")
 )
 
 ## --------------------------------------------------------------------------
@@ -37,24 +37,24 @@ tail(msigdf)
 
 ## --------------------------------------------------------------------------
 msigdf %>%
-  group_by(org, collection) %>%
+  group_by(org, category_code) %>%
   summarize(ngenesets=n_distinct(geneset)) %>%
-  spread(org, ngenesets)
+  tidyr::spread(org, ngenesets)
 
 ## --------------------------------------------------------------------------
 msigdf %>%
-  count(org, collection) %>%
-  spread(org, n)
+  count(org, category_code) %>%
+  tidyr::spread(org, n)
 
 ## --------------------------------------------------------------------------
 msigdf %>%
-  count(org, collection, geneset) %>%
-  filter(collection=="hallmark") %>%
-  spread(org, n)
+  count(org, category_code, geneset) %>%
+  filter(category_code=="hallmark") %>%
+  tidyr::spread(org, n)
 
 ## --------------------------------------------------------------------------
 msigdf.human %>%
-  filter(collection=="hallmark") %>%
+  filter(category_code=="hallmark") %>%
   count(geneset) %>%
   arrange((n)) %>%
   head(1) %>%
@@ -63,7 +63,7 @@ msigdf.human %>%
 
 ## --------------------------------------------------------------------------
 msigdf.human %>%
-  filter(collection=="c2" & grepl("^KEGG_", geneset)) %>%
+  filter(category_code=="c2" & grepl("^KEGG_", geneset)) %>%
   count(geneset) %>% 
   arrange(desc(n))
 
