@@ -53,28 +53,28 @@ for (i in seq_along(gmts)){
 }
 
 # Tidy up list to tbl_df
-# collapse multiple lists into a dataframe
-# Add data groups into new columns gs_labels
-# gs_label colums are split for geneset (category_code) and subcategory_code, twice just becouse.
-# Columns with no relevant or raw data are drop
-# There are repeated genesets in C2.CP versus C2.*
 
-msigdf <- bind_rows(!!!msigdf,.id = "gs_labels")
+
+# Collapse multiple lists into a dataframe, with explicit splicing (!!!) to maintain list names 
+msigdf <- bind_rows(!!!msigdf,.id = "gs_labels") 
+
+# Add data groups into new columns gs_labels.
+# gs_label colums are split for geneset (category_code) and subcategory_code, twice just becouse.
+# Columns with raw data are drop.
+# There are repeated genesets in C2.CP versus C2.*
 msigdf <- msigdf %>% separate(gs_labels, c("label", "temp"), sep = "\\.v6", remove=FALSE) %>% dplyr::select(-temp) %>%
   separate(label,c("category_code","category_subcode"),sep = "[.]",extra = "drop") %>% dplyr::select(-gs_labels) %>% distinct()
-
 
 # fix labeling for hallmark geneset
 msigdf$category_code <- ifelse(msigdf$category_code=="h","hallmark",paste(msigdf$category_code))
 
-
-# Dased in human genes
+# Based in human genes
 msigdf.human <- msigdf
-
 
 # Human to mouse symbols
 # Not all human genes in MSigDB have a proper mouse homologous.
-# Would recommend to check it before use.
+# Would recommend to check with the human geneset to be certain that the mouse geneset is still a good representation of a biological phenomena.
+# Althoug a it is a remote posibility, I didn't compare the size of the geneset between human and mouse 
 library(biomaRt)
 human <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 mouse <- useMart("ensembl", dataset = "mmusculus_gene_ensembl")
@@ -86,7 +86,7 @@ genes_lookuptbl <- getLDS(attributes = c("mgi_symbol"), filters = "mgi_symbol", 
 # Create mouse output, clean output of genes without homology
 msigdf.mouse <- msigdf %>% right_join(genes_lookuptbl,by="symbol") %>% dplyr::select(-symbol) %>% distinct() %>% filter(!is.na(category_code))
 
-rm(genes_lookuptbl)
+rm(genes_lookuptbl,human,mouse)
 
 # Create data frame of urls to join to
 msigdf.urls <- msigdf %>%
@@ -98,4 +98,4 @@ msigdf.urls <- msigdf %>%
 devtools::use_data(msigdf.human, msigdf.mouse, msigdf.urls, overwrite=TRUE, compress='xz')
 devtools::use_package("tibble")
 detach("package:biomaRt", unload=TRUE)
-rm(list=ls(pattern="v6.1"),human,mouse,msigdf,gmts,gmtPathways)
+rm(list=ls(pattern="v6.1"),msigdf,gmts,gmtPathways)
