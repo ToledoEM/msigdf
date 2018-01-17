@@ -10,11 +10,20 @@ Current version: [v6.1](http://software.broadinstitute.org/cancer/software/gsea/
 # Install devtools if you don't already have it
 install.packages("devtools")
 
-# Just get the data
-devtools::install_github("stephenturner/msigdf")
+# Just get the data for MSigDB v5.2
+devtools::install_github("stephenturner/msigdf") 
 
-# Get the data and build the vignette (requires tidyverse, knitr, rmarkdown)
+# Just get the data for MSigDB v6.1
+devtools::install_github("toledoem/msigdf")
+
+
+# Get the data and build the vignette (requires tidyverse, knitr, rmarkdown) for MSigDB v5.2
 devtools::install_github("stephenturner/msigdf", build_vignettes = TRUE)
+
+
+# Get the data and build the vignette (requires tidyverse, knitr, rmarkdown) for MSigDB v6.1
+devtools::install_github("toledoem/msigdf", build_vignettes = TRUE)
+
 ```
 
 ## Example usage
