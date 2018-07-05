@@ -1,6 +1,7 @@
 # MSigDF
 
-The [Molecular Signatures Database (MSigDB)](http://www.broad.mit.edu/gsea/msigdb/index.jsp) in a data frame.
+The [Molecular Signatures Database (MSigDB)](http://www.broad.mit.edu/gsea/msigdb/index.jsp) in a data frame.    
+Updated version for the archived repo of @stephenturner https://github.com/stephenturner/msigdf
 
 Current version: [v6.1](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_v6.1_Release_Notes) (January 2018).
 
@@ -11,16 +12,17 @@ Current version: [v6.1](http://software.broadinstitute.org/cancer/software/gsea/
 install.packages("devtools")
 
 # Just get the data
-devtools::install_github("stephenturner/msigdf")
+devtools::install_github("toledoem/msigdf")
 
 # Get the data and build the vignette (requires tidyverse, knitr, rmarkdown)
-devtools::install_github("stephenturner/msigdf", build_vignettes = TRUE)
+devtools::install_github("toledoem/msigdf", build_vignettes = TRUE)
 ```
 
 ## Example usage
 
-See the [package vignette](http://stephenturner.github.io/msigdf/vignettes/msigdf.html) for more.
 
+See the [package vignette](http://stephenturner.github.io/msigdf/vignettes/msigdf.html) for more.   
+*need to update this link to my repo*.     
 ```r
 library(dplyr)
 library(msigdf)
@@ -68,4 +70,6 @@ msigdf.human %>% filter(geneset=="KEGG_NON_HOMOLOGOUS_END_JOINING")
 13 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING PRKDC
 ```
 
-See the [package vignette](http://stephenturner.github.io/msigdf/vignettes/msigdf.html) for more.
+See the [package vignette](http://stephenturner.github.io/msigdf/vignettes/msigdf.html) for more. 
+*need to update this link to my repo*.     
+ 
