@@ -1,17 +1,21 @@
 ---
 title: "MSigDF: Molecular Signature Database (MSigDB) in a Data Frame"
 author:
-- name: Stephen D. Turner
+- name: Stephen D. Turner 
   affiliation: University of Virginia, Charlottesville VA, United States
   email: vustephen@gmail.com
+- name: Enrique M. Toledo 
+  affiliation: NNRCO
+  email: enriquetoledo@gmail.com
+maintenace: Enrique M. Toledo (enriquetoledo@gmail.com)
 package: msigdf
 output:
-  BiocStyle::html_document2
+  BiocStyle::html_document
 abstract: |
   This data package contains the Molecular Signature Database (MSigDB) for both human and predicted mouse orthologs in separate data frames (tibbles). 
   Each data frame (`msigdf.human` and `msigdf.mouse`) contain three columns: the collection (Hallmark, or c1-c7), the gene set, and Entrez IDs
   for genes in that set. The `msigdf.urls` tibble contains links to descriptions on the Broad Institute's website of each gene set.
-  **[Source code available on GitHub](https://github.com/stephenturner/msigdf)**.
+  **[Source code available on GitHub](https://github.com/ToledoEM/msigdf)**.
 vignette: |
   %\VignetteIndexEntry{MSigDF: Molecular Signature Database (MSigDB) in a Data Frame}
   %\VignetteEngine{knitr::rmarkdown}
@@ -33,7 +37,7 @@ _The gene sets contained in the MSigDB are from a wide variety of sources, and r
 
 **_Prodecure:_** 
 
-_1. The current MSigDB v6.1 gmt files were downloaded._
+_1. The current MSigDB v6.1 gmt files were downloaded manually since programmatically download them it is not feasible._
 _2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20180110)._
 _3. Each collection was converted to a list in R, and written to a RData file using `save()`._ 
 
@@ -67,7 +71,7 @@ msigdf.human %>%
   filter(geneset=="KEGG_NON_HOMOLOGOUS_END_JOINING")
 ```
 
-Some software, e.g., [GAGE](http://bioconductor.org/packages/release/bioc/html/gage.html) might require gene sets to be a named list of Entrez IDs, where the name of each element in the list is the name of the pathway. This is how the data was originally structured, and we can return to it with `plyr::dlply()`. Here, let's use only the hallmark sets, and after we `dlply` the data into this named list format, get just the first few pathways, and in each of those, just display the first few entrez IDs.
+Some software, e.g., [fGSEA](https://github.com/ctlab/fgsea) might require gene sets to be a named list of genes identifiers, where the name of each element in the list is the name of the pathway. This is how the data was originally structured, and we can return to it with `plyr::dlply()`. Here, let's use only the hallmark sets, and after we `dlply` the data into this named list format, get just the first few pathways, and in each of those, just display the first few gene symbols.
 
 ```{r}
 msigdf.human %>% 
@@ -128,7 +132,7 @@ Get the URL for the hallmark set with the fewest number of genes (Notch signalin
 msigdf.human %>%
   filter(category_code=="hallmark") %>%
   count(geneset) %>%
-  arrange((n)) %>%
+  arrange(n) %>%
   head(1) %>%
   inner_join(msigdf.urls, by="geneset") %>%
   pull(url)
