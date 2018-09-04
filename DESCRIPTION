@@ -1,11 +1,12 @@
 Package: msigdf
 Type: Package
 Title: MSigDB in a data frame
-Version: 5.2
-Authors@R: person("Stephen", "Turner", email = "vustephen@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9140-9028"))
-Maintainer: Stephen Turner <vustephen@gmail.com>
+Version: 6.2
+Authors@R: c(
+    person("Stephen", "Turner", email = "vustephen@gmail.com", role = "aut"),
+    person("Toledo", "Enrique", email = "enriquetoledo@gmail.com", role = c("ctb","cre")))
 Description: Molecular Signatures Database (MSigDB) in a data frame.
-URL: https://github.com/stephenturner/msigdf
+URL: https://github.com/ToledoEM/msigdf
 License: CC0
 Encoding: UTF-8
 LazyData: true
