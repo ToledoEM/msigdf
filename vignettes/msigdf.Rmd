@@ -37,8 +37,8 @@ _The gene sets contained in the MSigDB are from a wide variety of sources, and r
 
 **_Prodecure:_** 
 
-_1. The current MSigDB v6.1 gmt files were downloaded manually since programmatically download them it is not feasible._
-_2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20180110)._
+_1. The current MSigDB v6.2 gmt files were downloaded manually since programmatically download them it is not feasible._
+_2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20180831)._
 _3. Each collection was converted to a list in R, and written to a RData file using `save()`._ 
 
 ----
@@ -47,7 +47,7 @@ See the script in `data-raw/` to see how the data frames (tibbles) were created.
 
 # Example usage
 
-There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection (c1-7 and hallmark), sub-collection (like C5 cc, bp and mf), each gene set, and gene symbol, where each row is a single gene symbol. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
+There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection (c1-7 and hallmark) divided by sub-collection (like cc, bp and mf for C5). The format of the data is tidy, so each row is a single gene set collection, sub-collection and gene symbol. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
 
 The data sets in this package have several million rows. The package imports the tibble package so they're displayed nicely.
 

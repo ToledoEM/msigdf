@@ -3,7 +3,7 @@
 \docType{data}
 \name{msigdf.human}
 \alias{msigdf.human}
-\title{MSigDB in a data frame (human)}
+\title{MSigDB in a data frame (human) by gene symbol}
 \format{A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset} and \code{symbol}. See vignette for more details.}
 \source{
 \url{http://software.broadinstitute.org/gsea/msigdb/}

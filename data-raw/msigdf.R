@@ -2,23 +2,8 @@
 # Due to the website need user registration to access the datasets. Local copies are in the repository subfolder ~/data-row/gmt/
 # I couldn'd find a way to use curl or wget to save the files.
 #
-# Files Downloaded
-# c1.all.v6.1.symbols.gmt
-# c2.cgp.v6.1.symbols.gmt
-# c2.cp.biocarta.v6.1.symbols.gmt
-# c2.cp.kegg.v6.1.symbols.gmt
-# c2.cp.reactome.v6.1.symbols.gmt
-# c3.mir.v6.1.symbols.gmt
-# c3.tft.v6.1.symbols.gmt
-# c4.cgn.v6.1.symbols.gmt
-# c4.cm.v6.1.symbols.gmt
-# c5.bp.v6.1.symbols.gmt
-# c5.cc.v6.1.symbols.gmt
-# c5.mf.v6.1.symbols.gmt
-# c6.all.v6.1.symbols.gmt
-# c7.all.v6.1.symbols.gmt
-# h.all.v6.1.symbols.gmt
-#
+# File Downloades
+# ZIPped MSigDB v6.2 file set
 #
 # Collections details (http://software.broadinstitute.org/gsea/msigdb/collection_details.jsp)
 #
@@ -28,7 +13,11 @@
 
 
 
-library(tidyverse)
+# library(tidyverse) #not recommended
+library(plyr)
+library(dplyr)
+library(tidyr)
+library(tibble)
 
 #Function to read GTM files, output list. From fgsea package (https://github.com/ctlab/fgsea)
 gmtPathways <- function(gmt.file) {
@@ -39,8 +28,10 @@ gmtPathways <- function(gmt.file) {
 }
 
 
+## For gene symbols
+
 # Load gmt genesets files as lists
-gmts <- dir(path = "data-raw/gmt/",pattern = "*.gmt")
+gmts <- dir(path = "data-raw/gmt/",pattern = "*.symbols.gmt")
 for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/gmt/",gmts[i]))) }
 
 gmts <- ls(pattern = "v6")
@@ -55,47 +46,47 @@ for (i in seq_along(gmts)){
 # Tidy up list to tbl_df
 
 
-# Collapse multiple lists into a dataframe, with explicit splicing (!!!) to maintain list names 
-msigdf <- bind_rows(!!!msigdf,.id = "gs_labels") 
+# Collapse multiple lists into a dataframe, with explicit splicing (!!!) to maintain list names
+msigdf_symbol <- bind_rows(!!!msigdf,.id = "gs_labels")
 
 # Add data groups into new columns gs_labels.
 # gs_label colums are split for geneset (category_code) and subcategory_code, twice just becouse.
 # Columns with raw data are drop.
 # There are repeated genesets in C2.CP versus C2.*
-msigdf <- msigdf %>% separate(gs_labels, c("label", "temp"), sep = "\\.v6", remove=FALSE) %>% dplyr::select(-temp) %>%
+msigdf_symbol <- msigdf_symbol %>% separate(gs_labels, c("label", "temp"), sep = "\\.v6", remove=FALSE) %>% dplyr::select(-temp) %>%
   separate(label,c("category_code","category_subcode"),sep = "[.]",extra = "drop") %>% dplyr::select(-gs_labels) %>% distinct()
 
 # fix labeling for hallmark geneset
-msigdf$category_code <- ifelse(msigdf$category_code=="h","hallmark",paste(msigdf$category_code))
+msigdf_symbol$category_code <- ifelse(msigdf_symbol$category_code=="h","hallmark",paste(msigdf_symbol$category_code))
 
 # Based in human genes
-msigdf.human <- msigdf
+msigdf.human <- msigdf_symbol
 
 # Human to mouse symbols
 # Not all human genes in MSigDB have a proper mouse homologous.
 # Would recommend to check with the human geneset to be certain that the mouse geneset is still a good representation of a biological phenomena.
-# Althoug a it is a remote posibility, I didn't compare the size of the geneset between human and mouse 
+# Althoug a it is a remote posibility, I didn't compare the size of the geneset between human and mouse
 library(biomaRt)
 human <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 mouse <- useMart("ensembl", dataset = "mmusculus_gene_ensembl")
 
 # Create Look-up table of human mouse homologous
-genes_lookuptbl <- getLDS(attributes = c("mgi_symbol"), filters = "mgi_symbol", values = unique(msigdf$symbol) , mart = mouse, attributesL = c("hgnc_symbol"), martL = human, uniqueRows=T) %>%
+genes_lookuptbl <- getLDS(attributes = c("mgi_symbol"), filters = "mgi_symbol", values = unique(msigdf_symbol$symbol) , mart = mouse, attributesL = c("hgnc_symbol"), martL = human, uniqueRows=T) %>%
   dplyr::rename(symbol=HGNC.symbol,mouse.symbol=MGI.symbol)
 
 # Create mouse output, clean output of genes without homology
-msigdf.mouse <- msigdf %>% right_join(genes_lookuptbl,by="symbol") %>% dplyr::select(-symbol) %>% distinct() %>% filter(!is.na(category_code))
+msigdf.mouse <- msigdf_symbol %>% right_join(genes_lookuptbl,by="symbol") %>% dplyr::select(-symbol) %>% distinct() %>% filter(!is.na(category_code))
 
 rm(genes_lookuptbl,human,mouse)
 
 # Create data frame of urls to join to
-msigdf.urls <- msigdf %>%
-  distinct(collection, geneset) %>%
+msigdf.urls <- msigdf_symbol %>%
+  distinct(category_code,category_subcode, geneset) %>%
   mutate(url=paste0("http://software.broadinstitute.org/gsea/msigdb/cards/", geneset))
 
 
 # Save data in the package, and remove the original list objects
-devtools::use_data(msigdf.human, msigdf.mouse, msigdf.urls, overwrite=TRUE, compress='xz')
+devtools::use_data(msigdf.mouse, msigdf.human,msigdf.urls, overwrite=TRUE, compress='xz')
 devtools::use_package("tibble")
 detach("package:biomaRt", unload=TRUE)
-rm(list=ls(pattern="v6.1"),msigdf,gmts,gmtPathways)
+rm(list=ls(pattern="v6.2"),msigdf,gmts,gmtPathways)

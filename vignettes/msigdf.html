@@ -10,7 +10,6 @@
 
 
 
-<meta name="date" content="2018-07-11" />
 
 <title>MSigDF: Molecular Signature Database (MSigDB) in a Data Frame</title>
 
@@ -131,11 +130,11 @@ $(document).ready(function () {
 <p class="author-name">Stephen D. Turner<span class="affil-mark">1*</span> and Enrique M. Toledo<span class="affil-mark">2**</span></p>
 <p class="author-affiliation"><span class="affil-mark">1</span>University of Virginia, Charlottesville VA, United States<br><span class="affil-mark">2</span>NNRCO</p>
 <p class="author-email"><span class="affil-mark">*</span><a href="mailto:vustephen@gmail.com">vustephen@gmail.com</a><br><span class="affil-mark">**</span><a href="mailto:enriquetoledo@gmail.com">enriquetoledo@gmail.com</a></p>
-<h4 class="date"><em>11 July 2018</em></h4>
+<h4 class="date"><em>4 September 2018</em></h4>
 <h4 class="abstract">Abstract</h4>
 <p>This data package contains the Molecular Signature Database (MSigDB) for both human and predicted mouse orthologs in separate data frames (tibbles). Each data frame (<code>msigdf.human</code> and <code>msigdf.mouse</code>) contain three columns: the collection (Hallmark, or c1-c7), the gene set, and Entrez IDs for genes in that set. The <code>msigdf.urls</code> tibble contains links to descriptions on the Broad Institute’s website of each gene set. <strong><a href="https://github.com/ToledoEM/msigdf">Source code available on GitHub</a></strong>.</p>
 <h4 class="package">Package</h4>
-<p>msigdf 5.2</p>
+<p>msigdf 6.2</p>
 
 </div>
 
@@ -155,13 +154,13 @@ $(document).ready(function () {
 <hr />
 <p><em>The gene sets contained in the MSigDB are from a wide variety of sources, and relate to a variety of species, mostly human. To facilitate use of the MSigDB in our work, we have created a pure mouse version of the MSigDB by mapping all sets to mouse orthologs. A pure human version is also provided.</em></p>
 <p><strong><em>Prodecure:</em></strong></p>
-<p><em>1. The current MSigDB v6.1 gmt files were downloaded manually since programmatically download them it is not feasible.</em> <em>2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20180110).</em> <em>3. Each collection was converted to a list in R, and written to a RData file using <code>save()</code>.</em></p>
+<p><em>1. The current MSigDB v6.2 gmt files were downloaded manually since programmatically download them it is not feasible.</em> <em>2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20180831).</em> <em>3. Each collection was converted to a list in R, and written to a RData file using <code>save()</code>.</em></p>
 <hr />
 <p>See the script in <code>data-raw/</code> to see how the data frames (tibbles) were created.</p>
 </div>
 <div id="example-usage" class="section level1">
 <h1><span class="header-section-number">2</span> Example usage</h1>
-<p>There are three data frames (tibbles) this package. The <code>msigdf.human</code> data frame has columns for each MSigDB collection (c1-7 and hallmark), sub-collection (like C5 cc, bp and mf), each gene set, and gene symbol, where each row is a single gene symbol. The <code>msigdf.mouse</code> data frame has the same structure for mouse orthologs. The <code>msigdf.urls</code> data frame links the name of the gene set to the URL on the Broad’s website.</p>
+<p>There are three data frames (tibbles) this package. The <code>msigdf.human</code> data frame has columns for each MSigDB collection (c1-7 and hallmark) divided by sub-collection (like cc, bp and mf for C5). The format of the data is tidy, so each row is a single gene set collection, sub-collection and gene symbol. The <code>msigdf.mouse</code> data frame has the same structure for mouse orthologs. The <code>msigdf.urls</code> data frame links the name of the gene set to the URL on the Broad’s website.</p>
 <p>The data sets in this package have several million rows. The package imports the tibble package so they’re displayed nicely.</p>
 <pre class="r"><code>library(tidyverse)
 library(msigdf)</code></pre>
@@ -180,20 +179,27 @@ library(msigdf)</code></pre>
 <pre><code>## # A tibble: 6 x 4
 ##   category_code category_subcode geneset                        mouse.symbol
 ##   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;                          &lt;chr&gt;       
-## 1 c1            all              chr12q13                       Tmem106c    
-## 2 c2            cgp              HOLLMANN_APOPTOSIS_VIA_CD40_UP Tmem106c    
-## 3 c2            cgp              CASORELLI_ACUTE_PROMYELOCYTIC~ Tmem106c    
-## 4 c2            cgp              DOANE_RESPONSE_TO_ANDROGEN_DN  Tmem106c    
-## 5 c2            cgp              GOZGIT_ESR1_TARGETS_DN         Tmem106c    
-## 6 c2            cgp              LINDGREN_BLADDER_CANCER_CLUST~ Tmem106c</code></pre>
+## 1 c1            all              chr11q23                       Abcg4       
+## 2 c2            cgp              LASTOWSKA_NEUROBLASTOMA_COPY_… Abcg4       
+## 3 c2            cgp              HATADA_METHYLATED_IN_LUNG_CAN… Abcg4       
+## 4 c2            cgp              BENPORATH_SUZ12_TARGETS        Abcg4       
+## 5 c2            cgp              BENPORATH_ES_WITH_H3K27ME3     Abcg4       
+## 6 c2            cgp              MOREAUX_MULTIPLE_MYELOMA_BY_T… Abcg4</code></pre>
 <pre class="r"><code>msigdf.urls %&gt;% as.data.frame() %&gt;% head()</code></pre>
-<pre><code>##    geneset                                                           url
-## 1  chr5q23  http://software.broadinstitute.org/gsea/msigdb/cards/chr5q23
-## 2 chr16q24 http://software.broadinstitute.org/gsea/msigdb/cards/chr16q24
-## 3  chr8q24  http://software.broadinstitute.org/gsea/msigdb/cards/chr8q24
-## 4 chr13q11 http://software.broadinstitute.org/gsea/msigdb/cards/chr13q11
-## 5  chr7p21  http://software.broadinstitute.org/gsea/msigdb/cards/chr7p21
-## 6 chr10q23 http://software.broadinstitute.org/gsea/msigdb/cards/chr10q23</code></pre>
+<pre><code>##   category_code category_subcode  geneset
+## 1            c1              all  chr5q23
+## 2            c1              all chr16q24
+## 3            c1              all  chr8q24
+## 4            c1              all chr13q11
+## 5            c1              all  chr7p21
+## 6            c1              all chr10q23
+##                                                             url
+## 1  http://software.broadinstitute.org/gsea/msigdb/cards/chr5q23
+## 2 http://software.broadinstitute.org/gsea/msigdb/cards/chr16q24
+## 3  http://software.broadinstitute.org/gsea/msigdb/cards/chr8q24
+## 4 http://software.broadinstitute.org/gsea/msigdb/cards/chr13q11
+## 5  http://software.broadinstitute.org/gsea/msigdb/cards/chr7p21
+## 6 http://software.broadinstitute.org/gsea/msigdb/cards/chr10q23</code></pre>
 <p>Just get the entries for the <a href="http://www.genome.jp/kegg/pathway/hsa/hsa03450.html">KEGG non-homologous end joining pathway</a>:</p>
 <pre class="r"><code>msigdf.human %&gt;% 
   filter(geneset==&quot;KEGG_NON_HOMOLOGOUS_END_JOINING&quot;)</code></pre>
@@ -262,12 +268,12 @@ library(msigdf)</code></pre>
 <pre><code>## # A tibble: 6 x 5
 ##   category_code category_subcode geneset                        symbol org  
 ##   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;                          &lt;chr&gt;  &lt;chr&gt;
-## 1 c7            all              GSE43863_TH1_VS_TFH_MEMORY_CD~ Arhge~ mouse
-## 2 c7            all              GSE43863_TH1_VS_TFH_EFFECTOR_~ Arhge~ mouse
-## 3 c7            all              GSE43863_TH1_VS_LY6C_INT_CXCR~ Arhge~ mouse
-## 4 c7            all              GSE42088_UNINF_VS_LEISHMANIA_~ Arhge~ mouse
-## 5 c7            all              GSE42088_UNINF_VS_LEISHMANIA_~ Arhge~ mouse
-## 6 c7            all              GSE18804_SPLEEN_MACROPHAGE_VS~ Arhge~ mouse</code></pre>
+## 1 c7            all              GSE37301_RAG2_KO_VS_RAG2_AND_… Stx8   mouse
+## 2 c7            all              GSE40273_XBP1_KO_VS_WT_TREG_UP Stx8   mouse
+## 3 c7            all              GSE11961_FOLLICULAR_BCELL_VS_… Stx8   mouse
+## 4 c7            all              GSE46606_DAY1_VS_DAY3_CD40L_I… Stx8   mouse
+## 5 c7            all              GSE41176_UNSTIM_VS_ANTI_IGM_S… Stx8   mouse
+## 6 c7            all              GSE45365_HEALTHY_VS_MCMV_INFE… Stx8   mouse</code></pre>
 <p>The number of gene sets in each collection is the same for each organism:</p>
 <pre class="r"><code>msigdf %&gt;%
   group_by(org, category_code) %&gt;%
@@ -277,7 +283,7 @@ library(msigdf)</code></pre>
 ##   category_code human mouse
 ##   &lt;chr&gt;         &lt;int&gt; &lt;int&gt;
 ## 1 c1              326   326
-## 2 c2             4738  4737
+## 2 c2             4762  4760
 ## 3 c3              836   836
 ## 4 c4              858   858
 ## 5 c5             5917  5913
@@ -291,14 +297,14 @@ library(msigdf)</code></pre>
 <pre><code>## # A tibble: 8 x 3
 ##   category_code  human  mouse
 ##   &lt;chr&gt;          &lt;int&gt;  &lt;int&gt;
-## 1 c1             30288  14605
-## 2 c2            444687 389301
-## 3 c3            198275 176259
-## 4 c4             91309  81682
-## 5 c5            689570 617282
-## 6 c6             31319  27028
-## 7 c7            948254 824671
-## 8 hallmark        7324   6924</code></pre>
+## 1 c1             30288  14582
+## 2 c2            447052 390045
+## 3 c3            198275 175983
+## 4 c4             91309  81365
+## 5 c5            689570 615568
+## 6 c6             31319  26963
+## 7 c7            948254 822915
+## 8 hallmark        7324   6912</code></pre>
 <p>Look at the first few gene sets just in the 50-geneset hallmark collection. In each gene set, the number of mouse genes is greater than the number of human genes.</p>
 <pre class="r"><code>msigdf %&gt;%
   count(org, category_code, geneset) %&gt;%
@@ -308,15 +314,15 @@ library(msigdf)</code></pre>
 ##    category_code geneset                          human mouse
 ##    &lt;chr&gt;         &lt;chr&gt;                            &lt;int&gt; &lt;int&gt;
 ##  1 hallmark      HALLMARK_ADIPOGENESIS              200   191
-##  2 hallmark      HALLMARK_ALLOGRAFT_REJECTION       200   176
+##  2 hallmark      HALLMARK_ALLOGRAFT_REJECTION       200   177
 ##  3 hallmark      HALLMARK_ANDROGEN_RESPONSE         101    92
 ##  4 hallmark      HALLMARK_ANGIOGENESIS               36    36
-##  5 hallmark      HALLMARK_APICAL_JUNCTION           200   190
+##  5 hallmark      HALLMARK_APICAL_JUNCTION           200   191
 ##  6 hallmark      HALLMARK_APICAL_SURFACE             44    43
 ##  7 hallmark      HALLMARK_APOPTOSIS                 161   156
 ##  8 hallmark      HALLMARK_BILE_ACID_METABOLISM      112   111
 ##  9 hallmark      HALLMARK_CHOLESTEROL_HOMEOSTASIS    74    67
-## 10 hallmark      HALLMARK_COAGULATION               138   133
+## 10 hallmark      HALLMARK_COAGULATION               138   132
 ## # ... with 40 more rows</code></pre>
 <p>Get the URL for the hallmark set with the fewest number of genes (Notch signaling). Optionally, <code>%&gt;%</code> this to <code>browseURL</code> to open it up in your browser.</p>
 <pre class="r"><code>msigdf.human %&gt;%
@@ -349,42 +355,42 @@ library(msigdf)</code></pre>
 </div>
 <div id="session-info" class="section level1 unnumbered">
 <h1>Session info</h1>
-<pre><code>## R version 3.5.1 (2018-07-02)
-## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 17134)
+<pre><code>## R version 3.4.4 (2018-03-15)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.6
 ## 
 ## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
-## [1] LC_COLLATE=English_United States.1252 
-## [2] LC_CTYPE=English_United States.1252   
-## [3] LC_MONETARY=English_United States.1252
-## [4] LC_NUMERIC=C                          
-## [5] LC_TIME=English_United States.1252    
+## [1] C/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] bindrcpp_0.2.2  msigdf_5.2      forcats_0.3.0   stringr_1.3.1  
-##  [5] dplyr_0.7.6     purrr_0.2.5     readr_1.1.1     tidyr_0.8.1    
-##  [9] tibble_1.4.2    ggplot2_3.0.0   tidyverse_1.2.1 knitr_1.20     
-## [13] BiocStyle_2.8.2
+##  [1] bindrcpp_0.2.2     forcats_0.3.0      stringr_1.3.1     
+##  [4] dplyr_0.7.6        purrr_0.2.5        readr_1.1.1       
+##  [7] tidyr_0.8.1        tibble_1.4.2       ggplot2_3.0.0.9000
+## [10] tidyverse_1.2.1    knitr_1.20         BiocStyle_2.6.1   
+## [13] msigdf_6.2        
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_0.2.4 xfun_0.3         reshape2_1.4.3   haven_1.1.2     
-##  [5] lattice_0.20-35  colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.19     
-##  [9] utf8_1.1.4       rlang_0.2.1      pillar_1.2.3     withr_2.1.2     
-## [13] foreign_0.8-70   glue_1.2.0       modelr_0.1.2     readxl_1.1.0    
-## [17] bindr_0.1.1      plyr_1.8.4       munsell_0.5.0    gtable_0.2.0    
-## [21] cellranger_1.1.0 rvest_0.3.2      psych_1.8.4      evaluate_0.10.1 
-## [25] parallel_3.5.1   broom_0.4.5      Rcpp_0.12.17     backports_1.1.2 
-## [29] scales_0.5.0     jsonlite_1.5     mnormt_1.5-5     hms_0.4.2       
-## [33] digest_0.6.15    stringi_1.2.3    bookdown_0.7     grid_3.5.1      
-## [37] rprojroot_1.3-2  cli_1.0.0        tools_3.5.1      magrittr_1.5    
+##  [1] tidyselect_0.2.4 xfun_0.3         haven_1.1.2      lattice_0.20-35 
+##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.19      utf8_1.1.4      
+##  [9] rlang_0.2.2      pillar_1.3.0     glue_1.3.0       withr_2.1.2     
+## [13] modelr_0.1.2     readxl_1.1.0     bindr_0.1.1      plyr_1.8.4      
+## [17] cellranger_1.1.0 munsell_0.5.0    commonmark_1.5   gtable_0.2.0    
+## [21] rvest_0.3.2      devtools_1.13.6  memoise_1.1.0    evaluate_0.11   
+## [25] fansi_0.2.3      broom_0.5.0      Rcpp_0.12.18     backports_1.1.2 
+## [29] scales_1.0.0     desc_1.2.0       jsonlite_1.5     hms_0.4.2       
+## [33] digest_0.6.16    stringi_1.2.3    bookdown_0.7     grid_3.4.4      
+## [37] rprojroot_1.3-2  cli_1.0.0        tools_3.4.4      magrittr_1.5    
 ## [41] lazyeval_0.2.1   crayon_1.3.4     pkgconfig_2.0.1  xml2_1.2.0      
-## [45] lubridate_1.7.4  assertthat_0.2.0 rmarkdown_1.10   httr_1.3.1      
-## [49] rstudioapi_0.7   R6_2.2.2         nlme_3.1-137     compiler_3.5.1</code></pre>
+## [45] lubridate_1.7.4  assertthat_0.2.0 rmarkdown_1.10   roxygen2_6.0.1  
+## [49] httr_1.3.1       rstudioapi_0.7   R6_2.2.2         nlme_3.1-137    
+## [53] compiler_3.4.4</code></pre>
 </div>
 
 

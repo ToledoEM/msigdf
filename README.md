@@ -1,9 +1,12 @@
 # MSigDF
 
-The [Molecular Signatures Database (MSigDB)](http://www.broad.mit.edu/gsea/msigdb/index.jsp) in a data frame.    
-Updated version for the archived repo of @stephenturner https://github.com/stephenturner/msigdf
+The [Molecular Signatures Database (MSigDB)](http://www.broad.mit.edu/gsea/msigdb/index.jsp) in a tidy data frame.    
 
-Current version: [v6.1](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_v6.1_Release_Notes) (January 2018).
+
+This is the updated version of the archived repo of [@stephenturner](https://github.com/stephenturner/msigdf/pull/1)   
+    
+          
+Current version: [v6.2](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_v6.2_Release_Notes) (July 2018).
 
 ## Installation
 
@@ -21,8 +24,8 @@ devtools::install_github("toledoem/msigdf", build_vignettes = TRUE)
 ## Example usage
 
 
-See the [package vignette](http://stephenturner.github.io/msigdf/vignettes/msigdf.html) for more.   
-*need to update this link to my repo*.     
+See the [package vignette](http://htmlpreview.github.io/?https://raw.githubusercontent.com/ToledoEM/msigdf/master/vignettes/msigdf.html) for more.   
+
 ```r
 library(dplyr)
 library(msigdf)
@@ -37,14 +40,14 @@ msigdf.human %>%
 
 ```
 # A tibble: 6 x 4
-  category_code category_subcode geneset                          symbol
-  <chr>         <chr>            <chr>                            <chr>
-1 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB JUNB
-2 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB CXCL2
-3 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB ATF3
-4 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB NFKBIA
+  category_code category_subcode geneset                          symbol 
+  <chr>         <chr>            <chr>                            <chr>  
+1 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB JUNB   
+2 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB CXCL2  
+3 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB ATF3   
+4 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB NFKBIA 
 5 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB TNFAIP3
-6 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB PTGS2
+6 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB PTGS2 
 ```
 
 ```r
@@ -70,6 +73,5 @@ msigdf.human %>% filter(geneset=="KEGG_NON_HOMOLOGOUS_END_JOINING")
 13 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING PRKDC
 ```
 
-See the [package vignette](http://stephenturner.github.io/msigdf/vignettes/msigdf.html) for more. 
-*need to update this link to my repo*.     
- 
+See the [package vignette](http://htmlpreview.github.io/?https://raw.githubusercontent.com/ToledoEM/msigdf/master/vignettes/msigdf.html) for more.   
+
