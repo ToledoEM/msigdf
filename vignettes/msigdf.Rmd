@@ -37,9 +37,9 @@ _The gene sets contained in the MSigDB are from a wide variety of sources, and r
 
 **_Prodecure:_** 
 
-_1. The current MSigDB v6.2 gmt files were downloaded manually since programmatically download them it is not feasible._
-_2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20180831)._
-_3. Each collection was converted to a list in R, and written to a RData file using `save()`._ 
+_1. The current MSigDB v7.0 gmt files were downloaded from Broad ftp._      
+_2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20190825)._      
+_3. Each collection was converted to a list in R, and written to a RData file using `save()`._        
 
 ----
 
