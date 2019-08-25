@@ -6,7 +6,7 @@ The [Molecular Signatures Database (MSigDB)](http://www.broad.mit.edu/gsea/msigd
 This is the updated version of the archived repo of [@stephenturner](https://github.com/stephenturner/msigdf/pull/1)   
     
           
-Current version: [v6.2](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_v6.2_Release_Notes) (July 2018).
+Current version: [v7.0](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_v7.0_Release_Notes) (August 2019).
 
 ## Installation
 

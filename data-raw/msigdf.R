@@ -2,14 +2,12 @@
 # Due to the website need user registration to access the datasets. Local copies are in the repository subfolder ~/data-row/gmt/
 # I couldn'd find a way to use curl or wget to save the files.
 #
-# File Downloades
-# ZIPped MSigDB v6.2 file set
 #
 # Collections details (http://software.broadinstitute.org/gsea/msigdb/collection_details.jsp)
 #
 # License Terms for MSigDB Gene Sets
-# MSigDB release (v6.0 and above)
-# MSigDB v6.0 and above are available under a Creative Commons style license, plus additional terms for some gene sets. (http://software.broadinstitute.org/gsea/msigdb_license_terms.jsp)
+# MSigDB release (v7.0 and above)
+# MSigDB v7.0 and above are available under a Creative Commons style license, plus additional terms for some gene sets. (http://software.broadinstitute.org/gsea/msigdb_license_terms.jsp)
 
 
 
@@ -34,10 +32,10 @@ gmtPathways <- function(gmt.file) {
 gmts <- dir(path = "data-raw/gmt/",pattern = "*.symbols.gmt")
 for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/gmt/",gmts[i]))) }
 
-gmts <- ls(pattern = "v6")
+gmts <- ls(pattern = "v7")
 msigdf<- list()
 for (i in seq_along(gmts)){
-  msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) data_frame(symbol=x), .id="geneset") %>%
+  msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) tibble(symbol=x), .id="geneset") %>%
     filter(symbol!="-") %>%
     mutate(symbol=as.character(symbol), geneset=as.character(geneset)) %>%
     tbl_df()
@@ -86,7 +84,8 @@ msigdf.urls <- msigdf_symbol %>%
 
 
 # Save data in the package, and remove the original list objects
-devtools::use_data(msigdf.mouse, msigdf.human,msigdf.urls, overwrite=TRUE, compress='xz')
-devtools::use_package("tibble")
+library(devtools)
+use_data(msigdf.mouse, msigdf.human,msigdf.urls, overwrite=TRUE, compress='xz')
+use_package("tibble")
 detach("package:biomaRt", unload=TRUE)
-rm(list=ls(pattern="v6.2"),msigdf,gmts,gmtPathways)
+rm(list=ls(pattern="v7.0"),msigdf,gmts,gmtPathways)
