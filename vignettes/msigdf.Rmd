@@ -78,7 +78,7 @@ msigdf.human %>%
   filter(category_code=="hallmark") %>% 
   select(geneset, symbol) %>% 
   group_by(geneset) %>% 
-  summarize(entrez=list(symbol)) %>% 
+  summarize(symbol=list(symbol)) %>% 
   deframe() %>% 
   head() %>% 
   map(head)
