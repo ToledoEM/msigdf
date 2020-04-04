@@ -1,7 +1,7 @@
 Package: msigdf
 Type: Package
 Title: MSigDB in a data frame
-Version: 7.0
+Version: 7.1
 Authors@R: c(
     person("Stephen", "Turner", email = "vustephen@gmail.com", role = "aut"),
     person("Toledo", "Enrique", email = "enriquetoledo@gmail.com", role = c("ctb","cre")))
@@ -10,7 +10,7 @@ URL: https://github.com/ToledoEM/msigdf
 License: CC0
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Depends: R (>= 3.1.2)
 Imports: tibble
 Suggests: knitr, plyr, tidyverse, rmarkdown, BiocStyle
