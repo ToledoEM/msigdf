@@ -4,7 +4,9 @@
 \name{msigdf.urls}
 \alias{msigdf.urls}
 \title{Links to MSigDB website}
-\format{A data frame with 3 variables: \code{collection}, \code{geneset}, and \code{url}. See vignette for more details.}
+\format{
+A data frame with 3 variables: \code{collection}, \code{geneset}, and \code{url}. See vignette for more details.
+}
 \source{
 \url{http://software.broadinstitute.org/gsea/msigdb/}
 }

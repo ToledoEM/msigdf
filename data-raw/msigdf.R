@@ -51,7 +51,7 @@ msigdf_symbol <- bind_rows(!!!msigdf,.id = "gs_labels")
 # gs_label colums are split for geneset (category_code) and subcategory_code, twice just becouse.
 # Columns with raw data are drop.
 # There are repeated genesets in C2.CP versus C2.*
-msigdf_symbol <- msigdf_symbol %>% separate(gs_labels, c("label", "temp"), sep = "\\.v6", remove=FALSE) %>% dplyr::select(-temp) %>%
+msigdf_symbol <- msigdf_symbol %>% separate(gs_labels, c("label", "temp"), sep = "\\.v7", remove=FALSE) %>% dplyr::select(-temp) %>%
   separate(label,c("category_code","category_subcode"),sep = "[.]",extra = "drop") %>% dplyr::select(-gs_labels) %>% distinct()
 
 # fix labeling for hallmark geneset
@@ -88,4 +88,4 @@ library(devtools)
 use_data(msigdf.mouse, msigdf.human,msigdf.urls, overwrite=TRUE, compress='xz')
 use_package("tibble")
 detach("package:biomaRt", unload=TRUE)
-rm(list=ls(pattern="v7.0"),msigdf,gmts,gmtPathways)
+rm(list=ls(pattern="v7.1"),msigdf,gmts,gmtPathways)

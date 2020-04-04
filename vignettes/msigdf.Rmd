@@ -5,7 +5,7 @@ author:
   affiliation: University of Virginia, Charlottesville VA, United States
   email: vustephen@gmail.com
 - name: Enrique M. Toledo 
-  affiliation: NNRCO
+  affiliation: ---
   email: enriquetoledo@gmail.com
 maintenace: Enrique M. Toledo (enriquetoledo@gmail.com)
 package: msigdf
@@ -37,7 +37,7 @@ _The gene sets contained in the MSigDB are from a wide variety of sources, and r
 
 **_Prodecure:_** 
 
-_1. The current MSigDB v7.0 gmt files were downloaded from Broad ftp._      
+_1. The current MSigDB v7.1 gmt files were downloaded from Broad ftp._      
 _2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20190825)._      
 _3. Each collection was converted to a list in R, and written to a RData file using `save()`._        
 
