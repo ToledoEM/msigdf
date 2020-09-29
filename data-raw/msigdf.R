@@ -38,7 +38,7 @@ for (i in seq_along(gmts)){
   msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) tibble(symbol=x), .id="geneset") %>%
     filter(symbol!="-") %>%
     mutate(symbol=as.character(symbol), geneset=as.character(geneset)) %>%
-    tbl_df()
+    as_tibble()
 }
 
 # Tidy up list to tbl_df
@@ -82,10 +82,14 @@ msigdf.urls <- msigdf_symbol %>%
   distinct(category_code,category_subcode, geneset) %>%
   mutate(url=paste0("http://software.broadinstitute.org/gsea/msigdb/cards/", geneset))
 
+#added single cell identity SCSig dataframe
+
+# scsig <- readxl::read_xls("data-raw/scsig/scsig.v1.0.metadata.xls",.name_repair = "universal")
+# colnames(scsig)
 
 # Save data in the package, and remove the original list objects
 library(devtools)
 use_data(msigdf.mouse, msigdf.human,msigdf.urls, overwrite=TRUE, compress='xz')
 use_package("tibble")
 detach("package:biomaRt", unload=TRUE)
-rm(list=ls(pattern="v7.1"),msigdf,gmts,gmtPathways)
+rm(list=ls(pattern="v7.2"),msigdf,gmts,gmtPathways)
