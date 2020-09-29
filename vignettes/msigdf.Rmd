@@ -13,7 +13,7 @@ output:
   BiocStyle::html_document
 abstract: |
   This data package contains the Molecular Signature Database (MSigDB) for both human and predicted mouse orthologs in separate data frames (tibbles). 
-  Each data frame (`msigdf.human` and `msigdf.mouse`) contain three columns: the collection (Hallmark, or c1-c7), the gene set, and Entrez IDs
+  Each data frame (`msigdf.human` and `msigdf.mouse`) contain three columns: the collection (Hallmark, or c1-c8), the gene set, and Entrez IDs
   for genes in that set. The `msigdf.urls` tibble contains links to descriptions on the Broad Institute's website of each gene set.
   **[Source code available on GitHub](https://github.com/ToledoEM/msigdf)**.
 vignette: |
@@ -37,7 +37,7 @@ _The gene sets contained in the MSigDB are from a wide variety of sources, and r
 
 **_Prodecure:_** 
 
-_1. The current MSigDB v7.1 gmt files were downloaded from Broad ftp._      
+_1. The current MSigDB v7.2 gmt files were downloaded from Broad ftp._      
 _2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20190825)._      
 _3. Each collection was converted to a list in R, and written to a RData file using `save()`._        
 
@@ -47,7 +47,7 @@ See the script in `data-raw/` to see how the data frames (tibbles) were created.
 
 # Example usage
 
-There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection (c1-7 and hallmark) divided by sub-collection (like cc, bp and mf for C5). The format of the data is tidy, so each row is a single gene set collection, sub-collection and gene symbol. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
+There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection (c1-8 and hallmark) divided by sub-collection (like cc, bp and mf for C5). The format of the data is tidy, so each row is a single gene set collection, sub-collection and gene symbol. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
 
 The data sets in this package have several million rows. The package imports the tibble package so they're displayed nicely.
 
