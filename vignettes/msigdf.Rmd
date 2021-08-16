@@ -37,8 +37,8 @@ _The gene sets contained in the MSigDB are from a wide variety of sources, and r
 
 **_Prodecure:_** 
 
-_1. The current MSigDB v7.2 gmt files were downloaded from Broad ftp._      
-_2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20190825)._      
+_1. The current MSigDB v7.4 gmt files were downloaded from Broad ftp._      
+_2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20210815)._      
 _3. Each collection was converted to a list in R, and written to a RData file using `save()`._        
 
 ----
@@ -47,7 +47,15 @@ See the script in `data-raw/` to see how the data frames (tibbles) were created.
 
 # Example usage
 
-There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection (c1-8 and hallmark) divided by sub-collection (like cc, bp and mf for C5). The format of the data is tidy, so each row is a single gene set collection, sub-collection and gene symbol. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
+There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection divided by sub-collection (like cc, bp and mf for C5). The format of the data is tidy, so each row is a single gene set collection, sub-collection and gene symbol. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
+
+New C5 ontology information into was added into category subcode for easy filtering and consistency
+
+- HPO: Human Phenotype Ontology
+- MF: GO Molecular Function ontology
+- BP: GO Biological Process ontology
+- CC: GO Cellular Component ontology
+
 
 The data sets in this package have several million rows. The package imports the tibble package so they're displayed nicely.
 
@@ -75,7 +83,7 @@ Some software, e.g., [fGSEA](https://github.com/ctlab/fgsea) might require gene 
 
 ```{r}
 msigdf.human %>% 
-  filter(category_code=="hallmark") %>% 
+  filter(category_code=="c2") %>% 
   select(geneset, symbol) %>% 
   group_by(geneset) %>% 
   summarize(symbol=list(symbol)) %>% 
@@ -122,7 +130,7 @@ Look at the first few gene sets just in the 50-geneset hallmark collection. In e
 ```{r}
 msigdf %>%
   count(org, category_code, geneset) %>%
-  filter(category_code=="hallmark") %>%
+  filter(category_code=="h") %>%
   tidyr::spread(org, n)
 ```
 
@@ -130,7 +138,7 @@ Get the URL for the hallmark set with the fewest number of genes (Notch signalin
 
 ```{r}
 msigdf.human %>%
-  filter(category_code=="hallmark") %>%
+  filter(category_code=="h") %>%
   count(geneset) %>%
   arrange(n) %>%
   head(1) %>%
