@@ -1,7 +1,7 @@
 Package: msigdf
 Type: Package
 Title: MSigDB in a data frame
-Version: 7.2
+Version: 7.4
 Authors@R: c(
     person("Stephen", "Turner", email = "vustephen@gmail.com", role = "aut"),
     person("Toledo", "Enrique", email = "enriquetoledo@gmail.com", role = c("ctb","cre")))

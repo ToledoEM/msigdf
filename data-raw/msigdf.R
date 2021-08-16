@@ -51,11 +51,49 @@ msigdf_symbol <- bind_rows(!!!msigdf,.id = "gs_labels")
 # gs_label colums are split for geneset (category_code) and subcategory_code, twice just becouse.
 # Columns with raw data are drop.
 # There are repeated genesets in C2.CP versus C2.*
-msigdf_symbol <- msigdf_symbol %>% separate(gs_labels, c("label", "temp"), sep = "\\.v7", remove=FALSE) %>% dplyr::select(-temp) %>%
-  separate(label,c("category_code","category_subcode"),sep = "[.]",extra = "drop") %>% dplyr::select(-gs_labels) %>% distinct()
+# msigdf_symbol <- msigdf_symbol %>% separate(gs_labels, c("label", "temp"), sep = "\\.v7", remove=FALSE) %>% dplyr::select(-temp) %>%
+#   separate(label,c("category_code","category_subcode"),sep = "[.]",extra = "drop") %>% dplyr::select(-gs_labels) %>% distinct()
+#
+# msigdf_symbol <- msigdf_symbol %>% mutate(gs_labels=gsub(gs_labels,pattern = "[.]v*gmt",replacement = "") ) %>%
+#    separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "drop") %>% distinct()
 
+
+msigdf_symbol <- msigdf_symbol %>% mutate(gs_labels=gsub(gs_labels,pattern = "[.]v*gmt",replacement = "") ) %>%
+  separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "merge") %>%  distinct()
+
+
+msigdf_symbol$category_subcode <- gsub(msigdf_symbol$category_subcode,pattern = "\\.v7\\.4\\.symbols",replacement = "")
+
+
+
+# Sanity check
+msigdf_symbol %>% filter(category_code=="c5") %>% pull(category_subcode) %>% unique()
+msigdf_symbol %>% filter(category_code=="c3") %>% pull(category_subcode) %>% unique()
+msigdf_symbol %>% filter(category_code=="h") %>% pull(category_subcode) %>% unique()
+msigdf_symbol %>% filter(category_code=="c2") %>% pull(category_subcode) %>% unique()
+
+
+
+# DO NOT RUN ---
+# if you want to parse more info from gene set name this is the place to start
+# To keep new C5 ontology information into category subcode
+# HPO: Human Phenotype Ontology
+# MF: GO Molecular Function ontology
+# BP: GO Biological Process ontology
+# CC: GO Cellular Component ontology
+
+# # case_when from specific to general
+# msigdf_symbol <- msigdf_symbol %>%
+#   mutate(category_subcode=case_when(grepl(geneset,pattern = "^HP_")~"hpo",
+#                                     grepl(geneset,pattern = "^GOBP_")~"bp",
+#                                     grepl(geneset,pattern = "^GOMF_")~"mf",
+#                                     grepl(geneset,pattern = "^GOCC_")~"cc",
+#                                     grepl(geneset,pattern = "^MIR")~"mir",
+#                                     grepl(geneset,pattern = "^")~"",
+#                                     TRUE ~ category_subcode))  %>%      #catch all
+#    mutate(category_code=if_else(category_code=="h",true = "hallmark",category_code))
 # fix labeling for hallmark geneset
-msigdf_symbol$category_code <- ifelse(msigdf_symbol$category_code=="h","hallmark",paste(msigdf_symbol$category_code))
+#msigdf_symbol$category_code <- ifelse(msigdf_symbol$category_code=="h","hallmark",paste(msigdf_symbol$category_code))
 
 # Based in human genes
 msigdf.human <- msigdf_symbol
@@ -82,14 +120,10 @@ msigdf.urls <- msigdf_symbol %>%
   distinct(category_code,category_subcode, geneset) %>%
   mutate(url=paste0("http://software.broadinstitute.org/gsea/msigdb/cards/", geneset))
 
-#added single cell identity SCSig dataframe
-
-# scsig <- readxl::read_xls("data-raw/scsig/scsig.v1.0.metadata.xls",.name_repair = "universal")
-# colnames(scsig)
 
 # Save data in the package, and remove the original list objects
 library(devtools)
 use_data(msigdf.mouse, msigdf.human,msigdf.urls, overwrite=TRUE, compress='xz')
 use_package("tibble")
 detach("package:biomaRt", unload=TRUE)
-rm(list=ls(pattern="v7.2"),msigdf,gmts,gmtPathways)
+rm(list=ls(pattern="v7."),msigdf,gmts,gmtPathways)
