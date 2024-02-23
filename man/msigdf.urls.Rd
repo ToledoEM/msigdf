@@ -3,12 +3,12 @@
 \docType{data}
 \name{msigdf.urls}
 \alias{msigdf.urls}
-\title{Links to MSigDB website}
+\title{Links to MSigDB website human gene sets}
 \format{
-A data frame with 3 variables: \code{collection}, \code{geneset}, and \code{url}. See vignette for more details.
+A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset}, and \code{url}. See vignette for more details.
 }
 \source{
-\url{http://software.broadinstitute.org/gsea/msigdb/}
+\url{https://www.gsea-msigdb.org/gsea/msigdb/mouse/geneset/}
 }
 \usage{
 msigdf.urls

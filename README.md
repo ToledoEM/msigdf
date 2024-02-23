@@ -6,7 +6,7 @@ The [Molecular Signatures Database (MSigDB)](http://www.broad.mit.edu/gsea/msigd
 This is the updated version of the archived repo of [@stephenturner](https://github.com/stephenturner/msigdf/pull/1)   
     
     
-Current version: [v7.4](https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_v7.4_Release_Notes) (April 2021).
+Current version: [v2023.2.Hs](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2023.2.Hs/) (Oct 2023).
 
 ## Installation
 
@@ -77,6 +77,7 @@ msigdf.human %>% filter(geneset=="KEGG_NON_HOMOLOGOUS_END_JOINING")
 ## Building
 
 Code for building this data is in folder data-raw
+
 
 
 

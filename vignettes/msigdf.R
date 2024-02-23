@@ -1,4 +1,4 @@
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 library(knitr)
 opts_chunk$set(message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE)
 
@@ -26,31 +26,14 @@ msigdf.human %>%
   map(head)
 
 ## -----------------------------------------------------------------------------
-msigdf <- bind_rows(
-  msigdf.human %>% mutate(org="human"),
-  msigdf.mouse %>% rename(symbol=mouse.symbol) %>% mutate(org="mouse")
-)
+msigdf.human %>%
+  group_by(category_code,category_subcode) %>% 
+  tally()
 
 ## -----------------------------------------------------------------------------
-head(msigdf)
-tail(msigdf)
-
-## -----------------------------------------------------------------------------
-msigdf %>%
-  group_by(org, category_code) %>%
-  summarize(ngenesets=n_distinct(geneset)) %>%
-  tidyr::spread(org, ngenesets)
-
-## -----------------------------------------------------------------------------
-msigdf %>%
-  count(org, category_code) %>%
-  tidyr::spread(org, n)
-
-## -----------------------------------------------------------------------------
-msigdf %>%
-  count(org, category_code, geneset) %>%
-  filter(category_code=="h") %>%
-  tidyr::spread(org, n)
+msigdf.mouse %>%
+  group_by(category_code,category_subcode) %>% 
+  tally()
 
 ## -----------------------------------------------------------------------------
 msigdf.human %>%
