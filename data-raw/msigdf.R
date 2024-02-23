@@ -5,9 +5,6 @@
 #
 # Collections details (http://software.broadinstitute.org/gsea/msigdb/collection_details.jsp)
 #
-# License Terms for MSigDB Gene Sets
-# MSigDB release (v7.0 and above)
-# MSigDB v7.0 and above are available under a Creative Commons style license, plus additional terms for some gene sets. (http://software.broadinstitute.org/gsea/msigdb_license_terms.jsp)
 
 
 
@@ -26,13 +23,27 @@ gmtPathways <- function(gmt.file) {
 }
 
 
+
+# Human gene sets
+
 ## For gene symbols
 
 # Load gmt genesets files as lists
-gmts <- dir(path = "data-raw/gmt/",pattern = "*.symbols.gmt")
-for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/gmt/",gmts[i]))) }
+gmts <- dir(path = "data-raw/gmt/human/msigdb_v2023.2.Hs_GMTs/",pattern = "*.symbols.gmt")
+for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/gmt/human/msigdb_v2023.2.Hs_GMTs/",gmts[i]))) }
 
-gmts <- ls(pattern = "v7")
+# remove duplicated information
+rm(c5.all.v2023.2.Hs.symbols.gmt,
+   c5.go.v2023.2.Hs.symbols.gmt,
+   c3.all.v2023.2.Hs.symbols.gmt,
+   c4.all.v2023.2.Hs.symbols.gmt,
+   c2.all.v2023.2.Hs.symbols.gmt,
+   c2.cp.v2023.2.Hs.symbols.gmt,
+   c7.all.v2023.2.Hs.symbols.gmt,
+   msigdb.v2023.2.Hs.symbols.gmt)
+
+
+gmts <- ls(pattern = "v2023")
 msigdf<- list()
 for (i in seq_along(gmts)){
   msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) tibble(symbol=x), .id="geneset") %>%
@@ -58,62 +69,16 @@ msigdf_symbol <- bind_rows(!!!msigdf,.id = "gs_labels")
 #    separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "drop") %>% distinct()
 
 
-msigdf_symbol <- msigdf_symbol %>% mutate(gs_labels=gsub(gs_labels,pattern = "[.]v*gmt",replacement = "") ) %>%
+msigdf_symbol <- msigdf_symbol %>% mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2023\\.2\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
   separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "merge") %>%  distinct()
 
 
-msigdf_symbol$category_subcode <- gsub(msigdf_symbol$category_subcode,pattern = "\\.v7\\.4\\.symbols",replacement = "")
+# tally
+msigdf_symbol %>% group_by(category_code,category_subcode) %>% tally()
 
 
-
-# Sanity check
-msigdf_symbol %>% filter(category_code=="c5") %>% pull(category_subcode) %>% unique()
-msigdf_symbol %>% filter(category_code=="c3") %>% pull(category_subcode) %>% unique()
-msigdf_symbol %>% filter(category_code=="h") %>% pull(category_subcode) %>% unique()
-msigdf_symbol %>% filter(category_code=="c2") %>% pull(category_subcode) %>% unique()
-
-
-
-# DO NOT RUN ---
-# if you want to parse more info from gene set name this is the place to start
-# To keep new C5 ontology information into category subcode
-# HPO: Human Phenotype Ontology
-# MF: GO Molecular Function ontology
-# BP: GO Biological Process ontology
-# CC: GO Cellular Component ontology
-
-# # case_when from specific to general
-# msigdf_symbol <- msigdf_symbol %>%
-#   mutate(category_subcode=case_when(grepl(geneset,pattern = "^HP_")~"hpo",
-#                                     grepl(geneset,pattern = "^GOBP_")~"bp",
-#                                     grepl(geneset,pattern = "^GOMF_")~"mf",
-#                                     grepl(geneset,pattern = "^GOCC_")~"cc",
-#                                     grepl(geneset,pattern = "^MIR")~"mir",
-#                                     grepl(geneset,pattern = "^")~"",
-#                                     TRUE ~ category_subcode))  %>%      #catch all
-#    mutate(category_code=if_else(category_code=="h",true = "hallmark",category_code))
-# fix labeling for hallmark geneset
-#msigdf_symbol$category_code <- ifelse(msigdf_symbol$category_code=="h","hallmark",paste(msigdf_symbol$category_code))
-
-# Based in human genes
+# Human genes
 msigdf.human <- msigdf_symbol
-
-# Human to mouse symbols
-# Not all human genes in MSigDB have a proper mouse homologous.
-# Would recommend to check with the human geneset to be certain that the mouse geneset is still a good representation of a biological phenomena.
-# Althoug a it is a remote posibility, I didn't compare the size of the geneset between human and mouse
-library(biomaRt)
-human <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
-mouse <- useMart("ensembl", dataset = "mmusculus_gene_ensembl")
-
-# Create Look-up table of human mouse homologous
-genes_lookuptbl <- getLDS(attributes = c("mgi_symbol"), filters = "mgi_symbol", values = unique(msigdf_symbol$symbol) , mart = mouse, attributesL = c("hgnc_symbol"), martL = human, uniqueRows=T) %>%
-  dplyr::rename(symbol=HGNC.symbol,mouse.symbol=MGI.symbol)
-
-# Create mouse output, clean output of genes without homology
-msigdf.mouse <- msigdf_symbol %>% right_join(genes_lookuptbl,by="symbol") %>% dplyr::select(-symbol) %>% distinct() %>% filter(!is.na(category_code))
-
-rm(genes_lookuptbl,human,mouse)
 
 # Create data frame of urls to join to
 msigdf.urls <- msigdf_symbol %>%
@@ -121,9 +86,69 @@ msigdf.urls <- msigdf_symbol %>%
   mutate(url=paste0("http://software.broadinstitute.org/gsea/msigdb/cards/", geneset))
 
 
+# Mouse
+
+#clean
+rm(list=ls(pattern="v2023."),msigdf,gmts)
+
+# Load gmt genesets files as lists
+gmts <- dir(path = "data-raw/gmt/mouse/msigdb_v2023.2.Mm_GMTs/",pattern = "*.symbols.gmt")
+for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/gmt/mouse/msigdb_v2023.2.Mm_GMTs/",gmts[i]))) }
+
+
+# remove duplicated information
+rm(m2.all.v2023.2.Mm.symbols.gmt,
+   m2.cp.v2023.2.Mm.symbols.gmt,
+   m5.all.v2023.2.Mm.symbols.gmt,
+   m5.go.v2023.2.Mm.symbols.gmt,
+   m3.all.v2023.2.Mm.symbols.gmt,
+   msigdb.v2023.2.Mm.symbols.gmt)
+
+
+gmts <- ls(pattern = "v2023")
+msigdf<- list()
+for (i in seq_along(gmts)){
+  msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) tibble(symbol=x), .id="geneset") %>%
+    filter(symbol!="-") %>%
+    mutate(symbol=as.character(symbol), geneset=as.character(geneset)) %>%
+    as_tibble()
+}
+
+
+
+# Tidy up list to tbl_df
+# Collapse multiple lists into a dataframe, with explicit splicing (!!!) to maintain list names
+msigdf_symbol <- bind_rows(!!!msigdf,.id = "gs_labels")
+
+# Add data groups into new columns gs_labels.
+# gs_label colums are split for geneset (category_code) and subcategory_code, twice just becouse.
+# Columns with raw data are drop.
+# There are repeated genesets in C2.CP versus C2.*
+
+
+msigdf_symbol <- msigdf_symbol %>%
+  mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2023\\.2\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
+  separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "merge") %>%
+  distinct()
+
+# tally
+# msigdf_symbol %>% group_by(category_code,category_subcode) %>% tally()
+
+# mouse genes
+msigdf.mouse <- msigdf_symbol
+
+# # Create data frame of urls to join to
+msigdf.mouse.urls <- msigdf_symbol %>%
+  distinct(category_code,category_subcode, geneset) %>%
+  mutate(url=paste0("https://www.gsea-msigdb.org/gsea/msigdb/mouse/geneset/", geneset))
+
 # Save data in the package, and remove the original list objects
 library(devtools)
-use_data(msigdf.mouse, msigdf.human,msigdf.urls, overwrite=TRUE, compress='xz')
+use_data(msigdf.human,msigdf.mouse,msigdf.urls,msigdf.mouse.urls, overwrite=TRUE, compress='xz')
 use_package("tibble")
-detach("package:biomaRt", unload=TRUE)
-rm(list=ls(pattern="v7."),msigdf,gmts,gmtPathways)
+# detach("package:biomaRt", unload=TRUE)
+rm(list=ls(pattern="v2023."),msigdf,msigdf_symbol,i,gmts,gmtPathways)
+
+library(roxygen2)
+roxygenize(package.dir = ".", roclets = NULL, load_code = NULL, clean = T)
+devtools::check()

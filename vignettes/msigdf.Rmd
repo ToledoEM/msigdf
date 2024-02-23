@@ -37,8 +37,8 @@ _The gene sets contained in the MSigDB are from a wide variety of sources, and r
 
 **_Prodecure:_** 
 
-_1. The current MSigDB v7.4 gmt files were downloaded from Broad ftp._      
-_2. Human Gene symbols were mapped to Mouse Gene symbols, using biomaRt ensembl package (20210815)._      
+_1. The current MSigDB v2023.2 gmt files were downloaded from Broad ftp._      
+_2. This was domne with the human and mouse gene sets_     
 _3. Each collection was converted to a list in R, and written to a RData file using `save()`._        
 
 ----
@@ -94,44 +94,24 @@ msigdf.human %>%
 
 # Further exploration
 
-For demonstration purposes, create a single object containing both human and mouse data:
+The number of gene sets in each collection for each organism is dependent of the construction at MSigDB.
+
+**Human Collection of gene sets**
+https://www.gsea-msigdb.org/gsea/msigdb/human/collections.jsp
 
 ```{r}
-msigdf <- bind_rows(
-  msigdf.human %>% mutate(org="human"),
-  msigdf.mouse %>% rename(symbol=mouse.symbol) %>% mutate(org="mouse")
-)
+msigdf.human %>%
+  group_by(category_code,category_subcode) %>% 
+  tally()
 ```
 
-```{r}
-head(msigdf)
-tail(msigdf)
-```
-
-The number of gene sets in each collection is the same for each organism:
+**Mouse Collection of gene sets**
+https://www.gsea-msigdb.org/gsea/msigdb/mouse/collections.jsp
 
 ```{r}
-msigdf %>%
-  group_by(org, category_code) %>%
-  summarize(ngenesets=n_distinct(geneset)) %>%
-  tidyr::spread(org, ngenesets)
-```
-
-But the number of mouse genes in each collection is much greater, due to the one-to-many ortholog mapping.
-
-```{r}
-msigdf %>%
-  count(org, category_code) %>%
-  tidyr::spread(org, n)
-```
-
-Look at the first few gene sets just in the 50-geneset hallmark collection. In each gene set, the number of mouse genes is greater than the number of human genes.
-
-```{r}
-msigdf %>%
-  count(org, category_code, geneset) %>%
-  filter(category_code=="h") %>%
-  tidyr::spread(org, n)
+msigdf.mouse %>%
+  group_by(category_code,category_subcode) %>% 
+  tally()
 ```
 
 Get the URL for the hallmark set with the fewest number of genes (Notch signaling). Optionally, `%>%` this to `browseURL` to open it up in your browser.
