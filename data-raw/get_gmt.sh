@@ -2,6 +2,9 @@
 # DO NOT RUN
 # Example code
 
+#wget -P gmt/ https://www.gsea-msigdb.org/gsea/msigdb/download_file.jsp?filePath=/msigdb/release/2024.1.Hs/msigdb_v2024.1.Hs_files_to_download_locally.zip
+#wget -P gmt/ https://www.gsea-msigdb.org/gsea/msigdb/download_file.jsp?filePath=/msigdb/release/2024.1.Mm/msigdb_v2024.1.Mm_files_to_download_locally.zip
+
 
 <<<<<<< Updated upstream
 
