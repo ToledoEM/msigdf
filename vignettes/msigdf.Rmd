@@ -10,7 +10,9 @@ author:
 maintenace: Enrique M. Toledo (enriquetoledo@gmail.com)
 package: msigdf
 output:
-  BiocStyle::html_document
+  BiocStyle::html_document:
+    theme: united
+    highlight: zenburn
 abstract: |
   This data package contains the Molecular Signature Database (MSigDB) for both human and predicted mouse orthologs in separate data frames (tibbles). 
   Each data frame (`msigdf.human` and `msigdf.mouse`) contain three columns: the collection (Hallmark, or c1-c8), the gene set, and Entrez IDs
@@ -35,10 +37,10 @@ Original data from the Broad Institute's Molecular Signature Database (MSigDB)^[
 
 _The gene sets contained in the MSigDB are from a wide variety of sources, and relate to a variety of species, mostly human. To facilitate use of the MSigDB in our work, we have created a pure mouse version of the MSigDB by mapping all sets to mouse orthologs. A pure human version is also provided._
 
-**_Prodecure:_** 
+**_Procedure:_** 
 
-_1. The current MSigDB v2023.2 gmt files were downloaded from Broad ftp._      
-_2. This was domne with the human and mouse gene sets_     
+_1. The current MSigDB v2024.1 gmt files were downloaded from Broad ftp._      
+_2. This was done with the human and mouse gene sets_     
 _3. Each collection was converted to a list in R, and written to a RData file using `save()`._        
 
 ----
@@ -49,7 +51,7 @@ See the script in `data-raw/` to see how the data frames (tibbles) were created.
 
 There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection divided by sub-collection (like cc, bp and mf for C5). The format of the data is tidy, so each row is a single gene set collection, sub-collection and gene symbol. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
 
-New C5 ontology information into was added into category subcode for easy filtering and consistency
+New C5 ontology information was added to the category subcode for easy filtering and consistency.   
 
 - HPO: Human Phenotype Ontology
 - MF: GO Molecular Function ontology
