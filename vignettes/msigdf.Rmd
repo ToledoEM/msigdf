@@ -13,6 +13,12 @@ output:
   BiocStyle::html_document:
     theme: united
     highlight: zenburn
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    toc_depth: 3
+    number_sections: true
 abstract: |
   This data package contains the Molecular Signature Database (MSigDB) for both human and predicted mouse orthologs in separate data frames (tibbles). 
   Each data frame (`msigdf.human` and `msigdf.mouse`) contain three columns: the collection (Hallmark, or c1-c8), the gene set, and Entrez IDs
@@ -39,7 +45,7 @@ _The gene sets contained in the MSigDB are from a wide variety of sources, and r
 
 **_Procedure:_** 
 
-_1. The current MSigDB v2024.1 gmt files were downloaded from Broad ftp._      
+_1. The current MSigDB v2025.1 gmt files were downloaded from Broad ftp._      
 _2. This was done with the human and mouse gene sets_     
 _3. Each collection was converted to a list in R, and written to a RData file using `save()`._        
 
