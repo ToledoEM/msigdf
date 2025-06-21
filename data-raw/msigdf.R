@@ -23,27 +23,19 @@ gmtPathways <- function(gmt.file) {
 }
 
 
+# updating urls from ftp of Broad
+# bash just look for yml and human and mouse url
+# Only the complete collections are downloaded
 
 # Human gene sets
 
 ## For gene symbols
 
 # Load gmt genesets files as lists
-gmts <- dir(path = "data-raw/gmt/human/msigdb_v2024.1.Hs_GMTs/",pattern = "*.symbols.gmt")
-for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/gmt/human/msigdb_v2024.1.Hs_GMTs/",gmts[i]))) }
+gmts <- dir(path = "data-raw/human_gmt/",pattern = "*.symbols.gmt")
+for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/human_gmt/",gmts[i]))) }
 
-# remove duplicated information
-rm(c5.all.v2024.1.Hs.symbols.gmt,
-   c5.go.v2024.1.Hs.symbols.gmt,
-   c3.all.v2024.1.Hs.symbols.gmt,
-   c4.all.v2024.1.Hs.symbols.gmt,
-   c2.all.v2024.1.Hs.symbols.gmt,
-   c2.cp.v2024.1.Hs.symbols.gmt,
-   c7.all.v2024.1.Hs.symbols.gmt,
-   msigdb.v2024.1.Hs.symbols.gmt)
-
-
-gmts <- ls(pattern = "v2024")
+gmts <- ls(pattern = "v2025")
 msigdf<- list()
 for (i in seq_along(gmts)){
   msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) tibble(symbol=x), .id="geneset") %>%
@@ -69,7 +61,7 @@ msigdf_symbol <- bind_rows(!!!msigdf,.id = "gs_labels")
 #    separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "drop") %>% distinct()
 
 
-msigdf_symbol <- msigdf_symbol %>% mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2024\\.1\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
+msigdf_symbol <- msigdf_symbol %>% mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2025\\.1\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
   separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "merge") %>%  distinct()
 
 
@@ -89,23 +81,14 @@ msigdf.urls <- msigdf_symbol %>%
 # Mouse
 
 #clean
-rm(list=ls(pattern="v2024."),msigdf,gmts)
+rm(list=ls(pattern="v2025."),gmts,msigdf_symbol)
 
 # Load gmt genesets files as lists
-gmts <- dir(path = "data-raw/gmt/mouse/msigdb_v2024.1.Mm_GMTs/",pattern = "*.symbols.gmt")
-for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/gmt/mouse/msigdb_v2024.1.Mm_GMTs/",gmts[i]))) }
+gmts <- dir(path = "data-raw/mouse_gmt/",pattern = "*.symbols.gmt")
+for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/mouse_gmt/",gmts[i]))) }
 
 
-# remove duplicated information
-rm(m2.all.v2024.1.Mm.symbols.gmt,
-   m2.cp.v2024.1.Mm.symbols.gmt,
-   m5.all.v2024.1.Mm.symbols.gmt,
-   m5.go.v2024.1.Mm.symbols.gmt,
-   m3.all.v2024.1.Mm.symbols.gmt,
-   msigdb.v2024.1.Mm.symbols.gmt)
-
-
-gmts <- ls(pattern = "v2024")
+gmts <- ls(pattern = "v2025")
 msigdf<- list()
 for (i in seq_along(gmts)){
   msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) tibble(symbol=x), .id="geneset") %>%
@@ -127,7 +110,7 @@ msigdf_symbol <- bind_rows(!!!msigdf,.id = "gs_labels")
 
 
 msigdf_symbol <- msigdf_symbol %>%
-  mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2024\\.1\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
+  mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2025\\.1\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
   separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "merge") %>%
   distinct()
 
@@ -147,8 +130,9 @@ library(devtools)
 use_data(msigdf.human,msigdf.mouse,msigdf.urls,msigdf.mouse.urls, overwrite=TRUE, compress='xz')
 use_package("tibble")
 # detach("package:biomaRt", unload=TRUE)
-rm(list=ls(pattern="v2024."),msigdf,msigdf_symbol,i,gmts,gmtPathways)
+rm(list=ls(pattern="v2025."),msigdf,msigdf_symbol,i,gmts,gmtPathways)
 
 library(roxygen2)
 roxygenize(package.dir = ".", roclets = NULL, load_code = NULL, clean = T)
 devtools::check()
+
