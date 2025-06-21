@@ -5,7 +5,7 @@
 \alias{msigdf.human}
 \title{MSigDB in a data frame (human) by gene symbol}
 \format{
-A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset} and \code{symbol}. See vignette for more details.
+A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset}, and \code{symbol}.
 }
 \source{
 \url{http://software.broadinstitute.org/gsea/msigdb/}
@@ -14,6 +14,9 @@ A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \c
 msigdf.human
 }
 \description{
-MSigDB in a data frame (human)
+A data frame containing the Molecular Signatures Database (MSigDB) gene sets for human, with gene symbols.
+}
+\examples{
+head(msigdf.human)
 }
 \keyword{datasets}
