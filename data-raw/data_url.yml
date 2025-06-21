@@ -1,0 +1,19 @@
+human:
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c1.all.v2025.1.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.all.v2025.1.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.all.v2025.1.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c4.all.v2025.1.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c5.all.v2025.1.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c6.all.v2025.1.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c7.all.v2025.1.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c8.all.v2025.1.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/h.all.v2025.1.Hs.symbols.gmt
+
+mouse:
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m1.all.v2025.1.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m2.all.v2025.1.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m3.all.v2025.1.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.all.v2025.1.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m7.all.v2025.1.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m8.all.v2025.1.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/mh.all.v2025.1.Mm.symbols.gmt
