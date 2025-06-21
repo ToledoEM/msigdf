@@ -1,12 +1,12 @@
 # MSigDF
 
-The [Molecular Signatures Database (MSigDB)](http://www.broad.mit.edu/gsea/msigdb/index.jsp) in a tidy data frame.    
+The [Molecular Signatures Database (MSigDB)](https://www.gsea-msigdb.org/gsea/msigdb/index.jsp) in a tidy data frame.    
 
 
 This is the updated version of the archived repo of [@stephenturner](https://github.com/stephenturner/msigdf/pull/1)   
     
     
-Current version: [v2024.1.Hs](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_Latest/) (Aug 2024).
+Current version: [v2025.1.Hs](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_Latest/) (June 2025).
 
 ## Installation
 
