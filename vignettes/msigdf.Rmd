@@ -2,10 +2,8 @@
 title: "MSigDF: Molecular Signature Database (MSigDB) in a Data Frame"
 author:
 - name: Stephen D. Turner 
-  affiliation: University of Virginia, Charlottesville VA, United States
   email: vustephen@gmail.com
 - name: Enrique M. Toledo 
-  affiliation: ---
   email: enriquetoledo@gmail.com
 maintenace: Enrique M. Toledo (enriquetoledo@gmail.com)
 package: msigdf
