@@ -81,5 +81,7 @@ Code for building this data is in folder data-raw
 
 
 
-See the [package vignette](http://htmlpreview.github.io/?https://raw.githubusercontent.com/ToledoEM/msigdf/master/vignettes/msigdf.html) for more.   
+See the [package vignette](http://htmlpreview.github.io/?https://raw.githubusercontent.com/ToledoEM/msigdf/master/vignettes/msigdf.html) for more.
+
+<a href="https://creativecommons.org">MSigDF</a> by <a href="https://creativecommons.org">US</a> is marked <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/zero.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;">
 
