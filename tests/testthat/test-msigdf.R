@@ -1,3 +1,6 @@
+library(testthat)
+library(dplyr)
+
 test_that("msigdf.human has expected structure and content", {
   expect_true(exists("msigdf.human"))
   expect_s3_class(msigdf.human, "tbl_df")

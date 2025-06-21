@@ -5,7 +5,7 @@
 \alias{msigdf.mouse}
 \title{MSigDB in a data frame (mouse) by gene symbol}
 \format{
-A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset} and \code{symbol}. See vignette for more details.
+A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset}, and \code{symbol}.
 }
 \source{
 \url{http://software.broadinstitute.org/gsea/msigdb/}
@@ -14,6 +14,9 @@ A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \c
 msigdf.mouse
 }
 \description{
-MSigDB in a data frame (mouse)
+A data frame containing the Molecular Signatures Database (MSigDB) gene sets for mouse, with gene symbols.
+}
+\examples{
+head(msigdf.mouse)
 }
 \keyword{datasets}
