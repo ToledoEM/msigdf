@@ -1,6 +1,31 @@
+# R project files
 ^.*\.Rproj$
 ^\.Rproj\.user$
+
+# Version control - multiple patterns to ensure .git is excluded
+^\.git$
+^\.git/
+^\.git/*
+\.git$
+^\.gitignore$
+
+# Development files
 ^data-raw$
-README.md
-^\.git/$
-^.Rprofile$
+^\.Rprofile$
+^examples$
+
+# Documentation
+^README\.md$
+^NEWS\.md$
+^cran-comments\.md$
+
+# System files
+^\.DS_Store$
+
+# GitHub
+^\.github$
+
+# Package documentation site
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
