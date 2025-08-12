@@ -5,3 +5,5 @@
 # inst/doc
 .DS_Store
 .Rbuildignore
+# Ignore all folders under data-dar
+data-raw/*/
