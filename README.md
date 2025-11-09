@@ -81,10 +81,9 @@ msigdf.human %>% filter(geneset=="KEGG_NON_HOMOLOGOUS_END_JOINING")
 
 Code for building this data is in folder data-raw
 
+See the [package vignette](https://toledoem.github.io/msigdf/msigdf.html) for more.
 
-See the [package vignette](http://htmlpreview.github.io/?https://raw.githubusercontent.com/ToledoEM/msigdf/master/vignettes/msigdf.html) for more.
-
-
+## License
 [MSigDF](https://creativecommons.org) by [US](https://creativecommons.org) is marked [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)   
     
 ![CC logo](https://mirrors.creativecommons.org/presskit/icons/cc.svg) 
