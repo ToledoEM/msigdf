@@ -27,7 +27,7 @@ devtools::install_github("toledoem/msigdf", build_vignettes = TRUE)
 ## Example usage
 
 
-See the [package vignette](http://htmlpreview.github.io/?https://raw.githubusercontent.com/ToledoEM/msigdf/master/vignettes/msigdf.html) for more.   
+See the [package vignette](https://toledoem.github.io/msigdf/msigdf.html) for more.   
 
 ```r
 library(dplyr)
