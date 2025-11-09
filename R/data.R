@@ -49,21 +49,3 @@ NULL
 #' head(msigdf.mouse.urls)
 "msigdf.mouse.urls"
 
-.onLoad <- function(libname, pkgname) {
-  pkg_env <- asNamespace(pkgname)
-  base_url <- "https://raw.githubusercontent.com/ToledoEM/msigdf-data/main/data/"
-  data_files <- c("msigdf.human.rda", "msigdf.mouse.rda", "msigdf.urls.rda", "msigdf.mouse.urls.rda")
-  
-  for (file in data_files) {
-    url <- paste0(base_url, file)
-    temp <- tempfile()
-    tryCatch({
-      download.file(url, temp, quiet = TRUE)
-      load(temp, envir = pkg_env)
-    }, error = function(e) {
-      warning("Failed to download ", file, ": ", e$message)
-    })
-    unlink(temp)
-  }
-}
-
