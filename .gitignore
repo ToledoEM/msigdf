@@ -7,3 +7,4 @@
 .Rbuildignore
 # Ignore all folders under data-dar
 data-raw/*/
+forCRAN.md
