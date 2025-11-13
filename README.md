@@ -1,5 +1,7 @@
 # MSigDF
 
+<p align="left"><img src="inst/figures/msigdf_logo.png" alt="msigdf logo" width="200" /></p>
+
 The [Molecular Signatures Database (MSigDB)](https://www.gsea-msigdb.org/gsea/msigdb/index.jsp) in a tidy data frame.    
 
 
