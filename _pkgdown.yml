@@ -3,7 +3,7 @@ url: https://toledoem.github.io/msigdf
 template:
   bootstrap: 5
 
-logo: inst/figures/msigdf_logo.png
+logo: man/figures/msigdf_logo.png
 
 navbar:
   structure:
