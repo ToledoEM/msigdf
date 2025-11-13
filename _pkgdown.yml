@@ -3,11 +3,16 @@ url: https://toledoem.github.io/msigdf
 template:
   bootstrap: 5
 
-logo: man/figures/msigdf_logo.png
+logo: https://toledoem.github.io/img/msigdf_logo.png
 
 navbar:
   structure:
     left: [home, reference, articles]
+
+articles:
+  - title: Articles
+    contents:
+      - msigdf
 
 home:
   title: msigdf
