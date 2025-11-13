@@ -5,6 +5,14 @@
 # inst/doc
 .DS_Store
 .Rbuildignore
-# Ignore all folders under data-dar
+
+# R build artifacts
+*.tar.gz
+*.Rcheck
+..Rcheck
+*.Rcheck/
+..Rcheck/
+
+# Ignore all folders under data-raw
 data-raw/*/
 forCRAN.md
