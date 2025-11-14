@@ -1,6 +1,6 @@
 # MSigDF
 
-![msigdf logo](https://toledoem.github.io/img/msigdf_logo.png){width=200}
+![msigdf logo](https://toledoem.github.io/img/msigdf_logo.png){width=150}
   
 The [Molecular Signatures Database (MSigDB)](https://www.gsea-msigdb.org/gsea/msigdb/index.jsp) in a tidy data frame.    
 
@@ -29,7 +29,7 @@ devtools::install_github("toledoem/msigdf", build_vignettes = TRUE)
 ## Example usage
 
 
-See the [package vignette](https://toledoem.github.io/msigdf/msigdf.html) for more.   
+See the [package vignette](https://toledoem.github.io/msigdf/articles/msigdf.html) for more examples.   
 
 ```r
 library(dplyr)
@@ -83,10 +83,10 @@ msigdf.human %>% filter(geneset=="KEGG_NON_HOMOLOGOUS_END_JOINING")
 
 Code for building this data is in folder data-raw
 
-See the [package vignette](https://toledoem.github.io/msigdf/msigdf.html) for more.
+See the [package vignette](https://toledoem.github.io/msigdf/articles/msigdf.html) for more.
 
 ## License
 [MSigDF](https://creativecommons.org) by [US](https://creativecommons.org) is marked [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)   
     
-![CC logo](https://mirrors.creativecommons.org/presskit/icons/cc.svg) 
+![CC logo](https://mirrors.creativecommons.org/presskit/icons/cc.svg)    
 ![Zero logo](https://mirrors.creativecommons.org/presskit/icons/zero.svg)
