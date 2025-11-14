@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2025-06-21" />
+<meta name="date" content="2025-11-14" />
 
 <title>MSigDF: Molecular Signature Database (MSigDB) in a Data Frame</title>
 
@@ -1290,8 +1290,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -1302,7 +1303,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -1919,10 +1920,9 @@ function toggle_visibility(id1) {
 
 
 <h1 class="title toc-ignore">MSigDF: Molecular Signature Database (MSigDB) in a Data Frame</h1>
-<p class="author-name">Stephen D. Turner<span class="affil-mark">1*</span> and Enrique M. Toledo<span class="affil-mark">2**</span></p>
-<p class="author-affiliation"><span class="affil-mark">1</span>University of Virginia, Charlottesville VA, United States<br><span class="affil-mark">2</span>---</p>
+<p class="author-name">Stephen D. Turner<span class="affil-mark">*</span> and Enrique M. Toledo<span class="affil-mark">**</span></p>
 <p class="author-email"><span class="affil-mark">*</span><a href="mailto:vustephen@gmail.com">vustephen@gmail.com</a><br><span class="affil-mark">**</span><a href="mailto:enriquetoledo@gmail.com">enriquetoledo@gmail.com</a></p>
-<h4 class="date">21 June 2025</h4>
+<h4 class="date">14 November 2025</h4>
 <h4 class="abstract">Abstract</h4>
 <p>This data package contains the Molecular Signature Database (MSigDB) for both human and predicted mouse orthologs in separate data frames (tibbles).
 Each data frame (<code>msigdf.human</code> and <code>msigdf.mouse</code>) contain three columns: the collection (Hallmark, or c1-c8), the gene set, and Entrez IDs
@@ -2001,19 +2001,19 @@ for genes in that set. The <code>msigdf.urls</code> tibble contains links to des
 <pre><code>## # A tibble: 13 × 4
 ##    category_code category_subcode geneset                         symbol 
 ##    &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;                           &lt;chr&gt;  
-##  1 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING DCLRE1C
-##  2 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING DNTT   
-##  3 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING FEN1   
-##  4 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING LIG4   
-##  5 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING MRE11  
-##  6 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING NHEJ1  
-##  7 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING POLL   
-##  8 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING POLM   
-##  9 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING PRKDC  
-## 10 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING RAD50  
-## 11 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING XRCC4  
-## 12 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING XRCC5  
-## 13 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING XRCC6</code></pre>
+##  1 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING DCLRE1C
+##  2 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING DNTT   
+##  3 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING FEN1   
+##  4 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING LIG4   
+##  5 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING MRE11  
+##  6 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING NHEJ1  
+##  7 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING POLL   
+##  8 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING POLM   
+##  9 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING PRKDC  
+## 10 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING RAD50  
+## 11 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING XRCC4  
+## 12 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING XRCC5  
+## 13 c2            all              KEGG_NON_HOMOLOGOUS_END_JOINING XRCC6</code></pre>
 <p>Some software, e.g., <a href="https://github.com/ctlab/fgsea">fGSEA</a> might require gene sets to be a named list of genes identifiers, where the name of each element in the list is the name of the pathway. This is how the data was originally structured, and we can return to it with <code>plyr::dlply()</code>. Here, let’s use only the hallmark sets, and after we <code>dlply</code> the data into this named list format, get just the first few pathways, and in each of those, just display the first few gene symbols.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>msigdf.human <span class="sc">%&gt;%</span> </span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">filter</span>(category_code<span class="sc">==</span><span class="st">&quot;c2&quot;</span>) <span class="sc">%&gt;%</span> </span>
@@ -2049,43 +2049,42 @@ for genes in that set. The <code>msigdf.urls</code> tibble contains links to des
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>msigdf.human <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">group_by</span>(category_code,category_subcode) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 26 × 3
-## # Groups:   category_code [9]
-##    category_code category_subcode      n
-##    &lt;chr&gt;         &lt;chr&gt;             &lt;int&gt;
-##  1 c1            all               42654
-##  2 c2            cgp              393284
-##  3 c2            cp.biocarta        4814
-##  4 c2            cp.kegg_legacy    12795
-##  5 c2            cp.kegg_medicus    9662
-##  6 c2            cp.pid             8054
-##  7 c2            cp.reactome       97590
-##  8 c2            cp.wikipathways   37188
-##  9 c3            mir              406258
-## 10 c3            mir.mir_legacy    34178
-## # ℹ 16 more rows</code></pre>
+<pre><code>## # A tibble: 16 × 3
+## # Groups:   category_code [16]
+##    category_code category_subcode       n
+##    &lt;chr&gt;         &lt;chr&gt;              &lt;int&gt;
+##  1 c1            all                43429
+##  2 c2            all               581467
+##  3 c3            all               818674
+##  4 c4            all                98548
+##  5 c5            all              1361645
+##  6 c6            all                30586
+##  7 c7            all               990349
+##  8 c8            all               157386
+##  9 h             all                 7322
+## 10 m1            all                41375
+## 11 m2            all               197902
+## 12 m3            all               396685
+## 13 m5            all               885544
+## 14 m7            all                70547
+## 15 m8            all                47967
+## 16 mh            all                 7191</code></pre>
 <p><strong>Mouse Collection of gene sets</strong>
 <a href="https://www.gsea-msigdb.org/gsea/msigdb/mouse/collections.jsp" class="uri">https://www.gsea-msigdb.org/gsea/msigdb/mouse/collections.jsp</a></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>msigdf.mouse <span class="sc">%&gt;%</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">group_by</span>(category_code,category_subcode) <span class="sc">%&gt;%</span> </span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 13 × 3
-## # Groups:   category_code [6]
-##    category_code category_subcode      n
-##    &lt;chr&gt;         &lt;chr&gt;             &lt;int&gt;
-##  1 m1            all               41569
-##  2 m2            cgp              113138
-##  3 m2            cp.biocarta        3958
-##  4 m2            cp.reactome       71506
-##  5 m2            cp.wikipathways    9617
-##  6 m3            gtrd             163607
-##  7 m3            mirdb            233394
-##  8 m5            go.bp            649092
-##  9 m5            go.cc            101934
-## 10 m5            go.mf            109239
-## 11 m5            mpt                2606
-## 12 m8            all               47984
-## 13 mh            all                7191</code></pre>
+<pre><code>## # A tibble: 7 × 3
+## # Groups:   category_code [7]
+##   category_code category_subcode      n
+##   &lt;chr&gt;         &lt;chr&gt;             &lt;int&gt;
+## 1 m1            all               41375
+## 2 m2            all              197902
+## 3 m3            all              396685
+## 4 m5            all              885544
+## 5 m7            all               70547
+## 6 m8            all               47967
+## 7 mh            all                7191</code></pre>
 <p>Get the URL for the hallmark set with the fewest number of genes (Notch signaling). Optionally, <code>%&gt;%</code> this to <code>browseURL</code> to open it up in your browser.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>msigdf.human <span class="sc">%&gt;%</span></span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="fu">filter</span>(category_code<span class="sc">==</span><span class="st">&quot;h&quot;</span>) <span class="sc">%&gt;%</span></span>
@@ -2094,7 +2093,8 @@ for genes in that set. The <code>msigdf.urls</code> tibble contains links to des
 <span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>  <span class="fu">inner_join</span>(msigdf.urls, <span class="at">by=</span><span class="st">&quot;geneset&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>  <span class="fu">pull</span>(url)</span></code></pre></div>
-<pre><code>## [1] &quot;http://software.broadinstitute.org/gsea/msigdb/cards/HALLMARK_NOTCH_SIGNALING&quot;</code></pre>
+<pre><code>## [1] &quot;http://software.broadinstitute.org/gsea/msigdb/cards/HALLMARK_NOTCH_SIGNALING&quot;
+## [2] &quot;http://software.broadinstitute.org/gsea/msigdb/cards/HALLMARK_NOTCH_SIGNALING&quot;</code></pre>
 <p>Just look at the number of genes in each KEGG pathway (sorted descending by the number of genes in that pathway):</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>msigdf.human <span class="sc">%&gt;%</span></span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="fu">filter</span>(category_code<span class="sc">==</span><span class="st">&quot;c2&quot;</span> <span class="sc">&amp;</span> <span class="fu">grepl</span>(<span class="st">&quot;^KEGG_&quot;</span>, geneset)) <span class="sc">%&gt;%</span></span>
@@ -2111,22 +2111,22 @@ for genes in that set. The <code>msigdf.urls</code> tibble contains links to des
 ##  6 KEGG_REGULATION_OF_ACTIN_CYTOSKELETON          213
 ##  7 KEGG_FOCAL_ADHESION                            199
 ##  8 KEGG_CHEMOKINE_SIGNALING_PATHWAY               188
-##  9 KEGG_HUNTINGTONS_DISEASE                       182
+##  9 KEGG_HUNTINGTONS_DISEASE                       183
 ## 10 KEGG_ENDOCYTOSIS                               181
 ## # ℹ 834 more rows</code></pre>
 </div>
 <div id="session-info" class="section level1 unnumbered">
 <h1>Session info</h1>
-<pre><code>## R version 4.5.0 (2025-04-11)
+<pre><code>## R version 4.5.1 (2025-06-13)
 ## Platform: aarch64-apple-darwin20
-## Running under: macOS Sequoia 15.5
+## Running under: macOS Tahoe 26.1
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
 ## LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 ## 
 ## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## [1] C/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 ## 
 ## time zone: Europe/London
 ## tzcode source: internal
@@ -2135,25 +2135,30 @@ for genes in that set. The <code>msigdf.urls</code> tibble contains links to des
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] msigdf_2025.1    lubridate_1.9.4  forcats_1.0.0    stringr_1.5.1   
-##  [5] dplyr_1.1.4      purrr_1.0.4      readr_2.1.5      tidyr_1.3.1     
-##  [9] tibble_3.3.0     ggplot2_3.5.2    tidyverse_2.0.0  knitr_1.50      
-## [13] BiocStyle_2.36.0
+##  [1] lubridate_1.9.4  forcats_1.0.1    stringr_1.6.0    dplyr_1.1.4     
+##  [5] purrr_1.2.0      readr_2.1.5      tidyr_1.3.1      tibble_3.3.0    
+##  [9] ggplot2_4.0.0    tidyverse_2.0.0  knitr_1.50       BiocStyle_2.36.0
+## [13] msigdf_2025.1   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] gtable_0.3.6        jsonlite_2.0.0      compiler_4.5.0     
-##  [4] BiocManager_1.30.26 tidyselect_1.2.1    jquerylib_0.1.4    
-##  [7] scales_1.4.0        yaml_2.3.10         fastmap_1.2.0      
-## [10] R6_2.6.1            generics_0.1.4      bookdown_0.43      
-## [13] tzdb_0.5.0          bslib_0.9.0         pillar_1.10.2      
-## [16] RColorBrewer_1.1-3  rlang_1.1.6         utf8_1.2.6         
-## [19] stringi_1.8.7       cachem_1.1.0        xfun_0.52          
-## [22] sass_0.4.10         timechange_0.3.0    cli_3.6.5          
-## [25] withr_3.0.2         magrittr_2.0.3      digest_0.6.37      
-## [28] grid_4.5.0          rstudioapi_0.17.1   hms_1.1.3          
-## [31] lifecycle_1.0.4     vctrs_0.6.5         evaluate_1.0.3     
-## [34] glue_1.8.0          farver_2.1.2        rmarkdown_2.29     
-## [37] tools_4.5.0         pkgconfig_2.0.3     htmltools_0.5.8.1</code></pre>
+##  [1] utf8_1.2.6          sass_0.4.10         generics_0.1.4     
+##  [4] xml2_1.4.1          stringi_1.8.7       hms_1.1.4          
+##  [7] digest_0.6.37       magrittr_2.0.4      timechange_0.3.0   
+## [10] evaluate_1.0.5      grid_4.5.1          RColorBrewer_1.1-3 
+## [13] bookdown_0.45       pkgload_1.4.1       fastmap_1.2.0      
+## [16] rprojroot_2.1.1     jsonlite_2.0.0      pkgbuild_1.4.8     
+## [19] sessioninfo_1.2.3   BiocManager_1.30.26 scales_1.4.0       
+## [22] jquerylib_0.1.4     cli_3.6.5           rlang_1.1.6        
+## [25] ellipsis_0.3.2      remotes_2.5.0       withr_3.0.2        
+## [28] cachem_1.1.0        yaml_2.3.10         devtools_2.4.6     
+## [31] tools_4.5.1         tzdb_0.5.0          memoise_2.0.1      
+## [34] vctrs_0.6.5         R6_2.6.1            lifecycle_1.0.4    
+## [37] fs_1.6.6            usethis_3.2.1       pkgconfig_2.0.3    
+## [40] desc_1.4.3          pillar_1.11.1       bslib_0.9.0        
+## [43] gtable_0.3.6        glue_1.8.0          tidyselect_1.2.1   
+## [46] xfun_0.54           rstudioapi_0.17.1   farver_2.1.2       
+## [49] htmltools_0.5.8.1   rmarkdown_2.30      compiler_4.5.1     
+## [52] S7_0.2.0            roxygen2_7.3.3</code></pre>
 </div>
 
 
