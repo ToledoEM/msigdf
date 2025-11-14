@@ -2,6 +2,10 @@ url: https://toledoem.github.io/msigdf
 
 template:
   bootstrap: 5
+  includes:
+    in_header: |
+      <script data-goatcounter="https://etoledo.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 
 logo: https://toledoem.github.io/img/msigdf_logo.png
 
