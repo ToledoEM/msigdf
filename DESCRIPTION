@@ -17,6 +17,9 @@ LazyData: true
 RoxygenNote: 7.3.3
 Depends: 
     R (>= 3.5)
-Imports: tibble
+Imports: 
+    dplyr,
+    testthat,
+    tibble
 Suggests: knitr, plyr, tidyverse, rmarkdown, BiocStyle
 VignetteBuilder: knitr

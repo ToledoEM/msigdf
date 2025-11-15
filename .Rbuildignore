@@ -6,7 +6,7 @@
 ^\.git$
 ^\.git/
 ^\.git/*
-\.git$
+\.git
 ^\.gitignore$
 
 # Development files
@@ -29,3 +29,5 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^doc$
+^Meta$

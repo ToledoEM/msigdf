@@ -1,0 +1,18 @@
+/* Custom styles for vignette */
+
+/* Set a clear background for code blocks */
+pre, code {
+  background-color: #f8f9fa; /* Light gray background */
+  color: #212529; /* Dark text for readability */
+}
+
+/* Adjust link colors for a modern, subtle look */
+a {
+  color: #007bff; /* Bootstrap primary blue */
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0056b3; /* Slightly darker blue on hover */
+  text-decoration: underline;
+}
