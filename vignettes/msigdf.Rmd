@@ -8,15 +8,18 @@ author:
 maintenace: Enrique M. Toledo (enriquetoledo@gmail.com)
 package: msigdf
 output:
-  BiocStyle::html_document:
-    theme: united
-    highlight: zenburn
+  html_document:
+    theme:
+      version: 5
+      bootswatch: flatly
+    highlight: monochrome
     toc: true
     toc_float:
       collapsed: false
       smooth_scroll: true
     toc_depth: 3
     number_sections: true
+    css: styles.css
 abstract: |
   This data package contains the Molecular Signature Database (MSigDB) for both human and predicted mouse orthologs in separate data frames (tibbles). 
   Each data frame (`msigdf.human` and `msigdf.mouse`) contain three columns: the collection (Hallmark, or c1-c8), the gene set, and Entrez IDs
