@@ -1,0 +1,46 @@
+citHeader("To cite msigdf in publications, please use the following:")
+
+citEntry(
+  entry = "article",
+  title = "Molecular signatures database (MSigDB) 3.0",
+  author = c(
+    person("Arthur", "Liberzon"),
+    person("Aravind", "Subramanian"),
+    person("Reid", "Pinchback"),
+    person("Helga", "Thorvaldsdóttir"),
+    person("Pablo", "Tamayo"),
+    person("Jill P.", "Mesirov")
+  ),
+  journal = "Bioinformatics",
+  volume = "27",
+  number = "12",
+  pages = "1739–1740",
+  year = "2011",
+  doi = "10.1093/bioinformatics/btr260"
+)
+
+citEntry(
+  entry = "article",
+  title = "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+  author = c(
+    person("A.", "Subramanian"),
+    person("P.", "Tamayo"),
+    person("V.K.", "Mootha"),
+    person("S.", "Mukherjee"),
+    person("B.L.", "Ebert"),
+    person("M.A.", "Gillette"),
+    person("A.", "Paulovich"),
+    person("S.L.", "Pomeroy"),
+    person("T.R.", "Golub"),
+    person("E.S.", "Lander"),
+    person("J.P.", "Mesirov")
+  ),
+  journal = "Proc. Natl. Acad. Sci. U.S.A.",
+  volume = "102",
+  number = "43",
+  pages = "15545-15550",
+  year = "2005",
+  doi = "10.1073/pnas.0506580102"
+)
+
+citFooter("[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16815640.svg)](https://doi.org/10.5281/zenodo.16815640)")
