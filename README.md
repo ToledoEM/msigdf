@@ -17,6 +17,12 @@ Current version: [v2026.1](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MS
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16815640.svg)](https://doi.org/10.5281/zenodo.16815640)
 
 
+**Important Notices**
+- MSigDB v2026.1 (Jan 2026) is based on gene annotation data from Ensembl Release 115 (September 2026).
+- Human realese notes: https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2026.1.Hs/
+- Mouse release notes: https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2026.1.Mm/
+    
+    
 ## Installation
 
 ```r
