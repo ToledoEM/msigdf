@@ -8,11 +8,13 @@
 ^\.git/*
 \.git
 ^\.gitignore$
+./.git
 
 # Development files
 ^data-raw$
 ^\.Rprofile$
 ^examples$
+^msigdf_logo\.png$
 
 # Documentation
 ^README\.md$

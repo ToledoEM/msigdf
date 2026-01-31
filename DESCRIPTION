@@ -1,7 +1,7 @@
 Package: msigdf
 Type: Package
 Title: MSigDB in a data frame
-Version: 2025.1
+Version: 2026.1
 Authors@R: c(
     person("Stephen", "Turner", email = "vustephen@gmail.com", role = "aut"),
     person("Toledo", "Enrique", email = "enriquetoledo@gmail.com", role = c("ctb","cre")))
@@ -14,12 +14,11 @@ BugReports: https://github.com/ToledoEM/msigdf/issues
 License: CC0
 Encoding: UTF-8
 LazyData: true
+LazyDataCompression: xz
 RoxygenNote: 7.3.3
 Depends: 
     R (>= 3.5)
 Imports: 
-    dplyr,
-    testthat,
     tibble
-Suggests: knitr, plyr, tidyverse, rmarkdown, BiocStyle
+Suggests: knitr, plyr, tidyverse, rmarkdown, BiocStyle, dplyr, testthat
 VignetteBuilder: knitr

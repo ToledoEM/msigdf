@@ -12,7 +12,7 @@ The [Molecular Signatures Database (MSigDB)](https://www.gsea-msigdb.org/gsea/ms
 This is the updated version of the archived repo of [@stephenturner](https://github.com/stephenturner/msigdf/pull/1)   
     
     
-Current version: [v2025.1.Hs](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_Latest/) (June 2025).
+Current version: [v2026.1](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_Latest/).
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16815640.svg)](https://doi.org/10.5281/zenodo.16815640)
 
@@ -43,7 +43,7 @@ library(msigdf)
 
 ```r
 msigdf.human %>%
-  filter(category_code=="hallmark") %>%
+  filter(category_code=="h") %>%
   head
 ```
 
@@ -51,35 +51,49 @@ msigdf.human %>%
 # A tibble: 6 x 4
   category_code category_subcode geneset                          symbol 
   <chr>         <chr>            <chr>                            <chr>  
-1 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB JUNB   
-2 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB CXCL2  
-3 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB ATF3   
-4 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB NFKBIA 
-5 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB TNFAIP3
-6 hallmark      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB PTGS2 
+1 h      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB JUNB   
+2 h      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB CXCL2  
+3 h      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB ATF3   
+4 h      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB NFKBIA 
+5 h      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB TNFAIP3
+6 h      all              HALLMARK_TNFA_SIGNALING_VIA_NFKB PTGS2 
 ```
 
 ```r
-msigdf.human %>% filter(geneset=="KEGG_NON_HOMOLOGOUS_END_JOINING")
+> msigdf.human %>% 
+    filter(geneset=="KEGG_NON_HOMOLOGOUS_END_JOINING") %>% 
+      group_by(category_subcode) %>% 
+        top_n(n = 10)
 ```
 
+**Since now there are legacy and KEGG gene sets**
+
 ```
-# A tibble: 14 x 4
+Selecting by symbol
+# A tibble: 20 × 4
+# Groups:   category_subcode [2]
    category_code category_subcode geneset                         symbol
-   <chr>         <chr>            <chr>                           <chr>
- 1 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING XRCC4
- 2 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING MRE11A
- 3 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING POLL
- 4 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING POLM
- 5 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING LOC731751
- 6 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING NHEJ1
- 7 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING LIG4
- 8 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING FEN1
- 9 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING DNTT
-10 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING XRCC5
-11 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING RAD50
-12 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING XRCC6
-13 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING PRKDC
+   <chr>         <chr>            <chr>                           <chr> 
+ 1 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING LIG4  
+ 2 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING MRE11 
+ 3 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING NHEJ1 
+ 4 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING POLL  
+ 5 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING POLM  
+ 6 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING PRKDC 
+ 7 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING RAD50 
+ 8 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING XRCC4 
+ 9 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING XRCC5 
+10 c2            cp.kegg_legacy   KEGG_NON_HOMOLOGOUS_END_JOINING XRCC6 
+11 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING LIG4  
+12 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING MRE11 
+13 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING NHEJ1 
+14 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING POLL  
+15 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING POLM  
+16 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING PRKDC 
+17 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING RAD50 
+18 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING XRCC4 
+19 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING XRCC5 
+20 c2            cp               KEGG_NON_HOMOLOGOUS_END_JOINING XRCC6 
 ```
 
 
