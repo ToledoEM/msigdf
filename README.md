@@ -14,7 +14,7 @@ This is the updated version of the archived repo of [@stephenturner](https://git
     
 Current version: [v2026.1](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_Latest/).
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16815640.svg)](https://doi.org/10.5281/zenodo.16815640)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16815640.svg)](https://doi.org/10.5281/zenodo.16815639)
 
 
 **Important Notices**
