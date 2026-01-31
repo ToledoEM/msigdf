@@ -46,7 +46,7 @@ _The gene sets contained in the MSigDB are from a wide variety of sources, and r
 
 **_Procedure:_** 
 
-_1. The current MSigDB v2025.1 gmt files were downloaded from Broad ftp._      
+_1. The current MSigDB v2026.1 gmt files were downloaded from Broad ftp._      
 _2. This was done with the human and mouse gene sets_     
 _3. Each collection was converted to a list in R, and written to a RData file using `save()`._        
 
