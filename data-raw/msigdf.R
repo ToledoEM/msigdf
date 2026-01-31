@@ -35,7 +35,7 @@ gmtPathways <- function(gmt.file) {
 gmts <- dir(path = "data-raw/human_gmt/",pattern = "*.symbols.gmt")
 for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/human_gmt/",gmts[i]))) }
 
-gmts <- ls(pattern = "v2025")
+gmts <- ls(pattern = "v2026")
 msigdf<- list()
 for (i in seq_along(gmts)){
   msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) tibble(symbol=x), .id="geneset") %>%
@@ -61,7 +61,7 @@ msigdf_symbol <- bind_rows(!!!msigdf,.id = "gs_labels")
 #    separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "drop") %>% distinct()
 
 
-msigdf_symbol <- msigdf_symbol %>% mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2025\\.1\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
+msigdf_symbol <- msigdf_symbol %>% mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2026\\.1\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
   separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "merge") %>%  distinct()
 
 
@@ -81,14 +81,14 @@ msigdf.urls <- msigdf_symbol %>%
 # Mouse
 
 #clean
-rm(list=ls(pattern="v2025."),gmts,msigdf_symbol)
+rm(list=ls(pattern="v2026."),gmts,msigdf_symbol)
 
 # Load gmt genesets files as lists
 gmts <- dir(path = "data-raw/mouse_gmt/",pattern = "*.symbols.gmt")
 for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/mouse_gmt/",gmts[i]))) }
 
 
-gmts <- ls(pattern = "v2025")
+gmts <- ls(pattern = "v2026")
 msigdf<- list()
 for (i in seq_along(gmts)){
   msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) tibble(symbol=x), .id="geneset") %>%
@@ -110,7 +110,7 @@ msigdf_symbol <- bind_rows(!!!msigdf,.id = "gs_labels")
 
 
 msigdf_symbol <- msigdf_symbol %>%
-  mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2025\\.1\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
+  mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2026\\.1\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
   separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "merge") %>%
   distinct()
 
@@ -130,7 +130,7 @@ library(devtools)
 use_data(msigdf.human,msigdf.mouse,msigdf.urls,msigdf.mouse.urls, overwrite=TRUE, compress='xz')
 use_package("tibble")
 # detach("package:biomaRt", unload=TRUE)
-rm(list=ls(pattern="v2025."),msigdf,msigdf_symbol,i,gmts,gmtPathways)
+rm(list=ls(pattern="v2026."),msigdf,msigdf_symbol,i,gmts,gmtPathways)
 
 library(roxygen2)
 roxygenize(package.dir = ".", roclets = NULL, load_code = NULL, clean = T)
