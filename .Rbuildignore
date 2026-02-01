@@ -3,12 +3,7 @@
 ^\.Rproj\.user$
 
 # Version control - multiple patterns to ensure .git is excluded
-^\.git$
-^\.git/
-^\.git/*
-\.git
-^\.gitignore$
-./.git
+.git*
 
 # Development files
 ^data-raw$
