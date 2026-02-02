@@ -105,12 +105,22 @@ Selecting by symbol
 
 ## Building
 
-Code for building this data is in folder data-raw
+Code for building this data is in `data-raw/`. Update `data-raw/data_url.yml` with the new MSigDB version and URLs (the top-level `version:` is now used by the scripts).
+
+1) Download GMT files:
+`bash data-raw/get_gmt.sh`
+
+2) Build the data frames and save to `data/`:
+`Rscript data-raw/msigdf.R`
+
+The build script reads the version from `data-raw/data_url.yml`, so you no longer need to edit version strings inside the R code.
 
 See the [package vignette](https://toledoem.github.io/msigdf/articles/msigdf.html) for more.
+
+
 
 ## License
 [MSigDF](https://creativecommons.org) by [US](https://creativecommons.org) is marked [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)   
     
-![CC logo](https://mirrors.creativecommons.org/presskit/icons/cc.svg)    
-![Zero logo](https://mirrors.creativecommons.org/presskit/icons/zero.svg)
+<img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC logo" width="30" />
+<img src="https://mirrors.creativecommons.org/presskit/icons/zero.svg" alt="Zero logo" width="30" />

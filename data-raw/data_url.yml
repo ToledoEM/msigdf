@@ -1,3 +1,9 @@
+# MSigDB data URLs
+# Use symbols genesets
+# Use individual files not aggregated ones since it simplify annotations of gene set categories
+
+version: 2026.1
+
 human:
   - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c1.all.v2026.1.Hs.symbols.gmt
   - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cgp.v2026.1.Hs.symbols.gmt

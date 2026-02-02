@@ -15,9 +15,8 @@
 
 # Ignore all folders under data-raw
 data-raw/*/
-forCRAN.md
-/doc/
-/Meta/
+doc/
+Meta/
 
 #pkgdown site
 site/

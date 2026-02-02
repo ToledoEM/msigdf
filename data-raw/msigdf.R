@@ -14,6 +14,16 @@ library(dplyr)
 library(tidyr)
 library(tibble)
 
+# Read version from yml file to build versioned file names and regex for pattern matching and leave this unchanged in the future
+yaml_lines <- readLines("data-raw/data_url.yml", warn = FALSE)
+version_line <- yaml_lines[grep("^version:", yaml_lines)]
+if (length(version_line) == 0) {
+  stop("No version found in data-raw/data_url.yml")
+}
+version <- trimws(sub("^version:\\s*", "", version_line[1]))
+version_tag <- paste0("v", version)
+version_regex <- gsub("\\.", "\\\\.", version)
+
 #Function to read GTM files, output list. From fgsea package (https://github.com/ctlab/fgsea)
 gmtPathways <- function(gmt.file) {
   pathwayLines <- strsplit(readLines(gmt.file), "\t")
@@ -35,7 +45,7 @@ gmtPathways <- function(gmt.file) {
 gmts <- dir(path = "data-raw/human_gmt/",pattern = "*.symbols.gmt")
 for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/human_gmt/",gmts[i]))) }
 
-gmts <- ls(pattern = "v2026")
+gmts <- ls(pattern = "v2026") #this only select the files with the 2026 version but could be any pattern for the last version. Be carefull of what gmts are in the folders
 msigdf<- list()
 for (i in seq_along(gmts)){
   msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) tibble(symbol=x), .id="geneset") %>%
@@ -135,4 +145,3 @@ rm(list=ls(pattern="v2026."),msigdf,msigdf_symbol,i,gmts,gmtPathways)
 library(roxygen2)
 roxygenize(package.dir = ".", roclets = NULL, load_code = NULL, clean = T)
 devtools::check()
-

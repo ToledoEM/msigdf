@@ -4,10 +4,11 @@
 
 # Version control - multiple patterns to ensure .git is excluded
 .git*
+.git/*
 
 # Development files
-^data-raw$
 ^\.Rprofile$
+data-raw/*$
 ^examples$
 ^msigdf_logo\.png$
 

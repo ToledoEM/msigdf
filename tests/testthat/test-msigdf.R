@@ -55,3 +55,41 @@ test_that("Joining msigdf.human with msigdf.urls returns valid URLs", {
   expect_true(all(!is.na(joined$url)))
   expect_true(any(grepl("NOTCH", joined$url, ignore.case = TRUE)))
 })
+
+test_that("data_url.yml version matches URLs", {
+  find_repo_root <- function(start = getwd()) {
+    path <- normalizePath(start, winslash = "/", mustWork = FALSE)
+    for (i in seq_len(10)) {
+      if (file.exists(file.path(path, "DESCRIPTION"))) {
+        return(path)
+      }
+      parent <- dirname(path)
+      if (parent == path) {
+        break
+      }
+      path <- parent
+    }
+    NA_character_
+  }
+
+  repo_root <- find_repo_root()
+  yaml_path <- if (!is.na(repo_root)) {
+    file.path(repo_root, "data-raw", "data_url.yml")
+  } else {
+    "data-raw/data_url.yml"
+  }
+  skip_if_not(file.exists(yaml_path))
+
+  lines <- readLines(yaml_path, warn = FALSE)
+  version_line <- lines[grep("^version:", lines)]
+  expect_true(length(version_line) == 1)
+
+  version <- trimws(sub("^version:\\s*", "", version_line))
+  expect_gt(nchar(version), 0)
+
+  url_lines <- grep("^\\s*-\\s*(ftp|https?)://", lines, value = TRUE)
+  urls <- sub("^\\s*-\\s*", "", url_lines)
+
+  version_pattern <- paste0("v", gsub("\\.", "\\\\.", version), "\\.")
+  expect_true(all(grepl(version_pattern, urls)))
+})
