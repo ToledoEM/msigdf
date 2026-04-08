@@ -1,5 +1,13 @@
 # msigdf
 
+## 2026.1 build changes (2)
+- Refactor build script: extract shared human/mouse logic into single function.
+- Replace `eval(parse())` with `lapply` in build script.
+- Derive version regex from data_url.yml; remove hardcoded version strings.
+- Move `dplyr` from Suggests to Imports in DESCRIPTION.
+- Add GitHub Actions CI with R CMD check and lintr.
+- Migrate `data/*.rda` to Git LFS; purge binary blobs from git history.
+
 ## 2026.1 build changes
 - Read MSigDB version from data-raw/data_url.yml during builds.
 - Parse URLs by section in data-raw/get_gmt.sh and report missing/extra downloads.
