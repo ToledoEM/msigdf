@@ -1,5 +1,8 @@
 # msigdf
 
+## Repo maintenance
+- Purged `data-raw/gmt/` from entire git history; repo size reduced from ~850MB to ~32MB. Existing clones must be re-cloned.
+
 ## 2026.1 build changes (2)
 - Refactor build script: extract shared human/mouse logic into single function.
 - Replace `eval(parse())` with `lapply` in build script.
