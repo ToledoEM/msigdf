@@ -1,7 +1,5 @@
-# GMT files were downloaded from Broad Institute GSAE website (http://software.broadinstitute.org/gsea/downloads.jsp)
+# GMT files were downloaded from Broad Institute GSAE ftp site
 # Due to the website need user registration to access the datasets. Local copies are in the repository subfolder ~/data-row/gmt/
-# I couldn'd find a way to use curl or wget to save the files.
-#
 #
 # Collections details (http://software.broadinstitute.org/gsea/msigdb/collection_details.jsp)
 #

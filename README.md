@@ -26,14 +26,15 @@ Current version: [v2026.1](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MS
 ## Installation
 
 ```r
-# Install devtools if you don't already have it
-install.packages("devtools")
+# Install pak if you don't already have it 
+# install_github() was deprecated in devtools 2.5.0.
+install.packages("pak")
 
 # Just get the data
-devtools::install_github("toledoem/msigdf")
+pak::pak("toledoem/msigdf")
 
 # Get the data and build the vignette (requires tidyverse, knitr, rmarkdown)
-devtools::install_github("toledoem/msigdf", build_vignettes = TRUE)
+pak::pak("toledoem/msigdf", build_vignettes = TRUE)
 ```
 
 ## Example usage
