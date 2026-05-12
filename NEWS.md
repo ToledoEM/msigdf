@@ -1,6 +1,8 @@
 # msigdf
 
 ## Repo maintenance
+- Add version badge to README.
+- Update GitHub Actions: `actions/checkout@v4.2.1` for Node.js 24 compatibility.
 - Purged `data-raw/gmt/` from entire git history; repo size reduced from ~850MB to ~32MB. Existing clones must be re-cloned.
 
 ## 2026.1 build changes (2)
