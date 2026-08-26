@@ -14,18 +14,18 @@ This is the updated version of the archived repo of [@stephenturner](https://git
     
 Current version: [v2026.1](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_Latest/).
 
-[![R-CMD-check](https://github.com/ToledoEM/msigdf/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ToledoEM/msigdf/actions/workflows/R-CMD-check.yaml)
-[![lint](https://github.com/ToledoEM/msigdf/actions/workflows/lint.yaml/badge.svg)](https://github.com/ToledoEM/msigdf/actions/workflows/lint.yaml)
-[![pkgdown](https://github.com/ToledoEM/msigdf/actions/workflows/pkgdown.yaml/badge.svg)](https://toledoem.github.io/msigdf/)
-[![Codecov test coverage](https://codecov.io/gh/ToledoEM/msigdf/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ToledoEM/msigdf?branch=master)
-[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](https://creativecommons.org/publicdomain/zero/1.0/)
-[![R >= 3.5](https://img.shields.io/badge/R-%3E%3D%203.5-blue.svg)](https://cran.r-project.org/)
-
-<a href="https://doi.org/10.5281/zenodo.16815639"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.16815639.svg" alt="DOI"></a> [![Version](https://img.shields.io/badge/version-2026.1-blue)](https://github.com/ToledoEM/msigdf/releases)
-
+[![R-CMD-check](https://img.shields.io/github/actions/workflow/status/ToledoEM/msigdf/R-CMD-check.yaml?branch=master&label=R-CMD-check&style=flat-square)](https://github.com/ToledoEM/msigdf/actions/workflows/R-CMD-check.yaml)
+[![lint](https://img.shields.io/github/actions/workflow/status/ToledoEM/msigdf/lint.yaml?branch=master&label=lint&style=flat-square)](https://github.com/ToledoEM/msigdf/actions/workflows/lint.yaml)
+[![pkgdown](https://img.shields.io/github/actions/workflow/status/ToledoEM/msigdf/pkgdown.yaml?branch=master&label=pkgdown&style=flat-square)](https://toledoem.github.io/msigdf/)
+[![codecov](https://img.shields.io/codecov/c/github/ToledoEM/msigdf?branch=master&style=flat-square)](https://app.codecov.io/gh/ToledoEM/msigdf?branch=master)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![license](https://img.shields.io/badge/license-CC0%201.0-lightgrey?style=flat-square)](https://creativecommons.org/publicdomain/zero/1.0/)
+[![R](https://img.shields.io/badge/R-%3E%3D%203.5-blue?style=flat-square)](https://cran.r-project.org/)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.16815639-blue?style=flat-square)](https://doi.org/10.5281/zenodo.16815639)
+[![version](https://img.shields.io/badge/version-2026.1-blue?style=flat-square)](https://github.com/ToledoEM/msigdf/releases)
 
 **Important Notices**
+
 - MSigDB v2026.1 is based on gene annotation data from Ensembl Release 115.
 - Human release notes: https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2026.1.Hs/
 - Mouse release notes: https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2026.1.Mm/
