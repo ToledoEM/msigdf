@@ -5,10 +5,11 @@
 \alias{msigdf.human}
 \title{MSigDB in a data frame (human) by gene symbol}
 \format{
-A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset}, and \code{symbol}.
+A data frame with 4 variables: \code{category_code},
+  \code{category_subcode}, \code{geneset}, and \code{symbol}.
 }
 \source{
-\url{http://software.broadinstitute.org/gsea/msigdb/}
+\url{https://www.gsea-msigdb.org/gsea/msigdb/}
 }
 \usage{
 msigdf.human

@@ -49,11 +49,49 @@ test_that("Grouping and tallying works for msigdf.human", {
 # Example test: join with urls
 
 test_that("Joining msigdf.human with msigdf.urls returns valid URLs", {
-  joined <- msigdf.human %>% dplyr::filter(geneset == "HALLMARK_NOTCH_SIGNALING") %>%
+  joined <- msigdf.human %>%
+    dplyr::filter(geneset == "HALLMARK_NOTCH_SIGNALING") %>%
     dplyr::distinct(geneset) %>%
     dplyr::left_join(msigdf.urls, by = "geneset")
   expect_true(all(!is.na(joined$url)))
   expect_true(any(grepl("NOTCH", joined$url, ignore.case = TRUE)))
+})
+
+test_that("no missing values in any dataset", {
+  expect_false(any(is.na(msigdf.human)))
+  expect_false(any(is.na(msigdf.mouse)))
+  expect_false(any(is.na(msigdf.urls)))
+  expect_false(any(is.na(msigdf.mouse.urls)))
+})
+
+test_that("every geneset has a matching URL", {
+  expect_length(setdiff(unique(msigdf.human$geneset), unique(msigdf.urls$geneset)), 0)
+  expect_length(setdiff(unique(msigdf.mouse$geneset), unique(msigdf.mouse.urls$geneset)), 0)
+})
+
+test_that("category codes are within the expected MSigDB collections", {
+  # A bad separate() after a version bump shows up here first.
+  expect_setequal(
+    unique(msigdf.human$category_code),
+    c("h", paste0("c", 1:9))
+  )
+  expect_setequal(
+    unique(msigdf.mouse$category_code),
+    c("mh", paste0("m", c(1, 2, 3, 5, 7, 8)))
+  )
+})
+
+test_that("hallmark collections carry the expected 50 gene sets", {
+  expect_equal(dplyr::n_distinct(msigdf.human$geneset[msigdf.human$category_code == "h"]), 50)
+  expect_equal(dplyr::n_distinct(msigdf.mouse$geneset[msigdf.mouse$category_code == "mh"]), 50)
+})
+
+test_that("URLs are well formed", {
+  expect_true(all(grepl("^https?://", msigdf.urls$url)))
+  expect_true(all(grepl("^https://", msigdf.mouse.urls$url)))
+  # The geneset name is the last path segment of its URL.
+  expect_true(all(basename(msigdf.urls$url) == msigdf.urls$geneset))
+  expect_true(all(basename(msigdf.mouse.urls$url) == msigdf.mouse.urls$geneset))
 })
 
 test_that("data_url.yml version matches URLs", {

@@ -7,8 +7,9 @@ NULL
 #'
 #' @docType data
 #' @keywords datasets
-#' @source \url{http://software.broadinstitute.org/gsea/msigdb/}
-#' @format A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset}, and \code{symbol}.
+#' @source \url{https://www.gsea-msigdb.org/gsea/msigdb/}
+#' @format A data frame with 4 variables: \code{category_code},
+#'   \code{category_subcode}, \code{geneset}, and \code{symbol}.
 #' @examples
 #' head(msigdf.human)
 "msigdf.human"
@@ -19,8 +20,9 @@ NULL
 #'
 #' @docType data
 #' @keywords datasets
-#' @source \url{http://software.broadinstitute.org/gsea/msigdb/}
-#' @format A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset}, and \code{symbol}.
+#' @source \url{https://www.gsea-msigdb.org/gsea/msigdb/}
+#' @format A data frame with 4 variables: \code{category_code},
+#'   \code{category_subcode}, \code{geneset}, and \code{symbol}.
 #' @examples
 #' head(msigdf.mouse)
 "msigdf.mouse"
@@ -31,7 +33,7 @@ NULL
 #'
 #' @docType data
 #' @keywords datasets
-#' @source \url{https://www.gsea-msigdb.org/gsea/msigdb/geneset/}
+#' @source \url{https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/}
 #' @format A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset}, and \code{url}.
 #' @examples
 #' head(msigdf.urls)
@@ -48,4 +50,3 @@ NULL
 #' @examples
 #' head(msigdf.mouse.urls)
 "msigdf.mouse.urls"
-

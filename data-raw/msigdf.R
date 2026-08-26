@@ -1,28 +1,36 @@
-# GMT files were downloaded from Broad Institute GSAE ftp site
-# Due to the website need user registration to access the datasets. Local copies are in the repository subfolder ~/data-row/gmt/
+# Build the msigdf data frames from the MSigDB GMT files.
 #
-# Collections details (http://software.broadinstitute.org/gsea/msigdb/collection_details.jsp)
+# GMT files are downloaded from the Broad Institute GSEA ftp site by
+# data-raw/get_gmt.sh into data-raw/human_gmt/ and data-raw/mouse_gmt/.
+# Those folders are not tracked in the repository.
 #
+# Collections details:
+#   https://www.gsea-msigdb.org/gsea/msigdb/collections.jsp
+#
+# Run from the repository root:
+#   Rscript data-raw/msigdf.R
+#
+# This script only regenerates data/*.rda. Documentation and package checks
+# are separate developer steps -- see the Building section of README.md.
 
-
-
-# library(tidyverse) #not recommended
 library(plyr)
 library(dplyr)
 library(tidyr)
 library(tibble)
 
-# Read version from yml file to build versioned file names and regex for pattern matching and leave this unchanged in the future
-yaml_lines <- readLines("data-raw/data_url.yml", warn = FALSE)
-version_line <- yaml_lines[grep("^version:", yaml_lines)]
-if (length(version_line) == 0) {
-  stop("No version found in data-raw/data_url.yml")
+# Version is read from data-raw/data_url.yml so a release bump only needs to be
+# made in one place. Every version-dependent pattern below is derived from it.
+read_version <- function(yml = "data-raw/data_url.yml") {
+  lines <- readLines(yml, warn = FALSE)
+  version_line <- lines[grep("^version:", lines)]
+  if (length(version_line) == 0) {
+    stop("No version found in ", yml)
+  }
+  trimws(sub("^version:\\s*", "", version_line[1]))
 }
-version <- trimws(sub("^version:\\s*", "", version_line[1]))
-version_tag <- paste0("v", version)
-version_regex <- gsub("\\.", "\\\\.", version)
 
-#Function to read GTM files, output list. From fgsea package (https://github.com/ctlab/fgsea)
+# Read a GMT file into a named list of gene sets.
+# From the fgsea package (https://github.com/ctlab/fgsea).
 gmtPathways <- function(gmt.file) {
   pathwayLines <- strsplit(readLines(gmt.file), "\t")
   pathways <- lapply(pathwayLines, utils::tail, -2)
@@ -30,116 +38,69 @@ gmtPathways <- function(gmt.file) {
   pathways
 }
 
-
-# updating urls from ftp of Broad
-# bash just look for yml and human and mouse url
-# Only the complete collections are downloaded
-
-# Human gene sets
-
-## For gene symbols
-
-# Load gmt genesets files as lists
-gmts <- dir(path = "data-raw/human_gmt/",pattern = "*.symbols.gmt")
-for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/human_gmt/",gmts[i]))) }
-
-gmts <- ls(pattern = "v2026") #this only select the files with the 2026 version but could be any pattern for the last version. Be carefull of what gmts are in the folders
-msigdf<- list()
-for (i in seq_along(gmts)){
-  msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) tibble(symbol=x), .id="geneset") %>%
-    filter(symbol!="-") %>%
-    mutate(symbol=as.character(symbol), geneset=as.character(geneset)) %>%
-    as_tibble()
-}
-
-# Tidy up list to tbl_df
-
-
-# Collapse multiple lists into a dataframe, with explicit splicing (!!!) to maintain list names
-msigdf_symbol <- bind_rows(!!!msigdf,.id = "gs_labels")
-
-# Add data groups into new columns gs_labels.
-# gs_label colums are split for geneset (category_code) and subcategory_code, twice just becouse.
-# Columns with raw data are drop.
-# There are repeated genesets in C2.CP versus C2.*
-# msigdf_symbol <- msigdf_symbol %>% separate(gs_labels, c("label", "temp"), sep = "\\.v7", remove=FALSE) %>% dplyr::select(-temp) %>%
-#   separate(label,c("category_code","category_subcode"),sep = "[.]",extra = "drop") %>% dplyr::select(-gs_labels) %>% distinct()
+# Build the tidy gene set table and the matching URL table for one organism.
 #
-# msigdf_symbol <- msigdf_symbol %>% mutate(gs_labels=gsub(gs_labels,pattern = "[.]v*gmt",replacement = "") ) %>%
-#    separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "drop") %>% distinct()
+# gmt_dir    directory holding the *.symbols.gmt files for this organism
+# version    MSigDB version, e.g. "2026.1"
+# url_prefix base URL that each geneset name is appended to
+#
+# File names look like c2.cp.kegg_legacy.v2026.1.Hs.symbols.gmt. Stripping the
+# version suffix leaves c2.cp.kegg_legacy, which splits into the category code
+# (c2) and the category subcode (cp.kegg_legacy).
+build_msigdf <- function(gmt_dir, version, url_prefix) {
+  version_regex <- gsub(".", "\\.", version, fixed = TRUE)
 
+  files <- list.files(gmt_dir, pattern = "\\.symbols\\.gmt$", full.names = TRUE)
+  files <- files[grepl(paste0("\\.v", version_regex, "\\."), basename(files))]
+  if (length(files) == 0) {
+    stop("No v", version, " *.symbols.gmt files found in ", gmt_dir)
+  }
 
-msigdf_symbol <- msigdf_symbol %>% mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2026\\.1\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
-  separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "merge") %>%  distinct()
+  label_regex <- paste0("\\.v", version_regex, "\\...\\.symbols\\.gmt$")
+  labels <- sub(label_regex, "", basename(files))
 
+  pathways <- lapply(files, gmtPathways)
+  names(pathways) <- labels
 
-# tally
-msigdf_symbol %>% group_by(category_code,category_subcode) %>% tally()
-
-
-# Human genes
-msigdf.human <- msigdf_symbol
-
-# Create data frame of urls to join to
-msigdf.urls <- msigdf_symbol %>%
-  distinct(category_code,category_subcode, geneset) %>%
-  mutate(url=paste0("http://software.broadinstitute.org/gsea/msigdb/cards/", geneset))
-
-
-# Mouse
-
-#clean
-rm(list=ls(pattern="v2026."),gmts,msigdf_symbol)
-
-# Load gmt genesets files as lists
-gmts <- dir(path = "data-raw/mouse_gmt/",pattern = "*.symbols.gmt")
-for (i in seq_along(gmts)){ assign(gmts[i],gmtPathways(paste0("data-raw/mouse_gmt/",gmts[i]))) }
-
-
-gmts <- ls(pattern = "v2026")
-msigdf<- list()
-for (i in seq_along(gmts)){
-  msigdf[[gmts[i]]] <- eval(parse(text = gmts[i])) %>% plyr::ldply(function(x) tibble(symbol=x), .id="geneset") %>%
-    filter(symbol!="-") %>%
-    mutate(symbol=as.character(symbol), geneset=as.character(geneset)) %>%
+  tbl <- pathways %>%
+    lapply(function(p) plyr::ldply(p, function(x) tibble(symbol = x), .id = "geneset")) %>%
+    bind_rows(.id = "gs_labels") %>%
+    filter(symbol != "-") %>%
+    mutate(
+      symbol = as.character(symbol),
+      geneset = as.character(geneset)
+    ) %>%
+    separate(gs_labels, c("category_code", "category_subcode"),
+             sep = "[.]", extra = "merge", fill = "right") %>%
+    distinct() %>%
     as_tibble()
+
+  urls <- tbl %>%
+    distinct(category_code, category_subcode, geneset) %>%
+    mutate(url = paste0(url_prefix, geneset))
+
+  list(data = tbl, urls = urls)
 }
 
+version <- read_version()
 
+human <- build_msigdf(
+  "data-raw/human_gmt", version,
+  "https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/"
+)
+mouse <- build_msigdf(
+  "data-raw/mouse_gmt", version,
+  "https://www.gsea-msigdb.org/gsea/msigdb/mouse/geneset/"
+)
 
-# Tidy up list to tbl_df
-# Collapse multiple lists into a dataframe, with explicit splicing (!!!) to maintain list names
-msigdf_symbol <- bind_rows(!!!msigdf,.id = "gs_labels")
+msigdf.human <- human$data
+msigdf.urls <- human$urls
+msigdf.mouse <- mouse$data
+msigdf.mouse.urls <- mouse$urls
 
-# Add data groups into new columns gs_labels.
-# gs_label colums are split for geneset (category_code) and subcategory_code, twice just becouse.
-# Columns with raw data are drop.
-# There are repeated genesets in C2.CP versus C2.*
+# Tally so a bad parse is visible when run non-interactively.
+print(msigdf.human %>% group_by(category_code, category_subcode) %>% tally(), n = Inf)
+print(msigdf.mouse %>% group_by(category_code, category_subcode) %>% tally(), n = Inf)
 
-
-msigdf_symbol <- msigdf_symbol %>%
-  mutate(gs_labels=gsub(gs_labels,pattern = "\\.v2026\\.1\\...\\.symbols|[.]v*gmt",replacement = "") ) %>%
-  separate(gs_labels,c("category_code","category_subcode"),sep = "[.]",extra = "merge") %>%
-  distinct()
-
-# tally
-# msigdf_symbol %>% group_by(category_code,category_subcode) %>% tally()
-
-# mouse genes
-msigdf.mouse <- msigdf_symbol
-
-# # Create data frame of urls to join to
-msigdf.mouse.urls <- msigdf_symbol %>%
-  distinct(category_code,category_subcode, geneset) %>%
-  mutate(url=paste0("https://www.gsea-msigdb.org/gsea/msigdb/mouse/geneset/", geneset))
-
-# Save data in the package, and remove the original list objects
-library(devtools)
-use_data(msigdf.human,msigdf.mouse,msigdf.urls,msigdf.mouse.urls, overwrite=TRUE, compress='xz')
-use_package("tibble")
-# detach("package:biomaRt", unload=TRUE)
-rm(list=ls(pattern="v2026."),msigdf,msigdf_symbol,i,gmts,gmtPathways)
-
-library(roxygen2)
-roxygenize(package.dir = ".", roclets = NULL, load_code = NULL, clean = T)
-devtools::check()
+usethis::use_data(msigdf.human, msigdf.mouse, msigdf.urls, msigdf.mouse.urls,
+                  overwrite = TRUE, compress = "xz")
