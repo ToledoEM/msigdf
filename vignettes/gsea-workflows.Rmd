@@ -1,0 +1,184 @@
+---
+title: "Using msigdf with enrichment tools"
+author:
+- name: Enrique M. Toledo
+  email: enriquetoledo@gmail.com
+package: msigdf
+output:
+  html_document:
+    theme:
+      version: 5
+      bootswatch: flatly
+    highlight: monochrome
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    toc_depth: 3
+    number_sections: true
+    css: styles.css
+abstract: |
+  Recipes for reshaping the `msigdf` tibbles into the formats expected by common
+  gene set enrichment tools: `fgsea`, `clusterProfiler`, and anything else that
+  wants either a named list of gene sets or a two-column `TERM2GENE` frame.
+vignette: |
+  %\VignetteIndexEntry{Using msigdf with enrichment tools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+library(knitr)
+opts_chunk$set(message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE)
+```
+
+```{r}
+library(dplyr)
+library(msigdf)
+```
+
+# Scope
+
+`msigdf` ships the gene sets only. It deliberately does not depend on any
+enrichment package, so `fgsea` and `clusterProfiler` are **not** installed
+alongside it.
+
+The chunks that reshape `msigdf` data are evaluated below, so the output you see
+is real. The chunks that call an enrichment package are marked `eval=FALSE` and
+are shown as recipes to copy — install the relevant Bioconductor package first:
+
+```{r, eval=FALSE}
+# install.packages("BiocManager")
+BiocManager::install(c("fgsea", "clusterProfiler"))
+```
+
+# A named list of gene sets
+
+`fgsea::fgsea()` and several other tools expect gene sets as a named list: one
+element per gene set, each holding a character vector of gene identifiers.
+`split()` produces exactly that.
+
+Using the human hallmark collection (`category_code == "h"`):
+
+```{r}
+hallmark <- msigdf.human %>%
+  filter(category_code == "h")
+
+pathways <- split(hallmark$symbol, hallmark$geneset)
+
+length(pathways)
+lengths(pathways) %>% head()
+pathways[["HALLMARK_NOTCH_SIGNALING"]] %>% head(10)
+```
+
+Feed that straight to `fgsea`, together with your own named vector of ranking
+statistics:
+
+```{r, eval=FALSE}
+library(fgsea)
+
+# `stats` is a named numeric vector: names are gene symbols, values are the
+# ranking metric (log fold change, signed -log10 p-value, ...).
+res <- fgsea(pathways = pathways, stats = stats)
+
+res %>%
+  as_tibble() %>%
+  arrange(padj) %>%
+  select(pathway, pval, padj, NES, size)
+```
+
+Any collection works the same way. To restrict to one sub-collection, filter on
+`category_subcode` as well:
+
+```{r}
+reactome <- msigdf.human %>%
+  filter(category_code == "c2", category_subcode == "cp.reactome")
+
+reactome_pathways <- split(reactome$symbol, reactome$geneset)
+length(reactome_pathways)
+```
+
+# A TERM2GENE data frame
+
+`clusterProfiler::enricher()` and `GSEA()` take a two-column data frame: gene set
+name first, gene identifier second. That is the `msigdf` layout minus the
+collection columns.
+
+```{r}
+term2gene <- msigdf.human %>%
+  filter(category_code == "h") %>%
+  select(term = geneset, gene = symbol)
+
+term2gene
+```
+
+Then:
+
+```{r, eval=FALSE}
+library(clusterProfiler)
+
+# Over-representation on a character vector of gene symbols.
+ora <- enricher(gene = my_genes, TERM2GENE = term2gene)
+
+# Or GSEA on a sorted, named numeric vector.
+gsea <- GSEA(geneList = sorted_stats, TERM2GENE = term2gene)
+```
+
+# Mouse
+
+The mouse tibble has the same shape. Note the collection codes differ: hallmark
+is `mh` rather than `h`, and the numbered collections run `m1`-`m8`.
+
+```{r}
+msigdf.mouse %>%
+  distinct(category_code) %>%
+  arrange(category_code)
+```
+
+```{r}
+mouse_hallmark <- msigdf.mouse %>%
+  filter(category_code == "mh")
+
+mouse_pathways <- split(mouse_hallmark$symbol, mouse_hallmark$geneset)
+
+length(mouse_pathways)
+mouse_pathways[["HALLMARK_NOTCH_SIGNALING"]] %>% head(10)
+```
+
+Mouse gene sets carry mouse symbols, so no ortholog mapping is needed if your
+data is already mouse.
+
+# Linking results back to MSigDB
+
+`msigdf.urls` and `msigdf.mouse.urls` map every gene set name to its page on the
+MSigDB website. Join enrichment output against them to get clickable links in a
+report.
+
+```{r}
+top_sets <- msigdf.human %>%
+  filter(category_code == "h") %>%
+  count(geneset, name = "n_genes") %>%
+  arrange(n_genes) %>%
+  head(5)
+
+top_sets %>%
+  inner_join(msigdf.urls, by = "geneset") %>%
+  select(geneset, n_genes, url)
+```
+
+The same join applied to an `fgsea` result:
+
+```{r, eval=FALSE}
+res %>%
+  as_tibble() %>%
+  arrange(padj) %>%
+  head(20) %>%
+  inner_join(msigdf.urls, by = c("pathway" = "geneset")) %>%
+  select(pathway, padj, NES, url)
+```
+
+# Session info {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```

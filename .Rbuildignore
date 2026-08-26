@@ -2,13 +2,16 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 
-# Version control - multiple patterns to ensure .git is excluded
-.git*
-.git/*
+# Version control
+^\.git$
+^\.gitignore$
+^\.gitattributes$
+^\.github$
 
 # Development files
 ^\.Rprofile$
-data-raw/*$
+^\.lintr$
+^data-raw$
 ^examples$
 ^msigdf_logo\.png$
 
@@ -20,12 +23,12 @@ data-raw/*$
 # System files
 ^\.DS_Store$
 
-# GitHub
-^\.github$
-
 # Package documentation site
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
 ^doc$
 ^Meta$
+
+# Coverage
+^codecov\.yml$
