@@ -8,7 +8,7 @@ Repository chores and fixes only. The data is unchanged from 2026.1 — `msigdf.
 - Refactor `data-raw/msigdf.R`: extract the duplicated human/mouse blocks into a single `build_msigdf()` function, replace `assign()`/`eval(parse())` with a named list, and derive every version-dependent pattern from `data_url.yml`. Previously the version was read but never used, so a release bump silently produced empty data frames.
 - Update the human gene set URL prefix in the build script to `https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/`, replacing the retired `software.broadinstitute.org/gsea/msigdb/cards/` host. This is a build script change only — the shipped `msigdf.urls` still carries the old prefix and will pick up the new one at the next data rebuild.
 - Harden `data-raw/get_gmt.sh`: add `set -euo pipefail`, resolve paths relative to the script so it runs from the repository root as documented, replace GNU-only `find -printf` with a portable equivalent, deduplicate the verification logic, and check that downloaded files match the declared version.
-- Expand CI: R CMD check matrix across Linux/macOS/Windows on release and oldrel-1, with lint, test coverage, and pkgdown deployment as separate workflows.
+- Expand CI: R CMD check matrix across Linux/macOS/Windows on release and oldrel-1, with lint and pkgdown deployment as separate workflows.
 - Add `.lintr` configuration so linting reports real issues rather than flagging the package's dotted object names.
 - Convert `inst/CITATION` from deprecated `citEntry()` to `bibentry()`, and add an entry for the package itself.
 - Fix vignette errors: it described three data frames containing Entrez IDs (there are four, containing gene symbols) and filtered `c2` in a section about hallmark sets.

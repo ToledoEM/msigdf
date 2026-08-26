@@ -17,7 +17,6 @@ Current version: [v2026.1](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MS
 [![R-CMD-check](https://img.shields.io/github/actions/workflow/status/ToledoEM/msigdf/R-CMD-check.yaml?branch=master&label=R-CMD-check&style=flat-square)](https://github.com/ToledoEM/msigdf/actions/workflows/R-CMD-check.yaml)
 [![lint](https://img.shields.io/github/actions/workflow/status/ToledoEM/msigdf/lint.yaml?branch=master&label=lint&style=flat-square)](https://github.com/ToledoEM/msigdf/actions/workflows/lint.yaml)
 [![pkgdown](https://img.shields.io/github/actions/workflow/status/ToledoEM/msigdf/pkgdown.yaml?branch=master&label=pkgdown&style=flat-square)](https://toledoem.github.io/msigdf/)
-[![codecov](https://img.shields.io/codecov/c/github/ToledoEM/msigdf?branch=master&style=flat-square)](https://app.codecov.io/gh/ToledoEM/msigdf?branch=master)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![license](https://img.shields.io/badge/license-CC0%201.0-lightgrey?style=flat-square)](https://creativecommons.org/publicdomain/zero/1.0/)
 [![R](https://img.shields.io/badge/R-%3E%3D%203.5-blue?style=flat-square)](https://cran.r-project.org/)
