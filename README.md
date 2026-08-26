@@ -14,12 +14,20 @@ This is the updated version of the archived repo of [@stephenturner](https://git
     
 Current version: [v2026.1](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_Latest/).
 
-<a href="https://doi.org/10.5281/zenodo.16815639"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.16815639.svg" alt="DOI"></a> [![Version](https://img.shields.io/badge/version-2026.1-blue)](https://github.com/ToledoEM/msigdf/releases)
-
+[![R-CMD-check](https://img.shields.io/github/actions/workflow/status/ToledoEM/msigdf/R-CMD-check.yaml?branch=master&label=R-CMD-check&style=flat-square)](https://github.com/ToledoEM/msigdf/actions/workflows/R-CMD-check.yaml)
+[![lint](https://img.shields.io/github/actions/workflow/status/ToledoEM/msigdf/lint.yaml?branch=master&label=lint&style=flat-square)](https://github.com/ToledoEM/msigdf/actions/workflows/lint.yaml)
+[![pkgdown](https://img.shields.io/github/actions/workflow/status/ToledoEM/msigdf/pkgdown.yaml?branch=master&label=pkgdown&style=flat-square)](https://toledoem.github.io/msigdf/)
+[![codecov](https://img.shields.io/codecov/c/github/ToledoEM/msigdf?branch=master&style=flat-square)](https://app.codecov.io/gh/ToledoEM/msigdf?branch=master)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![license](https://img.shields.io/badge/license-CC0%201.0-lightgrey?style=flat-square)](https://creativecommons.org/publicdomain/zero/1.0/)
+[![R](https://img.shields.io/badge/R-%3E%3D%203.5-blue?style=flat-square)](https://cran.r-project.org/)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.16815639-blue?style=flat-square)](https://doi.org/10.5281/zenodo.16815639)
+[![version](https://img.shields.io/badge/version-2026.1-blue?style=flat-square)](https://github.com/ToledoEM/msigdf/releases)
 
 **Important Notices**
-- MSigDB v2026.1 (Jan 2026) is based on gene annotation data from Ensembl Release 115 (September 2026).
-- Human realese notes: https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2026.1.Hs/
+
+- MSigDB v2026.1 is based on gene annotation data from Ensembl Release 115.
+- Human release notes: https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2026.1.Hs/
 - Mouse release notes: https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2026.1.Mm/
     
     
@@ -33,14 +41,25 @@ install.packages("pak")
 # Just get the data
 pak::pak("toledoem/msigdf")
 
-# Get the data and build the vignette (requires tidyverse, knitr, rmarkdown)
-pak::pak("toledoem/msigdf", build_vignettes = TRUE)
+# Get the data and the suggested packages used by the vignettes
+pak::pak("toledoem/msigdf", dependencies = TRUE)
 ```
+
+## Data
+
+| Object | Columns | Description |
+|---|---|---|
+| `msigdf.human` | `category_code`, `category_subcode`, `geneset`, `symbol` | Human gene sets (`h`, `c1`-`c9`) |
+| `msigdf.mouse` | `category_code`, `category_subcode`, `geneset`, `symbol` | Mouse gene sets (`mh`, `m1`-`m8`) |
+| `msigdf.urls` | `category_code`, `category_subcode`, `geneset`, `url` | MSigDB page for each human gene set |
+| `msigdf.mouse.urls` | `category_code`, `category_subcode`, `geneset`, `url` | MSigDB page for each mouse gene set |
+
+Hallmark is `h` for human and `mh` for mouse. KEGG gene sets are human-only.
 
 ## Example usage
 
 
-See the [package vignette](https://toledoem.github.io/msigdf/articles/msigdf.html) for more examples.   
+See the [package vignette](https://toledoem.github.io/msigdf/articles/msigdf.html) for more examples, or [Using msigdf with enrichment tools](https://toledoem.github.io/msigdf/articles/gsea-workflows.html) to feed these tables into `fgsea` or `clusterProfiler`.
 
 ```r
 library(dplyr)
@@ -106,17 +125,26 @@ Selecting by symbol
 
 ## Building
 
-Code for building this data is in `data-raw/`. Update `data-raw/data_url.yml` with the new MSigDB version and URLs (the top-level `version:` is now used by the scripts).
+Code for building this data is in `data-raw/`. Update `data-raw/data_url.yml` with the new MSigDB version and URLs — the top-level `version:` key drives every version-dependent pattern in both scripts, so it is the only place a release bump needs to be made.
 
-1) Download GMT files:
-`bash data-raw/get_gmt.sh`
+1) Download the GMT files (run from the repository root):
+```bash
+bash data-raw/get_gmt.sh
+```
+The script verifies that every file listed in the YAML was downloaded and that each carries the declared version, so a stale URL list fails loudly instead of silently producing empty data frames.
 
 2) Build the data frames and save to `data/`:
-`Rscript data-raw/msigdf.R`
+```bash
+Rscript data-raw/msigdf.R
+```
 
-The build script reads the version from `data-raw/data_url.yml`, so you no longer need to edit version strings inside the R code.
+3) Regenerate documentation and check the package:
+```r
+devtools::document()
+devtools::check()
+```
 
-See the [package vignette](https://toledoem.github.io/msigdf/articles/msigdf.html) for more.
+See the [package vignette](https://toledoem.github.io/msigdf/articles/msigdf.html) for more examples, and [Using msigdf with enrichment tools](https://toledoem.github.io/msigdf/articles/gsea-workflows.html) for `fgsea` and `clusterProfiler` recipes.
 
 
 

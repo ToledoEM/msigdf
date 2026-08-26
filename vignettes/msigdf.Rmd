@@ -21,9 +21,10 @@ output:
     number_sections: true
     css: styles.css
 abstract: |
-  This data package contains the Molecular Signature Database (MSigDB) for both human and predicted mouse orthologs in separate data frames (tibbles). 
-  Each data frame (`msigdf.human` and `msigdf.mouse`) contain three columns: the collection (Hallmark, or c1-c8), the gene set, and Entrez IDs
-  for genes in that set. The `msigdf.urls` tibble contains links to descriptions on the Broad Institute's website of each gene set.
+  This data package contains the Molecular Signature Database (MSigDB) for both human and mouse in separate data frames (tibbles).
+  Each data frame (`msigdf.human` and `msigdf.mouse`) contains four columns: the collection code (`h` or `c1`-`c9` for human, `mh` or `m1`-`m8` for mouse),
+  the sub-collection code, the gene set name, and the gene symbols in that set. The `msigdf.urls` and `msigdf.mouse.urls` tibbles contain links to
+  descriptions of each gene set on the MSigDB website.
   **[Source code available on GitHub](https://github.com/ToledoEM/msigdf)**.
 vignette: |
   %\VignetteIndexEntry{MSigDF: Molecular Signature Database (MSigDB) in a Data Frame}
@@ -55,7 +56,7 @@ See the script in `data-raw/` to see how the data frames (tibbles) were created.
 
 # Example usage
 
-There are three data frames (tibbles) this package. The `msigdf.human` data frame has columns for each MSigDB collection divided by sub-collection (like cc, bp and mf for C5). The format of the data is tidy, so each row is a single gene set collection, sub-collection and gene symbol. The `msigdf.mouse` data frame has the same structure for mouse orthologs. The `msigdf.urls` data frame links the name of the gene set to the URL on the Broad's website.
+There are four data frames (tibbles) in this package. The `msigdf.human` data frame has columns for each MSigDB collection divided by sub-collection (like cc, bp and mf for C5). The format of the data is tidy, so each row is a single gene set collection, sub-collection and gene symbol. The `msigdf.mouse` data frame has the same structure for the mouse collections. The `msigdf.urls` and `msigdf.mouse.urls` data frames link the name of each gene set to its page on the MSigDB website.
 
 New C5 ontology information was added to the category subcode for easy filtering and consistency.   
 
@@ -68,7 +69,9 @@ New C5 ontology information was added to the category subcode for easy filtering
 The data sets in this package have several million rows. The package imports the tibble package so they're displayed nicely.
 
 ```{r}
-library(tidyverse)
+library(dplyr)
+library(tibble)
+library(purrr)
 library(msigdf)
 ```
 
@@ -90,13 +93,13 @@ msigdf.human %>%
 Some software, e.g., [fGSEA](https://github.com/ctlab/fgsea) might require gene sets to be a named list of genes identifiers, where the name of each element in the list is the name of the pathway. This is how the data was originally structured, and we can return to it with `plyr::dlply()`. Here, let's use only the hallmark sets, and after we `dlply` the data into this named list format, get just the first few pathways, and in each of those, just display the first few gene symbols.
 
 ```{r}
-msigdf.human %>% 
-  filter(category_code=="c2") %>% 
-  select(geneset, symbol) %>% 
-  group_by(geneset) %>% 
-  summarize(symbol=list(symbol)) %>% 
-  deframe() %>% 
-  head() %>% 
+msigdf.human %>%
+  filter(category_code=="h") %>%
+  select(geneset, symbol) %>%
+  group_by(geneset) %>%
+  summarize(symbol=list(symbol)) %>%
+  deframe() %>%
+  head() %>%
   map(head)
 ```
 

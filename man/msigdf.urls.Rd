@@ -8,7 +8,7 @@
 A data frame with 4 variables: \code{category_code}, \code{category_subcode}, \code{geneset}, and \code{url}.
 }
 \source{
-\url{https://www.gsea-msigdb.org/gsea/msigdb/geneset/}
+\url{https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/}
 }
 \usage{
 msigdf.urls
