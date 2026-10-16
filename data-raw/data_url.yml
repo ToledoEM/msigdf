@@ -2,53 +2,54 @@
 # Use symbols genesets
 # Use individual files not aggregated ones since it simplify annotations of gene set categories
 
-version: 2026.1
+version: 2026.2
 
 human:
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c1.all.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cgp.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.biocarta.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.kegg_legacy.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.kegg_medicus.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.pid.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.reactome.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.wikipathways.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.mir.mir_legacy.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.mir.mirdb.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.mir.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.tft.gtrd.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.tft.tft_legacy.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.tft.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c4.3ca.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c4.cgn.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c4.cm.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c5.go.bp.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c5.go.cc.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c5.go.mf.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c5.go.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c5.hpo.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c6.all.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c7.immunesigdb.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c7.vax.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c8.all.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c9.all.v2026.1.Hs.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/h.all.v2026.1.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c1.all.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cgp.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.biocarta.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.kegg_legacy.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.kegg_medicus.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.pid.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.reactome.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c2.cp.wikipathways.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.mir.mir_legacy.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.mir.mirdb.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.mir.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.tft.gtrd.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.tft.tft_legacy.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c3.tft.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c4.3ca.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c4.cgn.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c4.cm.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c5.go.bp.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c5.go.cc.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c5.go.mf.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c5.go.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c5.hpo.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c6.all.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c7.immunesigdb.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c7.vax.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c8.all.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/c9.all.v2026.2.Hs.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/human/gene_sets/h.all.v2026.2.Hs.symbols.gmt
 
 mouse:
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m1.all.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m2.cgp.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m2.cp.biocarta.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m2.cp.reactome.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m2.cp.wikipathways.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m2.cp.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m3.gtrd.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m3.mirdb.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.go.bp.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.go.cc.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.go.mf.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.go.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.mpt.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m7.all.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m8.all.v2026.1.Mm.symbols.gmt
-  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/mh.all.v2026.1.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m1.all.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m2.cgp.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m2.cp.biocarta.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m2.cp.reactome.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m2.cp.wikipathways.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m2.cp.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m3.gtrd.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m3.mirdb.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.go.bp.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.go.cc.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.go.mf.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.go.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.mpo.mp.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m5.mpo.mpt.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m7.all.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/m8.all.v2026.2.Mm.symbols.gmt
+  - ftp://ftp.broadinstitute.org/distribution/gsea/msigdb/mouse/gene_sets/mh.all.v2026.2.Mm.symbols.gmt
