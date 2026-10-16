@@ -1,5 +1,10 @@
 # msigdf
 
+## 2026.2
+- Update data to MSigDB 2026.2 (Ensembl Release 116).
+- Mouse M5:MPT moved to M5:MPO:MPT (`category_subcode` `mpo.mpt`); add new M5:MPO:MP subcollection (`mpo.mp`).
+- `msigdf.urls` now uses the `https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/` prefix.
+
 ## Repo maintenance 2
 
 Repository chores and fixes only. The data is unchanged from 2026.1 — `msigdf.human`, `msigdf.mouse`, `msigdf.urls` and `msigdf.mouse.urls` are byte-identical to the previous release.
