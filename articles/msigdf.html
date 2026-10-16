@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">msigdf</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2026.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2026.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,7 +90,7 @@ M. Toledo</h4>
 from the MSigDB.</p>
 <hr>
 <p><strong><em>Procedure:</em></strong></p>
-<p><em>1. The current MSigDB v2026.1 gmt files were downloaded from
+<p><em>1. The current MSigDB v2026.2 gmt files were downloaded from
 Broad ftp.</em><br><em>2. This was done with the human and mouse gene sets</em><br><em>3. Each collection was converted to a list in R, and written to a
 RData file using <code><a href="https://rdrr.io/r/base/save.html" class="external-link">save()</a></code>.</em></p>
 <hr>
@@ -115,6 +115,8 @@ easy filtering and consistency.</p>
 <li>MF: GO Molecular Function ontology</li>
 <li>BP: GO Biological Process ontology</li>
 <li>CC: GO Cellular Component ontology</li>
+<li>MPO.MP / MPO.MPT: Mammalian Phenotype Ontology, generic and tumor
+terms (mouse M5)</li>
 </ul>
 <p>The data sets in this package have several million rows. The package
 imports the tibble package so they’re displayed nicely.</p>
@@ -155,13 +157,13 @@ imports the tibble package so they’re displayed nicely.</p>
 <span><span class="co">## 4            c1              all chr10p13</span></span>
 <span><span class="co">## 5            c1              all chr10p14</span></span>
 <span><span class="co">## 6            c1              all chr10p15</span></span>
-<span><span class="co">##                                                             url</span></span>
-<span><span class="co">## 1       http://software.broadinstitute.org/gsea/msigdb/cards/MT</span></span>
-<span><span class="co">## 2 http://software.broadinstitute.org/gsea/msigdb/cards/chr10p11</span></span>
-<span><span class="co">## 3 http://software.broadinstitute.org/gsea/msigdb/cards/chr10p12</span></span>
-<span><span class="co">## 4 http://software.broadinstitute.org/gsea/msigdb/cards/chr10p13</span></span>
-<span><span class="co">## 5 http://software.broadinstitute.org/gsea/msigdb/cards/chr10p14</span></span>
-<span><span class="co">## 6 http://software.broadinstitute.org/gsea/msigdb/cards/chr10p15</span></span></code></pre>
+<span><span class="co">##                                                              url</span></span>
+<span><span class="co">## 1       https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/MT</span></span>
+<span><span class="co">## 2 https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/chr10p11</span></span>
+<span><span class="co">## 3 https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/chr10p12</span></span>
+<span><span class="co">## 4 https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/chr10p13</span></span>
+<span><span class="co">## 5 https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/chr10p14</span></span>
+<span><span class="co">## 6 https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/chr10p15</span></span></code></pre>
 <p>Just get the entries for the <a href="http://www.genome.jp/kegg/pathway/hsa/hsa03450.html" class="external-link">KEGG
 non-homologous end joining pathway</a>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -230,42 +232,43 @@ dependent of the construction at MSigDB.</p>
 <span><span class="co">## <span style="color: #949494;"># Groups:   category_code [10]</span></span></span>
 <span><span class="co">##    category_code category_subcode      n</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> c1            all               <span style="text-decoration: underline;">43</span>707</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> c2            cgp              <span style="text-decoration: underline;">408</span>654</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> c2            cp               <span style="text-decoration: underline;">179</span>627</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> c1            all               <span style="text-decoration: underline;">43</span>874</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> c2            cgp              <span style="text-decoration: underline;">409</span>928</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> c2            cp               <span style="text-decoration: underline;">183</span>213</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 4</span> c2            cp.biocarta        <span style="text-decoration: underline;">4</span>814</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 5</span> c2            cp.kegg_legacy    <span style="text-decoration: underline;">12</span>801</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> c2            cp.kegg_medicus    <span style="text-decoration: underline;">9</span>662</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> c2            cp.kegg_medicus   <span style="text-decoration: underline;">11</span>484</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 7</span> c2            cp.pid             <span style="text-decoration: underline;">8</span>054</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> c2            cp.reactome      <span style="text-decoration: underline;">102</span>437</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> c2            cp.wikipathways   <span style="text-decoration: underline;">41</span>280</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> c3            mir              <span style="text-decoration: underline;">406</span>232</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> c2            cp.reactome      <span style="text-decoration: underline;">105</span>477</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> c2            cp.wikipathways   <span style="text-decoration: underline;">40</span>004</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> c3            mir              <span style="text-decoration: underline;">406</span>228</span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 19 more rows</span></span></span></code></pre>
 <p><strong>Mouse Collection of gene sets</strong> <a href="https://www.gsea-msigdb.org/gsea/msigdb/mouse/collections.jsp" class="external-link uri">https://www.gsea-msigdb.org/gsea/msigdb/mouse/collections.jsp</a></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">msigdf.mouse</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">category_code</span>,<span class="va">category_subcode</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">tally</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 16 × 3</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 17 × 3</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   category_code [7]</span></span></span>
 <span><span class="co">##    category_code category_subcode      n</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> m1            all               <span style="text-decoration: underline;">41</span>400</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> m2            cgp              <span style="text-decoration: underline;">116</span>378</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> m2            cp                <span style="text-decoration: underline;">89</span>841</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> m1            all               <span style="text-decoration: underline;">41</span>250</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> m2            cgp              <span style="text-decoration: underline;">116</span>663</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> m2            cp                <span style="text-decoration: underline;">91</span>143</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 4</span> m2            cp.biocarta        <span style="text-decoration: underline;">3</span>959</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> m2            cp.reactome       <span style="text-decoration: underline;">75</span>097</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> m2            cp.wikipathways   <span style="text-decoration: underline;">10</span>785</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> m3            gtrd             <span style="text-decoration: underline;">163</span>326</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> m3            mirdb            <span style="text-decoration: underline;">233</span>370</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> m5            go               <span style="text-decoration: underline;">878</span>221</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> m5            go.bp            <span style="text-decoration: underline;">651</span>755</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">11</span> m5            go.cc            <span style="text-decoration: underline;">112</span>349</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">12</span> m5            go.mf            <span style="text-decoration: underline;">114</span>117</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">13</span> m5            mpt                <span style="text-decoration: underline;">2</span>606</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">14</span> m7            all               <span style="text-decoration: underline;">70</span>547</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">15</span> m8            all               <span style="text-decoration: underline;">47</span>976</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">16</span> mh            all                <span style="text-decoration: underline;">7</span>191</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> m2            cp.reactome       <span style="text-decoration: underline;">76</span>386</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> m2            cp.wikipathways   <span style="text-decoration: underline;">10</span>798</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> m3            gtrd             <span style="text-decoration: underline;">163</span>656</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> m3            mirdb            <span style="text-decoration: underline;">233</span>362</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> m5            go               <span style="text-decoration: underline;">867</span>919</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> m5            go.bp            <span style="text-decoration: underline;">642</span>764</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span> m5            go.cc            <span style="text-decoration: underline;">107</span>985</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">12</span> m5            go.mf            <span style="text-decoration: underline;">117</span>170</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">13</span> m5            mpo.mp           <span style="text-decoration: underline;">555</span>716</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">14</span> m5            mpo.mpt            <span style="text-decoration: underline;">6</span>302</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">15</span> m7            all               <span style="text-decoration: underline;">70</span>547</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">16</span> m8            all               <span style="text-decoration: underline;">47</span>991</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">17</span> mh            all                <span style="text-decoration: underline;">7</span>191</span></span></code></pre>
 <p>Get the URL for the hallmark set with the fewest number of genes
 (Notch signaling). Optionally, <code>%&gt;%</code> this to
 <code>browseURL</code> to open it up in your browser.</p>
@@ -277,7 +280,7 @@ dependent of the construction at MSigDB.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">msigdf.urls</span>, by<span class="op">=</span><span class="st">"geneset"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "http://software.broadinstitute.org/gsea/msigdb/cards/HALLMARK_NOTCH_SIGNALING"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/HALLMARK_NOTCH_SIGNALING"</span></span></code></pre>
 <p>Just look at the number of genes in each KEGG pathway (sorted
 descending by the number of genes in that pathway):</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -285,7 +288,7 @@ descending by the number of genes in that pathway):</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">category_code</span><span class="op">==</span><span class="st">"c2"</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^KEGG_"</span>, <span class="va">geneset</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">geneset</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 844 × 2</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 976 × 2</span></span></span>
 <span><span class="co">##    geneset                                          n</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> KEGG_OLFACTORY_TRANSDUCTION                    778</span></span>
@@ -298,14 +301,14 @@ descending by the number of genes in that pathway):</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> KEGG_CHEMOKINE_SIGNALING_PATHWAY               376</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> KEGG_HUNTINGTONS_DISEASE                       366</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> KEGG_ENDOCYTOSIS                               362</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 834 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 966 more rows</span></span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="session-info">Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
 <pre><code><span><span class="co">## R version 4.6.1 (2026-06-24)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 24.04.4 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.5 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -324,13 +327,13 @@ descending by the number of genes in that pathway):</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] msigdf_2026.1 purrr_1.2.2   tibble_3.3.1  dplyr_1.2.1   knitr_1.51   </span></span>
+<span><span class="co">## [1] msigdf_2026.2 purrr_1.2.2   tibble_3.3.1  dplyr_1.2.1   knitr_1.52   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] vctrs_0.7.3       cli_3.6.6         rlang_1.3.0       xfun_0.60        </span></span>
+<span><span class="co">##  [1] vctrs_0.7.3       cli_3.6.6         rlang_1.3.0       xfun_0.61        </span></span>
 <span><span class="co">##  [5] otel_0.2.0        generics_0.1.4    textshaping_1.0.5 jsonlite_2.0.0   </span></span>
 <span><span class="co">##  [9] glue_1.8.1        htmltools_0.5.9   ragg_1.5.2        sass_0.4.10      </span></span>
-<span><span class="co">## [13] rmarkdown_2.31    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    </span></span>
+<span><span class="co">## [13] rmarkdown_2.32    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    </span></span>
 <span><span class="co">## [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.6.1    fs_2.1.0         </span></span>
 <span><span class="co">## [21] pkgconfig_2.0.3   systemfonts_1.3.2 digest_0.6.39     R6_2.6.1         </span></span>
 <span><span class="co">## [25] utf8_1.2.6        tidyselect_1.2.1  pillar_1.11.1     magrittr_2.0.5   </span></span>

@@ -100,7 +100,7 @@ reactome_pathways <- split(reactome$symbol, reactome$geneset)
 length(reactome_pathways)
 ```
 
-    ## [1] 1839
+    ## [1] 1867
 
 ## A TERM2GENE data frame
 
@@ -214,11 +214,11 @@ top_sets %>%
     ## # A tibble: 5 × 3
     ##   geneset                             n_genes url                               
     ##   <chr>                                 <int> <chr>                             
-    ## 1 HALLMARK_NOTCH_SIGNALING                 32 http://software.broadinstitute.or…
-    ## 2 HALLMARK_ANGIOGENESIS                    36 http://software.broadinstitute.or…
-    ## 3 HALLMARK_HEDGEHOG_SIGNALING              36 http://software.broadinstitute.or…
-    ## 4 HALLMARK_PANCREAS_BETA_CELLS             40 http://software.broadinstitute.or…
-    ## 5 HALLMARK_WNT_BETA_CATENIN_SIGNALING      42 http://software.broadinstitute.or…
+    ## 1 HALLMARK_NOTCH_SIGNALING                 32 https://www.gsea-msigdb.org/gsea/…
+    ## 2 HALLMARK_ANGIOGENESIS                    36 https://www.gsea-msigdb.org/gsea/…
+    ## 3 HALLMARK_HEDGEHOG_SIGNALING              36 https://www.gsea-msigdb.org/gsea/…
+    ## 4 HALLMARK_PANCREAS_BETA_CELLS             40 https://www.gsea-msigdb.org/gsea/…
+    ## 5 HALLMARK_WNT_BETA_CATENIN_SIGNALING      42 https://www.gsea-msigdb.org/gsea/…
 
 The same join applied to an `fgsea` result:
 
@@ -236,7 +236,7 @@ res %>%
 
     ## R version 4.6.1 (2026-06-24)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.4 LTS
+    ## Running under: Ubuntu 24.04.5 LTS
     ## 
     ## Matrix products: default
     ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -255,13 +255,13 @@ res %>%
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] msigdf_2026.1 dplyr_1.2.1   knitr_1.51   
+    ## [1] msigdf_2026.2 dplyr_1.2.1   knitr_1.52   
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] vctrs_0.7.3       cli_3.6.6         rlang_1.3.0       xfun_0.60        
+    ##  [1] vctrs_0.7.3       cli_3.6.6         rlang_1.3.0       xfun_0.61        
     ##  [5] otel_0.2.0        generics_0.1.4    textshaping_1.0.5 jsonlite_2.0.0   
     ##  [9] glue_1.8.1        htmltools_0.5.9   ragg_1.5.2        sass_0.4.10      
-    ## [13] rmarkdown_2.31    evaluate_1.0.5    jquerylib_0.1.4   tibble_3.3.1     
+    ## [13] rmarkdown_2.32    evaluate_1.0.5    jquerylib_0.1.4   tibble_3.3.1     
     ## [17] fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5   compiler_4.6.1   
     ## [21] fs_2.1.0          pkgconfig_2.0.3   systemfonts_1.3.2 digest_0.6.39    
     ## [25] R6_2.6.1          utf8_1.2.6        tidyselect_1.2.1  pillar_1.11.1    

@@ -10,7 +10,7 @@ This is the updated version of the archived repo of
 [@stephenturner](https://github.com/stephenturner/msigdf/pull/1)
 
 Current version:
-[v2026.1](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_Latest/).
+[v2026.2](https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_Latest/).
 
 [![R-CMD-check](https://img.shields.io/github/actions/workflow/status/ToledoEM/msigdf/R-CMD-check.yaml?branch=master&label=R-CMD-check&style=flat-square)](https://github.com/ToledoEM/msigdf/actions/workflows/R-CMD-check.yaml)
 [![lint](https://img.shields.io/github/actions/workflow/status/ToledoEM/msigdf/lint.yaml?branch=master&label=lint&style=flat-square)](https://github.com/ToledoEM/msigdf/actions/workflows/lint.yaml)
@@ -19,16 +19,18 @@ Current version:
 [![license](https://img.shields.io/badge/license-CC0%201.0-lightgrey?style=flat-square)](https://creativecommons.org/publicdomain/zero/1.0/)
 [![R](https://img.shields.io/badge/R-%3E%3D%203.5-blue?style=flat-square)](https://cran.r-project.org/)
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.16815639-blue?style=flat-square)](https://doi.org/10.5281/zenodo.16815639)
-[![version](https://img.shields.io/badge/version-2026.1-blue?style=flat-square)](https://github.com/ToledoEM/msigdf/releases)
+[![version](https://img.shields.io/badge/version-2026.2-blue?style=flat-square)](https://github.com/ToledoEM/msigdf/releases)
 
 **Important Notices**
 
-- MSigDB v2026.1 is based on gene annotation data from Ensembl Release
-  115.
+- MSigDB v2026.2 is based on gene annotation data from Ensembl Release
+  116.
 - Human release notes:
-  <https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2026.1.Hs/>
+  <https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2026.2.Hs/>
 - Mouse release notes:
-  <https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2026.1.Mm/>
+  <https://docs.gsea-msigdb.org/#MSigDB/Release_Notes/MSigDB_2026.2.Mm/>
+- Mouse M5:MPT is now M5:MPO:MPT (`category_subcode` `mpo.mpt`), with
+  the new M5:MPO:MP subcollection (`mpo.mp`).
 
 ## Installation
 

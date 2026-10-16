@@ -13,13 +13,13 @@ Source:
 
 Turner S, Toledo E (2026). *msigdf: MSigDB in a data frame*.
 [doi:10.5281/zenodo.16815639](https://doi.org/10.5281/zenodo.16815639).
-R package version 2026.1, <https://toledoem.github.io/msigdf/>.
+R package version 2026.2, <https://toledoem.github.io/msigdf/>.
 
     @Manual{,
       title = {msigdf: MSigDB in a data frame},
       author = {Stephen Turner and Enrique M. Toledo},
       year = {2026},
-      note = {R package version 2026.1},
+      note = {R package version 2026.2},
       url = {https://toledoem.github.io/msigdf/},
       doi = {10.5281/zenodo.16815639},
     }
