@@ -9,7 +9,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/ToledoEM/msigdf/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/ToledoEM/msigdf/blob/v2026.2/inst/CITATION)
 
 Turner S, Toledo E (2026). *msigdf: MSigDB in a data frame*.
 [doi:10.5281/zenodo.16815639](https://doi.org/10.5281/zenodo.16815639).
