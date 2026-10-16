@@ -46,7 +46,7 @@ Original data from the Broad Institute's Molecular Signature Database (MSigDB)^[
 
 **_Procedure:_** 
 
-_1. The current MSigDB v2026.1 gmt files were downloaded from Broad ftp._      
+_1. The current MSigDB v2026.2 gmt files were downloaded from Broad ftp._      
 _2. This was done with the human and mouse gene sets_     
 _3. Each collection was converted to a list in R, and written to a RData file using `save()`._        
 
@@ -64,6 +64,7 @@ New C5 ontology information was added to the category subcode for easy filtering
 - MF: GO Molecular Function ontology
 - BP: GO Biological Process ontology
 - CC: GO Cellular Component ontology
+- MPO.MP / MPO.MPT: Mammalian Phenotype Ontology, generic and tumor terms (mouse M5)
 
 
 The data sets in this package have several million rows. The package imports the tibble package so they're displayed nicely.
