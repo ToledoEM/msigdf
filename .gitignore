@@ -17,6 +17,9 @@ data-raw/*/
 doc/
 Meta/
 
-#pkgdown site
+# pkgdown site
 site/
 docs/
+
+# CI development
+.claude/
